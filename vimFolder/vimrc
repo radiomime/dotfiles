@@ -51,7 +51,7 @@ set hlsearch
 nnoremap j gj
 nnoremap k gk
 " Remap escape to ;;
-ino ;; <esc>
+ino jk <esc>
 
 "---" * Terminal Settings
 "---
