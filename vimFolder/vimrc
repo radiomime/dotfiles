@@ -53,6 +53,21 @@ nnoremap k gk
 " Remap escape to ;;
 ino jk <esc>
 
+" :W sudo saves the file (no permission denied)
+command W w !sudo tee % > /dev/null
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+"Always show current position
+set ruler
+
+" Ignore case when searching
+set ignorecase
+
+" ---------------------- Custom Ends Here
+
 "---" * Terminal Settings
 "---
 "---" `XTerm', `RXVT', `Gnome Terminal', and `Konsole' all claim to be "xterm";
