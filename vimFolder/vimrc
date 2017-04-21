@@ -31,7 +31,7 @@ set tabstop=4
 set softtabstop=4
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors
-colorscheme badwolf
+colorscheme onedark
 "enable syntax processing
 syntax enable
 
