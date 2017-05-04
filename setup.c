@@ -78,7 +78,6 @@ char* get_home_dir(){
   strcat(homedir, user);
 //  strcat(homedir, adding);
   char* get_home;
-  printf("Also printing: %s\n", homedir);
   get_home = homedir;
   return get_home;
 }
@@ -87,7 +86,10 @@ int main(int argc ,char *argv[])
 {  
 
    char *homedir = get_home_dir();
-   printf("The home dir is: %s\n", homedir);
+   char word[1024];
+   strcpy(word, homedir);
+
+   printf("The home dir is: %s\n", word);
    int check;
    if(argc == 2){
     check = one_arg(argv[1]);
