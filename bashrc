@@ -1,3 +1,5 @@
+alias tmux="tmux -2"
+export TERM=screen-256color
 export VISUAL=vim
 export EDITOR="$VISUAL"
 # ~/.bashrc: executed by bash(1) for non-login shells.
