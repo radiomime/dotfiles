@@ -1,11 +1,27 @@
-This installs the vim environment I prefer working with. Run the commands: </br>
-</br>
-git clone http://github.com/EthanJWright/myVim </br>
-cd myVim </br>
-. setup.sh
+Ethan Wright Dot Files with Setup </br>
 
-New C code method:
+All dot files are stored in the conf/ directory of this repo. Current list
+includes 
+* bashrc
+* vim 
+* tmux
+
+The code in the bin/ directory used to setup the dot files easily in a given environment 
+* linux_setup
+* mac_setup
+* other_setup_all.sh
+
+The mac and linux setup allows for flags to specify the files to install, e.g.
 ```
-./setup <flag> 
+./mac_setup -a 
+./mac_setup -v
+./mac_setup -v -t
 ```
-allows you to specify what files to set up. 
+
+Utility also exists to remove all currently existing versions of the dot files
+with 
+```
+./cleanup.sh
+```
+
+

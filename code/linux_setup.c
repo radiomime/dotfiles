@@ -1,99 +1,79 @@
-/*
-* Ethan Wright 5/6/2017
-* File for setting up my environment on linux
-* ./setup <flag>
-* ./setup <flag> <flag>
-* flags: -v : vim | -b : bashrc | -t : tmux.conf
-* Passes Valgrind: No memory leaks
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <pwd.h>
 
-//#include <linux/limits.h>
-// hard code for portability
-#define PATH_MAX 4096
+#include <pwd.h>
+#define PATH_MAX 1024
+
 int cp(char* from, char* to){
    char ch, source_file[1024], target_file[1024];
    FILE *source, *target;
- 
+
    source = fopen(from, "r");
- 
+
    if( source == NULL )
    {
-      printf("Press any key to exit...\n");
+      printf("Exiting from as null\n");
       exit(EXIT_FAILURE);
    }
- 
+
    target = fopen(to, "ab+");
- 
+
    if( target == NULL )
    {
       fclose(source);
-      printf("Press any key to exit...\n");
+      printf("Exiting to as null\n");
       exit(EXIT_FAILURE);
    }
- 
+
    while( ( ch = fgetc(source) ) != EOF )
       fputc(ch, target);
- 
-   printf("File copied successfully.\n");
- 
+
+
    fclose(source);
    fclose(target);
    return 1;
 
 }
 
-
-
 char* get_home_dir(){
-//  char user[PATH_MAX+1];
-  char *user = (char *)malloc(PATH_MAX+1);
-
-  /* Current safe method for getting user name */
+  char* user = malloc(PATH_MAX * sizeof(char));
   struct passwd *pws;
   pws = getpwuid(getuid());
   strcpy(user, pws->pw_name);
-
-//  char homedir[PATH_MAX+1];
-  char *homedir = (char *)malloc(PATH_MAX+1);
-
+  char *homedir = malloc(PATH_MAX * sizeof(char));
   char *home = "/home/";
-
 
   strcpy(homedir, home);
   strcat(homedir, user);
 
   char* get_home;
   get_home = homedir;
+  
   free(user);
   return get_home;
 }
 
 void make_vim(char *home_path){
-  
-  /* add the vimrc */ 
-  char *vimrc_file = (char *)malloc(PATH_MAX+1);
-//  char vimrc_file[PATH_MAX+1];
+  /* The home directory is passed in home_path */
+  /* add the vimrc */
+  char *vimrc_file = malloc(PATH_MAX * sizeof(char));
   strcpy(vimrc_file, home_path);
   char *vimrc = "/.vimrc";
   strcat(vimrc_file, vimrc);
-  printf("Path to vimrc is: %s\n", vimrc_file);
+  /* The path to make the vimrc is stored in vimrc_file */
+  char *local_vimrc = "../conf/vimrc";
   /* Try to copy the vim to /.vimrc */
-  if(cp("vimrc", vimrc_file) != 1){
+  if(cp(local_vimrc, vimrc_file) != 1){
     printf("vimrc not coppied, the horror... blood everywhere...\n");
   }
 
   /* Make directory for .vim */
   char *vim = "/.vim";
   strcat(home_path, vim);
-  printf("The home dir is %s\n", home_path);
   mkdir(home_path, 0777);
 
   /* Make directory for colors */
@@ -103,71 +83,70 @@ void make_vim(char *home_path){
 
 
   /* Create badwolf color scheme   */
-//   char badwolf_file[PATH_MAX+1];
-   char *badwolf_file = (char *)malloc(PATH_MAX+1);
+   char *badwolf_file = malloc(PATH_MAX * sizeof(char));
    strcpy(badwolf_file, home_path);
    char *badwolf = "/badwolf.vim";
    strcat(badwolf_file, badwolf);
-   if(cp("badwolf.vim", badwolf_file) != 1){
-    printf("It's not good... something happened and I'mma just crash now\n");
-  } 
-  printf("Coppied: %s\n", badwolf_file);
-
-
-  /* create goodwolf color scheme  */
-//  char goodwolf_file[PATH_MAX+1];
-  char *goodwolf_file = (char *)malloc(PATH_MAX+1);
-  strcpy(goodwolf_file, home_path);
-  printf("home_path is: %s\n", home_path);
-  char *goodwolf = "/goodwolf.vim";
-  strcat(goodwolf_file, goodwolf);
-  if(cp("goodwolf.vim", goodwolf_file) != 1){
+   char *local_badwolf = "../conf/badwolf.vim";
+   if(cp(local_badwolf, badwolf_file) != 1){
     printf("It's not good... something happened and I'mma just crash now\n");
   }
-  printf("Coppied: %s\n", goodwolf_file);
 
+  /* create goodwolf color scheme  */
+  char *goodwolf_file = malloc(PATH_MAX * sizeof(char));
+  strcpy(goodwolf_file, home_path);
+  char *goodwolf = "/goodwolf.vim";
+  strcat(goodwolf_file, goodwolf);
+  char *local_goodwolf = "../conf/goodwolf.vim";
+  /* Copy the local version of the file to the correct path */
+  if(cp(local_goodwolf, goodwolf_file) != 1){
+    printf("It's not good... something happened and I'mma just crash now\n");
+  }
 
   /* create onedark color scheme  */
-//  char onedark_file[PATH_MAX+1];
-  char *onedark_file = (char *)malloc(PATH_MAX+1);
+  char *onedark_file = malloc(PATH_MAX * sizeof(char));
   strcpy(onedark_file, home_path);
   char *onedark = "/onedark.vim";
   strcat(onedark_file, onedark);
-  if(cp("onedark.vim", onedark_file) != 1){
+  char *local_onedark = "../conf/onedark.vim";
+  /* Copy the local version of the file to the correct path */
+  if(cp(local_onedark, onedark_file) != 1){
     printf("It's not good... something happened and I'mma just crash now\n");
-  } 
-  printf("Coppied: %s\n", onedark_file);
-  free(vimrc_file);
-  free(badwolf_file);
-  free(goodwolf_file);
+  }
   free(onedark_file);
+  free(goodwolf_file);
+  free(badwolf_file);
+  free(vimrc_file);
 }
 
 void make_tmux(char *home_path){
-  /* add the tmux.conf */ 
-//  char tmux_file[PATH_MAX+1];
-  char *tmux_file = (char *)malloc(PATH_MAX+1);
+  /* add the tmux.conf */
+  char *tmux_file = malloc(PATH_MAX * sizeof(char));
   strcpy(tmux_file, home_path);
   char *tmux = "/.tmux.conf";
   strcat(tmux_file, tmux);
-  printf("Path to tmux.conf is: %s\n", tmux_file);
+  /* Path to new tmux is stored in tmux_file */
+  char *local_tmux = "../conf/tmux.conf";
   /* Try to copy the tmux to /.tmux */
-  if(cp("tmux.conf", tmux_file) != 1){
+  if(cp(local_tmux, tmux_file) != 1){
     printf("tmux.conf not coppied, the horror... blood everywhere...\n");
   }
   free(tmux_file);
 }
 
 void make_bash(char *home_path){
-  /* add the bashrc */ 
-  char *bash_file = (char *)malloc(PATH_MAX+1);
-//  char bash_file[PATH_MAX+1];
+
+
+  /* add the tmux.conf */
+  char *bash_file = malloc(PATH_MAX * sizeof(char));
   strcpy(bash_file, home_path);
   char *bash = "/.bashrc";
   strcat(bash_file, bash);
-  printf("Path to bashrc is: %s\n", bash_file);
+
+  /* Path to new bashrc is stored in bash_file  */
+  char *local_bashrc = "../conf/bashrc";
   /* Try to copy the bashrc to .bashrc */
-  if(cp("bashrc", bash_file) != 1){
+  if(cp(local_bashrc, bash_file) != 1){
     printf("bashrc not coppied, the horror... blood everywhere...\n");
   }
   free(bash_file);
@@ -175,16 +154,15 @@ void make_bash(char *home_path){
 
 
 int one_arg(char* arg, char* homedir){
-   char vim[PATH_MAX+1];
+   char *vim = malloc(PATH_MAX * sizeof(char));
    strcpy(vim, homedir);
 
-
-   char tmux[PATH_MAX+1];
+   char *tmux = malloc(PATH_MAX * sizeof(char));
    strcpy(tmux, homedir);
 
-   char bash[PATH_MAX+1];
+   char *bash = malloc(PATH_MAX * sizeof(char));
    strcpy(bash, homedir);
-  
+
   /* All Flag is set  */
   if(!strcmp(arg, "-a")){
     make_vim(vim);
@@ -206,42 +184,44 @@ int one_arg(char* arg, char* homedir){
   if(!strcmp(arg, "-t")){
     make_tmux(tmux);
 }
+ free(bash);
+ free(tmux);
+ free(vim);
+ return 0;
 }
 
 
 int two_args(char* arg_one, char* arg_two, char *homedir){
   /* If a flag is set for vim  */
   if(!strcmp(arg_one, "-v") || !strcmp(arg_two, "-v")){
-    char vim[PATH_MAX+1];
+    char *vim = malloc(PATH_MAX * sizeof(char));
     strcpy(vim, homedir);
     make_vim(vim);
     int check = cp("from.txt", "to.txt");
+    free(vim);
   }
   /* If a flag is set for bash  */
   if(!strcmp(arg_one, "-b") || !strcmp(arg_two, "-b")){
-    char bash[PATH_MAX+1];
+    char *bash = malloc(PATH_MAX * sizeof(char));
     strcpy(bash, homedir);
     make_bash(bash);
+    free(bash);
   }
   /* If a flag is set for tmux  */
   if(!strcmp(arg_one, "-t") || !strcmp(arg_two, "-t")){
-    char tmux[PATH_MAX+1];
+    char *tmux = malloc(PATH_MAX * sizeof(char));
     strcpy(tmux, homedir);
     make_tmux(tmux);
+    free(tmux);
   }
   return 1;
 }
 
 int main(int argc ,char *argv[])
-{  
-
+{
    char *homedir = get_home_dir();
 
    int check;
-   if(argc != 2 && argc != 3){
-     printf("Usage: ./setup <flag>");
-     return 0;
-   }
    if(argc == 2){
     check = one_arg(argv[1], homedir);
    }
@@ -250,5 +230,6 @@ int main(int argc ,char *argv[])
    }
 
    free(homedir);
+
    return 0;
 }
