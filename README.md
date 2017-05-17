@@ -13,15 +13,15 @@ The code in the bin/ directory used to setup the dot files easily in a given env
 
 The mac and linux setup allows for flags to specify the files to install, e.g.
 ```
-./mac_setup -a 
-./mac_setup -v
-./mac_setup -v -t
+bin/mac_setup -a 
+bin/mac_setup -v
+bin/mac_setup -v -t
 ```
 
 Utility also exists to remove all currently existing versions of the dot files
 with 
 ```
-./cleanup.sh
+bin/cleanup.sh
 ```
 
 
