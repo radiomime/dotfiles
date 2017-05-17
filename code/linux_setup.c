@@ -4,9 +4,9 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-
+#include <linux/limits.h>
 #include <pwd.h>
-#define PATH_MAX 1024
+
 
 int cp(char* from, char* to){
    char ch, source_file[1024], target_file[1024];
