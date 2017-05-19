@@ -1,30 +1,13 @@
-" This vimrc is divided into these sections:
-" 
-" * Terminal Settings
-" * User Interface
-" * Text Formatting -- General
-" * Text Formatting -- Specific File Formats
-" * Search & Replace
-" * Spelling
-" * Keystrokes -- Moving Around
-" * Keystrokes -- Formatting
-" * Keystrokes -- Toggles
-" * Keystrokes -- Insert Mode
-" * Keystrokes -- For HTML Files
-" * `SLRN' Behaviour
-" * Functions Referred to Above
-" 
-" This file contains no control codes and no `top bit set' characters above the
-" normal Ascii range, and all lines contain a maximum of 79 characters.  With a
-" bit of luck, this should make it resilient to being uploaded, downloaded,
-" e-mailed, posted, encoded, decoded, transmitted by morse code, or whatever.
-
-
 " first clear any existing autocommands:
 autocmd!
 " Set Numbers
 set nu  
-set autoindent 
+
+set nofoldenable
+set foldmethod=indent
+set foldlevel=2
+set foldclose=all
+
 set smartindent
 "Set tab spacing to 4 
 set tabstop=4
@@ -37,6 +20,10 @@ syntax enable
 
 set showmatch
 set hlsearch 
+
+" Remap : to ; for ease of use
+nnoremap ; :
+
 " remap j k and to treat 'false' new lines as new line
 nnoremap j gj
 nnoremap k gk
