@@ -14,8 +14,6 @@ char* get_home_dir(int OS);
 int make_file(char *home_path, char* file_name);
 void make_vim_color(char *color_file, char *home_path);
 void make_vim(char *home_path);
-void make_tmux(char *home_path);
-void make_bash(char *home_path);
 void check_arg(char* homedir, char* arg);
 
 
@@ -165,57 +163,34 @@ void make_vim(char *home_path){
 }
 
 
-void make_tmux(char *home_path){
-  char* file_name = "tmux.conf";
-  if(make_file(home_path, file_name) != 0){
-      printf("Couldn't copy tmux \n");
-      }
-}
-
-
-void make_bash(char *home_path){
-  char* file_name = "bashrc";
-  if(make_file(home_path, file_name) != 0){
-  printf("Couldn't copy the bashrc\n");
-  }
-}
-
-
 void check_arg(char* homedir, char* arg){
-  /* All Flag is set  */
-   if(!strcmp(arg, "-a")){
-     char* new_arg = "-v";
-     check_arg(homedir, new_arg);
-     new_arg = "-t";
-     check_arg(homedir, new_arg);
-     new_arg = "-b";
-     check_arg(homedir, new_arg);
-   }
-
-  if(!strcmp(arg, "-b")){
-   char *bash = malloc(PATH_MAX * sizeof(char));
-   strcpy(bash, homedir);
-   make_bash(bash);
-   free(bash);
-   printf("Added bashrc file\n");
-  }
-
-  if(!strcmp(arg, "-v")){
-   char *vim = malloc(PATH_MAX * sizeof(char));
-   strcpy(vim, homedir);
-   make_vim(vim);
-   free(vim);
+  /*  Add vim files  */
+  if(!strcmp(arg, "-v") || !strcmp(arg, "-a")){
+   make_vim(homedir);
    printf("Added vim files\n");
   }
 
-  if(!strcmp(arg, "-t")){
-   char *tmux = malloc(PATH_MAX * sizeof(char));
-   strcpy(tmux, homedir);
-   make_tmux(tmux);
-   free(tmux);
-   printf("Added tmux.conf file\n");
+  /* Add the bashrc   */
+  if(!strcmp(arg, "-b") || !strcmp(arg, "-a")){
+   char* file_name = "bashrc";
+   if(make_file(homedir, file_name) != 0){
+     printf("Couldn't copy the bashrc\n");
+   }
+   else{
+     printf("Added bashrc file\n");
+   }
   }
-
+  
+  /* Add tmux file  */
+  if(!strcmp(arg, "-t") || !strcmp(arg, "-a")){
+  char* file_name = "tmux.conf";
+  if(make_file(homedir, file_name) != 0){
+      printf("Couldn't copy tmux \n");
+      }
+  else{
+    printf("Added tmux.conf file\n");
+    }
+  }
 }
 
 int main(int argc ,char *argv[]){  
