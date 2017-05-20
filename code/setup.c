@@ -6,7 +6,6 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <sys/utsname.h>
-
 #define PATH_MAX 1024
 
 /* Prototypes  */
@@ -183,41 +182,39 @@ void make_bash(char *home_path){
 
 
 void check_arg(char* homedir, char* arg){
-   char *vim = malloc(PATH_MAX * sizeof(char));
-   strcpy(vim, homedir);
-
-   char *tmux = malloc(PATH_MAX * sizeof(char));
-   strcpy(tmux, homedir);
-
-   char *bash = malloc(PATH_MAX * sizeof(char));
-   strcpy(bash, homedir);
-  
   /* All Flag is set  */
-  if(!strcmp(arg, "-a")){
-    printf("Setting up all files \n");
-    make_vim(vim);
-    make_tmux(tmux);
-    make_bash(bash);
-  }
+   if(!strcmp(arg, "-a")){
+     char* new_arg = "-v";
+     check_arg(homedir, new_arg);
+     new_arg = "-t";
+     check_arg(homedir, new_arg);
+     new_arg = "-b";
+     check_arg(homedir, new_arg);
+   }
 
   if(!strcmp(arg, "-b")){
-    printf("Setting up bash\n");
-    make_bash(bash);
+   char *bash = malloc(PATH_MAX * sizeof(char));
+   strcpy(bash, homedir);
+   make_bash(bash);
+   printf("Added bashrc file\n");
   }
 
   if(!strcmp(arg, "-v")){
-    printf("Setting up vim\n");
-    make_vim(vim);
+   char *vim = malloc(PATH_MAX * sizeof(char));
+   strcpy(vim, homedir);
+   make_vim(vim);
+   free(vim);
+   printf("Added vim files\n");
   }
 
   if(!strcmp(arg, "-t")){
-    printf("Setting up tmux\n");
-    make_tmux(tmux);
+   char *tmux = malloc(PATH_MAX * sizeof(char));
+   strcpy(tmux, homedir);
+   make_tmux(tmux);
+   free(tmux);
+   printf("Added tmux.conf file\n");
   }
 
- free(vim);
- free(tmux);
- free(bash);
 }
 
 int main(int argc ,char *argv[]){  
