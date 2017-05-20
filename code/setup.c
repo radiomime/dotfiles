@@ -196,6 +196,7 @@ void check_arg(char* homedir, char* arg){
    char *bash = malloc(PATH_MAX * sizeof(char));
    strcpy(bash, homedir);
    make_bash(bash);
+   free(bash);
    printf("Added bashrc file\n");
   }
 
