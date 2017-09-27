@@ -173,11 +173,18 @@ void check_arg(char* homedir, char* arg){
   /* Add the bashrc   */
   if(!strcmp(arg, "-b") || !strcmp(arg, "-a")){
    char* file_name = "bashrc";
+   char* ip_name = "getIP.sh";
    if(make_file(homedir, file_name) != 0){
      printf("Couldn't copy the bashrc\n");
    }
    else{
      printf("Added bashrc file\n");
+   }
+   if(make_file(homedir, ip_name) != 0){
+     printf("Couldn't copy the getIP\n");
+   }
+   else{
+     printf("Added getIP file\n");
    }
   }
   
