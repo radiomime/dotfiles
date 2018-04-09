@@ -28,8 +28,8 @@ hi String term=NONE cterm=NONE ctermbg=NONE ctermfg=113
 hi Function term=NONE cterm=NONE ctermbg=NONE ctermfg=215
 hi SpecialKey term=bold cterm=NONE ctermbg=NONE ctermfg=196
 hi NonText term=bold cterm=NONE ctermbg=NONE ctermfg=236
-"hi MatchParen term=reverse cterm=NONE ctermbg=215 ctermfg=23
-hi MatchParen term=NONE cterm=NONE ctermbg=NONE ctermfg=166
+hi MatchParen term=reverse cterm=NONE ctermbg=215 ctermfg=23
+"hi MatchParen term=NONE cterm=NONE ctermbg=NONE ctermfg=166
 hi Comment term=bold cterm=NONE ctermbg=NONE ctermfg=245
 hi Constant term=underline cterm=NONE ctermbg=NONE ctermfg=113
 hi Special term=bold cterm=NONE ctermbg=NONE ctermfg=66
@@ -40,7 +40,7 @@ hi PreProc term=underline cterm=NONE ctermbg=NONE ctermfg=215
 hi Type term=underline cterm=NONE ctermbg=NONE ctermfg=108
 hi LineNr term=underline cterm=NONE ctermbg=NONE ctermfg=59
 hi ExtraWhitespace term=NONE cterm=NONE ctermbg=NONE ctermfg=fg
-"hi Visual term=reverse cterm=NONE ctermbg=90 ctermfg=255
+hi Visual term=reverse cterm=NONE ctermbg=90 ctermfg=255
 
 hi Pmenu term=NONE cterm=NONE ctermbg=16 ctermfg=250
 hi PmenuSel term=NONE cterm=NONE ctermbg=61 ctermfg=231
