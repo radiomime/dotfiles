@@ -1,3 +1,7 @@
+colorscheme rdark-terminal2
+"Chose colorscheme, copy to folder: ~/.vim/colors
+" $ cp /path/to/your/color.vim  ~/.vim/colors
+
 " first clear any existing autocommands:
 autocmd!
 " Set Numbers
@@ -12,9 +16,7 @@ set smartindent
 "Set tab spacing to 4 
 set tabstop=4
 set softtabstop=4
-"Chose colorscheme, copy to folder: ~/.vim/colors
-" $ cp /path/to/your/color.vim  ~/.vim/colors
-colorscheme onedark
+
 "enable syntax processing
 syntax enable
 
