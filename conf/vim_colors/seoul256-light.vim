@@ -8,9 +8,11 @@
 " File:         seoul256-light.vim
 " URL:          github.com/junegunn/seoul256.vim
 " Author:       Junegunn Choi (junegunn.c@gmail.com)
+" Version:      1.4.0
+" Last Updated: July 6, 2014
 " License:      MIT
 "
-" Copyright (c) 2017 Junegunn Choi
+" Copyright (c) 2013 Junegunn Choi
 "
 " MIT License
 "
@@ -33,13 +35,13 @@
 " OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 " WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-let s:master    = expand('<sfile>:p:h').'/seoul256.vim'
+let s:master    = get(split(globpath(&rtp, 'colors/seoul256.vim'), '\n'), 0, '')
 let s:custom_bg = get(g:, 'seoul256_light_background', get(g:, 'seoul256_background', 253))
 let s:light     = s:custom_bg >= 252 && s:custom_bg <= 256
 let s:var_found = exists('g:seoul256_background')
 let s:light_var_found = exists('g:seoul256_light_background')
 
-if filereadable(s:master)
+if !empty(s:master)
   try
     " Backup current g:seoul256_background
     if s:var_found
@@ -62,7 +64,7 @@ if filereadable(s:master)
       set background=light
     endif
     let g:colors_name = 'seoul256'
-    execute 'silent source' fnameescape(s:master)
+    execute 'silent source '.s:master
     let g:colors_name = &background == 'dark' ? 'seoul256' : 'seoul256-light'
   finally
     " Revert g:seoul256_background

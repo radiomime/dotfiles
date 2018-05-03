@@ -1,2147 +1,1295 @@
 " Theme: PaperColor
-" Author: Nikyle Nguyen <NLKNguyen@MSN.com>
+" Author: Nguyen Nguyen <NLKNguyen@MSN.com>
 " License: MIT
-" Source: http://github.com/NLKNguyen/papercolor-theme
-
-let s:version = '0.9.x'
-
-" Note on navigating this source code:
-" - Use folding feature to collapse/uncollapse blocks of marked code
-"     zM to fold all markers in this file to see the structure of the source code
-"     zR to unfold all recursively
-"     za to toggle a fold
-"     See: http://vim.wikia.com/wiki/Folding
-" - The main section is at the end where the functions are called in order.
-
-" Theme Repository: {{{
-
-let s:themes = {}
-
-" }}}
-
-fun! s:register_default_theme()
-  " Theme name should be lowercase
-  let s:themes['default'] = {
-        \   'maintainer'  : 'Nikyle Nguyen <me@Nikyle.com>',
-        \   'source' : 'http://github.com/NLKNguyen/papercolor-theme',
-        \   'description' : 'The original PaperColor Theme, inspired by Google Material Design',
-        \   'options' : {
-        \       'allow_bold': 1
-        \    }
-        \ }
-
-  " Theme can have 'light' and/or 'dark' color palette.
-  " Color values can be HEX and/or 256-color. Use empty string '' if not provided.
-  " Only color00 -> color15 are required. The rest are optional.
-  let s:themes['default'].light = {
-        \     'NO_CONVERSION': 1,
-        \     'TEST_256_COLOR_CONSISTENCY' : 1,
-        \     'palette' : {
-        \       'color00' : ['#eeeeee', '255'],
-        \       'color01' : ['#af0000', '124'],
-        \       'color02' : ['#008700', '28'],
-        \       'color03' : ['#5f8700', '64'],
-        \       'color04' : ['#0087af', '31'],
-        \       'color05' : ['#878787', '102'],
-        \       'color06' : ['#005f87', '24'],
-        \       'color07' : ['#444444', '238'],
-        \       'color08' : ['#bcbcbc', '250'],
-        \       'color09' : ['#d70000', '160'],
-        \       'color10' : ['#d70087', '162'],
-        \       'color11' : ['#8700af', '91'],
-        \       'color12' : ['#d75f00', '166'],
-        \       'color13' : ['#d75f00', '166'],
-        \       'color14' : ['#005faf', '25'],
-        \       'color15' : ['#005f87', '24'],
-        \       'color16' : ['#0087af', '31'],
-        \       'color17' : ['#008700', '28'],
-        \       'cursor_fg' : ['#eeeeee', '255'],
-        \       'cursor_bg' : ['#005f87', '24'],
-        \       'cursorline' : ['#e4e4e4', '254'],
-        \       'cursorcolumn' : ['#e4e4e4', '254'],
-        \       'cursorlinenr_fg' : ['#af5f00', '130'],
-        \       'cursorlinenr_bg' : ['#eeeeee', '255'],
-        \       'popupmenu_fg' : ['#444444', '238'],
-        \       'popupmenu_bg' : ['#d0d0d0', '252'],
-        \       'search_fg' : ['#444444', '238'],
-        \       'search_bg' : ['#ffff5f', '227'],
-        \       'linenumber_fg' : ['#b2b2b2', '249'],
-        \       'linenumber_bg' : ['#eeeeee', '255'],
-        \       'vertsplit_fg' : ['#005f87', '24'],
-        \       'vertsplit_bg' : ['#eeeeee', '255'],
-        \       'statusline_active_fg' : ['#e4e4e4', '254'],
-        \       'statusline_active_bg' : ['#005f87', '24'],
-        \       'statusline_inactive_fg' : ['#444444', '238'],
-        \       'statusline_inactive_bg' : ['#d0d0d0', '252'],
-        \       'todo_fg' : ['#00af5f', '35'],
-        \       'todo_bg' : ['#eeeeee', '255'],
-        \       'error_fg' : ['#af0000', '124'],
-        \       'error_bg' : ['#ffd7ff', '225'],
-        \       'matchparen_bg' : ['#c6c6c6', '251'],
-        \       'matchparen_fg' : ['#005f87', '24'],
-        \       'visual_fg' : ['#eeeeee', '255'],
-        \       'visual_bg' : ['#0087af', '31'],
-        \       'folded_fg' : ['#0087af', '31'],
-        \       'folded_bg' : ['#afd7ff', '153'],
-        \       'wildmenu_fg': ['#444444', '238'],
-        \       'wildmenu_bg': ['#ffff00', '226'],
-        \       'spellbad':   ['#ffafd7', '218'],
-        \       'spellcap':   ['#ffffaf', '229'],
-        \       'spellrare':  ['#afff87', '156'],
-        \       'spelllocal': ['#d7d7ff', '189'],
-        \       'diffadd_fg':    ['#008700', '28'],
-        \       'diffadd_bg':    ['#afffaf', '157'],
-        \       'diffdelete_fg': ['#af0000', '124'],
-        \       'diffdelete_bg': ['#ffd7ff', '225'],
-        \       'difftext_fg':   ['#0087af', '31'],
-        \       'difftext_bg':   ['#ffffd7', '230'],
-        \       'diffchange_fg': ['#444444', '238'],
-        \       'diffchange_bg': ['#ffd787', '222'],
-        \       'tabline_bg':          ['#005f87', '24'],
-        \       'tabline_active_fg':   ['#444444', '238'],
-        \       'tabline_active_bg':   ['#e4e4e4', '254'],
-        \       'tabline_inactive_fg': ['#eeeeee', '255'],
-        \       'tabline_inactive_bg': ['#0087af', '31'],
-        \       'buftabline_bg':          ['#005f87', '24'],
-        \       'buftabline_current_fg':  ['#444444', '238'],
-        \       'buftabline_current_bg':  ['#e4e4e4', '254'],
-        \       'buftabline_active_fg':   ['#eeeeee', '255'],
-        \       'buftabline_active_bg':   ['#005faf', '25'],
-        \       'buftabline_inactive_fg': ['#eeeeee', '255'],
-        \       'buftabline_inactive_bg': ['#0087af', '31']
-        \     }
-        \   }
-
-  " TODO: idea for subtheme options
-  " let s:themes['default'].light.subtheme = {
-  "       \     'alternative' : {
-  "       \         'options' : {
-  "       \           'transparent_background': 1
-  "       \         },
-  "       \         'palette' : {
-  "       \         }
-  "       \     }
-  "       \ }
-
-  let s:themes['default'].dark = {
-        \     'NO_CONVERSION': 1,
-        \     'TEST_256_COLOR_CONSISTENCY' : 1,
-        \     'palette' : {
-        \       'color00' : ['#1c1c1c', '234'],
-        \       'color01' : ['#af005f', '125'],
-        \       'color02' : ['#5faf00', '70'],
-        \       'color03' : ['#d7af5f', '179'],
-        \       'color04' : ['#5fafd7', '74'],
-        \       'color05' : ['#808080', '244'],
-        \       'color06' : ['#d7875f', '173'],
-        \       'color07' : ['#d0d0d0', '252'],
-        \       'color08' : ['#585858', '240'],
-        \       'color09' : ['#5faf5f', '71'],
-        \       'color10' : ['#afd700', '148'],
-        \       'color11' : ['#af87d7', '140'],
-        \       'color12' : ['#ffaf00', '214'],
-        \       'color13' : ['#ff5faf', '205'],
-        \       'color14' : ['#00afaf', '37'],
-        \       'color15' : ['#5f8787', '66'],
-        \       'color16' : ['#5fafd7', '74'],
-        \       'color17' : ['#d7af00', '178'],
-        \       'cursor_fg' : ['#1c1c1c', '234'],
-        \       'cursor_bg' : ['#c6c6c6', '251'],
-        \       'cursorline' : ['#303030', '236'],
-        \       'cursorcolumn' : ['#303030', '236'],
-        \       'cursorlinenr_fg' : ['#ffff00', '226'],
-        \       'cursorlinenr_bg' : ['#1c1c1c', '234'],
-        \       'popupmenu_fg' : ['#c6c6c6', '251'],
-        \       'popupmenu_bg' : ['#303030', '236'],
-        \       'search_fg' : ['#000000', '16'],
-        \       'search_bg' : ['#00875f', '29'],
-        \       'linenumber_fg' : ['#585858', '240'],
-        \       'linenumber_bg' : ['#1c1c1c', '234'],
-        \       'vertsplit_fg' : ['#5f8787', '66'],
-        \       'vertsplit_bg' : ['#1c1c1c', '234'],
-        \       'statusline_active_fg' : ['#1c1c1c', '234'],
-        \       'statusline_active_bg' : ['#5f8787', '66'],
-        \       'statusline_inactive_fg' : ['#bcbcbc', '250'],
-        \       'statusline_inactive_bg' : ['#3a3a3a', '237'],
-        \       'todo_fg' : ['#ff8700', '208'],
-        \       'todo_bg' : ['#1c1c1c', '234'],
-        \       'error_fg' : ['#af005f', '125'],
-        \       'error_bg' : ['#5f0000', '52'],
-        \       'matchparen_bg' : ['#4e4e4e', '239'],
-        \       'matchparen_fg' : ['#c6c6c6', '251'],
-        \       'visual_fg' : ['#000000', '16'],
-        \       'visual_bg' : ['#8787af', '103'],
-        \       'folded_fg' : ['#d787ff', '177'],
-        \       'folded_bg' : ['#5f005f', '53'],
-        \       'wildmenu_fg': ['#1c1c1c', '234'],
-        \       'wildmenu_bg': ['#afd700', '148'],
-        \       'spellbad':   ['#5f0000', '52'],
-        \       'spellcap':   ['#5f005f', '53'],
-        \       'spellrare':  ['#005f00', '22'],
-        \       'spelllocal': ['#00005f', '17'],
-        \       'diffadd_fg':    ['#87d700', '112'],
-        \       'diffadd_bg':    ['#005f00', '22'],
-        \       'diffdelete_fg': ['#af005f', '125'],
-        \       'diffdelete_bg': ['#5f0000', '52'],
-        \       'difftext_fg':   ['#5fffff', '87'],
-        \       'difftext_bg':   ['#008787', '30'],
-        \       'diffchange_fg': ['#d0d0d0', '252'],
-        \       'diffchange_bg': ['#005f5f', '23'],
-        \       'tabline_bg':          ['#262626', '235'],
-        \       'tabline_active_fg':   ['#121212', '233'],
-        \       'tabline_active_bg':   ['#00afaf', '37'],
-        \       'tabline_inactive_fg': ['#bcbcbc', '250'],
-        \       'tabline_inactive_bg': ['#585858', '240'],
-        \       'buftabline_bg':          ['#262626', '235'],
-        \       'buftabline_current_fg':  ['#121212', '233'],
-        \       'buftabline_current_bg':  ['#00afaf', '37'],
-        \       'buftabline_active_fg':   ['#00afaf', '37'],
-        \       'buftabline_active_bg':   ['#585858', '240'],
-        \       'buftabline_inactive_fg': ['#bcbcbc', '250'],
-        \       'buftabline_inactive_bg': ['#585858', '240']
-        \     }
-        \   }
-endfun
-
-" ============================ THEME REGISTER =================================
-
-" Acquire Theme Data: {{{
-
-" Brief: 
-"   Function to get theme information and store in variables for other
-"   functions to use
+" Origin: http://github.com/NLKNguyen/papercolor-theme.git
 "
-" Require:
-"   s:themes    <dictionary>    collection of all theme palettes
-"
-" Require Optionally:
-"   {g:PaperColor_Theme_[s:theme_name]}   <dictionary>  user custom theme palette
-"   g:PaperColor_Theme_Options            <dictionary>  user options
-"
-" Expose:
-"   s:theme_name       <string>     the name of the selected theme 
-"   s:selected_theme   <dictionary> the selected theme object (contains palette, etc.)
-"   s:selected_variant <string>     'light' or 'dark'
-"   s:palette          <dictionary> the palette of selected theme
-"   s:options          <dictionary> user options
-fun! s:acquire_theme_data()
-  
-  " Get theme name: {{{
-  let s:theme_name = 'default'
-
-  if exists("g:PaperColor_Theme") " Users expressed theme preference
-    let lowercase_theme_name = tolower(g:PaperColor_Theme)
-
-    if lowercase_theme_name !=? 'default'
-      let theme_identifier = 'PaperColor_' . lowercase_theme_name
-      let autoload_function = theme_identifier . '#register'
-
-      call {autoload_function}()
-
-      let theme_variable = 'g:' . theme_identifier
-
-      if exists(theme_variable)
-        let s:theme_name = lowercase_theme_name
-        let s:themes[s:theme_name] = {theme_variable}
-      endif
-
-    endif
-
-  endif
-  " }}}
-
-  if s:theme_name ==? 'default'
-    " Either no other theme is specified or they failed to load
-    " Defer loading default theme until now
-    call s:register_default_theme()
-  endif
-
-  let s:selected_theme = s:themes[s:theme_name]
-
-  " Get Theme Variant: either dark or light  {{{
-  let s:selected_variant = 'dark'
-
-  let s:is_dark=(&background == 'dark')
-
-  if s:is_dark
-    if has_key(s:selected_theme, 'dark')
-      let s:selected_variant = 'dark'
-    else " in case the theme only provides the other variant
-      let s:selected_variant = 'light'
-    endif
-
-  else " is light background
-    if has_key(s:selected_theme, 'light')
-      let s:selected_variant = 'light'
-    else " in case the theme only provides the other variant
-      let s:selected_variant = 'dark'
-    endif
-  endif
-
-  let s:palette = s:selected_theme[s:selected_variant].palette
-
-  " Systematic User-Config Options: {{{
-  " Example config in .vimrc
-  " let g:PaperColor_Theme_Options = {
-  "       \   'theme': {
-  "       \     'default': {
-  "       \       'allow_bold': 1,
-  "       \       'allow_italic': 0,
-  "       \       'transparent_background': 1
-  "       \     }
-  "       \   },
-  "       \   'language': {
-  "       \     'python': {
-  "       \       'highlight_builtins' : 1
-  "       \     },
-  "       \     'c': {
-  "       \       'highlight_builtins' : 1
-  "       \     },
-  "       \     'cpp': {
-  "       \       'highlight_standard_library': 1
-  "       \     }
-  "       \   }
-  "       \ }
-  "
-  let s:options = {}
-
-
-  if exists("g:PaperColor_Theme_Options")
-    let s:options = g:PaperColor_Theme_Options
-  endif
-  " }}}
-
-  " }}}
-endfun
-
-
-" }}}
-
-" Identify Color Mode: {{{
-
-fun! s:identify_color_mode()
-  let s:MODE_16_COLOR = 0
-  let s:MODE_256_COLOR = 1
-  let s:MODE_GUI_COLOR = 2
-
-  if has("gui_running")  || has('termguicolors') && &termguicolors || has('nvim') && $NVIM_TUI_ENABLE_TRUE_COLOR
-    let s:mode = s:MODE_GUI_COLOR
-  elseif (&t_Co >= 256)
-    let s:mode = s:MODE_256_COLOR
-  else
-    let s:mode = s:MODE_16_COLOR
-  endif
-endfun
-
-" }}}
-
-" ============================ OPTION HANDLER =================================
-
-" Generate Them Option Variables: {{{
-
-
-fun! s:generate_theme_option_variables()
-  " 0. All possible theme option names must be registered here
-  let l:available_theme_options = [
-        \ 'allow_bold', 
-        \ 'allow_italic', 
-        \ 'transparent_background',
-        \ ]
-
-  " 1. Generate variables and set to default value
-  for l:option in l:available_theme_options
-      let s:{'themeOpt_' . l:option} = 0
-  endfor
-
-  let s:themeOpt_override = {} " special case, this has to be a dictionary
-
-  " 2. Reassign value to the above variables based on theme settings
-
-  " 2.1 In case the theme has top-level options
-  if has_key(s:selected_theme, 'options')
-    let l:theme_options = s:selected_theme['options']
-    for l:opt_name in keys(l:theme_options)
-      let s:{'themeOpt_' . l:opt_name} = l:theme_options[l:opt_name]
-      " echo 's:themeOpt_' . l:opt_name . ' = ' . s:{'themeOpt_' . l:opt_name}
-    endfor
-  endif
-
-  " 2.2 In case the theme has specific variant options
-  if has_key(s:selected_theme[s:selected_variant], 'options')
-    let l:theme_options = s:selected_theme[s:selected_variant]['options']
-    for l:opt_name in keys(l:theme_options)
-      let s:{'themeOpt_' . l:opt_name} = l:theme_options[l:opt_name]
-      " echo 's:themeOpt_' . l:opt_name . ' = ' . s:{'themeOpt_' . l:opt_name}
-    endfor
-  endif
-
-
-  " 3. Reassign value to the above variables which the user customizes
-  " Part of user-config options
-  let s:theme_options = {}
-  if has_key(s:options, 'theme')
-    let s:theme_options = s:options['theme']
-  endif
-  
-  " 3.1 In case user sets for a theme without specifying which variant
-  if has_key(s:theme_options, s:theme_name)
-    let l:theme_options = s:theme_options[s:theme_name]
-    for l:opt_name in keys(l:theme_options)
-      let s:{'themeOpt_' . l:opt_name} = l:theme_options[l:opt_name]
-      " echo 's:themeOpt_' . l:opt_name . ' = ' . s:{'themeOpt_' . l:opt_name}
-    endfor
-  endif
-
-
-  " 3.2 In case user sets for a specific variant of a theme
-  
-  " Create the string that the user might have set for this theme variant
-  " for example, 'default.dark'
-  let l:specific_theme_variant = s:theme_name . '.' . s:selected_variant
-
-  if has_key(s:theme_options, l:specific_theme_variant)
-    let l:theme_options = s:theme_options[l:specific_theme_variant]
-    for l:opt_name in keys(l:theme_options)
-      let s:{'themeOpt_' . l:opt_name} = l:theme_options[l:opt_name]
-      " echo 's:themeOpt_' . l:opt_name . ' = ' . s:{'themeOpt_' . l:opt_name}
-    endfor
-  endif
-
-endfun
-" }}}
-
-" Check If Theme Has Hint: {{{
-"
-" Brief:
-"   Function to Check if the selected theme and variant has a hint
-"
-" Details:
-"   A hint is a known key that has value 1
-"   It is not part of theme design but is used for technical purposes
-"
-" Example:
-"   If a theme has hint 'NO_CONVERSION', then we can assume that every
-"   color value is a complete pair, so we don't have to check.
-
-fun! s:theme_has_hint(hint)
-  return has_key(s:selected_theme[s:selected_variant], a:hint) &&
-        \ s:selected_theme[s:selected_variant][a:hint] == 1
-endfun
-" }}}
-
-" Set Overriding Colors: {{{
-
-fun! s:set_overriding_colors()
-
-  if s:theme_has_hint('NO_CONVERSION')
-    " s:convert_colors will not do anything, so we take care of conversion
-    " for the overriding colors that need to be converted
-
-    if s:mode == s:MODE_GUI_COLOR
-      " if GUI color is not provided, convert from 256 color that must be available
-      if !empty(s:themeOpt_override)
-        call s:load_256_to_GUI_converter()
-      endif
-
-      for l:color in keys(s:themeOpt_override)
-        let l:value = s:themeOpt_override[l:color]
-        if l:value[0] == ''
-          let l:value[0] = s:to_HEX[l:value[1]]
-        endif
-        let s:palette[l:color] = l:value
-      endfor
-
-    elseif s:mode == s:MODE_256_COLOR
-      " if 256 color is not provided, convert from GUI color that must be available
-      if !empty(s:themeOpt_override)
-        call s:load_GUI_to_256_converter()
-      endif
- 
-      for l:color in keys(s:themeOpt_override)
-        let l:value = s:themeOpt_override[l:color]
-        if l:value[1] == ''
-          let l:value[1] = s:to_256(l:value[0])
-        endif
-        let s:palette[l:color] = l:value
-      endfor
-    endif
-
-  else " simply set the colors and let s:convert_colors() take care of conversion
-
-    for l:color in keys(s:themeOpt_override)
-      let s:palette[l:color] = s:themeOpt_override[l:color]
-    endfor
-  endif
-
-endfun
-" }}}
-
-" Generate Language Option Variables: {{{
-
-" Brief:
-"   Function to generate language option variables so that there is no need to
-"   look up from the dictionary every time the option value is checked in the
-"   function s:apply_syntax_highlightings()
-"
-" Require:
-"   s:options <dictionary> user options
-"
-" Require Optionally:
-"   g:PaperColor_Theme_Options  <dictionary>  user option config in .vimrc
-"
-" Expose:
-"   s:langOpt_[LANGUAGE]__[OPTION]  <any>   variables for language options
-"
-" Example: 
-"     g:PaperColor_Theme_Options has something like this:
-"       'language': {
-"       \   'python': {
-"       \     'highlight_builtins': 1
-"       \   }
-"       }
-"    The following variable will be generated:
-"    s:langOpt_python__highlight_builtins = 1
-
-fun! s:generate_language_option_variables()
-  " 0. All possible theme option names must be registered here
-  let l:available_language_options = [
-        \   'c__highlight_builtins',
-        \   'cpp__highlight_standard_library',
-        \   'python__highlight_builtins'
-        \ ]
-
-  " 1. Generate variables and set to default value
-  for l:option in l:available_language_options
-    let s:{'langOpt_' . l:option} = 0
-  endfor
-
-  " Part of user-config options
-  if has_key(s:options, 'language')
-    let l:language_options = s:options['language']
-    " echo l:language_options 
-    for l:lang in keys(l:language_options)
-      let l:options = l:language_options[l:lang]
-      " echo l:lang 
-      " echo l:options
-      for l:option in keys(l:options)
-        let s:{'langOpt_' . l:lang . '__' . l:option} = l:options[l:option]
-        " echo 's:langOpt_' . l:lang . '__' . l:option . ' = ' . l:options[l:option]
-      endfor
-    endfor
-
-  endif
-
-endfun
-" }}}
-
-" =========================== COLOR CONVERTER =================================
-
-fun! s:load_GUI_to_256_converter()
-  " GUI-color To 256-color: {{{
-  " Returns an approximate grey index for the given grey level
-  fun! s:grey_number(x)
-    if &t_Co == 88
-      if a:x < 23
-        return 0
-      elseif a:x < 69
-        return 1
-      elseif a:x < 103
-        return 2
-      elseif a:x < 127
-        return 3
-      elseif a:x < 150
-        return 4
-      elseif a:x < 173
-        return 5
-      elseif a:x < 196
-        return 6
-      elseif a:x < 219
-        return 7
-      elseif a:x < 243
-        return 8
-      else
-        return 9
-      endif
-    else
-      if a:x < 14
-        return 0
-      else
-        let l:n = (a:x - 8) / 10
-        let l:m = (a:x - 8) % 10
-        if l:m < 5
-          return l:n
-        else
-          return l:n + 1
-        endif
-      endif
-    endif
-  endfun
-
-  " Returns the actual grey level represented by the grey index
-  fun! s:grey_level(n)
-    if &t_Co == 88
-      if a:n == 0
-        return 0
-      elseif a:n == 1
-        return 46
-      elseif a:n == 2
-        return 92
-      elseif a:n == 3
-        return 115
-      elseif a:n == 4
-        return 139
-      elseif a:n == 5
-        return 162
-      elseif a:n == 6
-        return 185
-      elseif a:n == 7
-        return 208
-      elseif a:n == 8
-        return 231
-      else
-        return 255
-      endif
-    else
-      if a:n == 0
-        return 0
-      else
-        return 8 + (a:n * 10)
-      endif
-    endif
-  endfun
-
-  " Returns the palette index for the given grey index
-  fun! s:grey_colour(n)
-    if &t_Co == 88
-      if a:n == 0
-        return 16
-      elseif a:n == 9
-        return 79
-      else
-        return 79 + a:n
-      endif
-    else
-      if a:n == 0
-        return 16
-      elseif a:n == 25
-        return 231
-      else
-        return 231 + a:n
-      endif
-    endif
-  endfun
-
-  " Returns an approximate colour index for the given colour level
-  fun! s:rgb_number(x)
-    if &t_Co == 88
-      if a:x < 69
-        return 0
-      elseif a:x < 172
-        return 1
-      elseif a:x < 230
-        return 2
-      else
-        return 3
-      endif
-    else
-      if a:x < 75
-        return 0
-      else
-        let l:n = (a:x - 55) / 40
-        let l:m = (a:x - 55) % 40
-        if l:m < 20
-          return l:n
-        else
-          return l:n + 1
-        endif
-      endif
-    endif
-  endfun
-
-  " Returns the actual colour level for the given colour index
-  fun! s:rgb_level(n)
-    if &t_Co == 88
-      if a:n == 0
-        return 0
-      elseif a:n == 1
-        return 139
-      elseif a:n == 2
-        return 205
-      else
-        return 255
-      endif
-    else
-      if a:n == 0
-        return 0
-      else
-        return 55 + (a:n * 40)
-      endif
-    endif
-  endfun
-
-  " Returns the palette index for the given R/G/B colour indices
-  fun! s:rgb_colour(x, y, z)
-    if &t_Co == 88
-      return 16 + (a:x * 16) + (a:y * 4) + a:z
-    else
-      return 16 + (a:x * 36) + (a:y * 6) + a:z
-    endif
-  endfun
-
-  " Returns the palette index to approximate the given R/G/B colour levels
-  fun! s:colour(r, g, b)
-    " Get the closest grey
-    let l:gx = s:grey_number(a:r)
-    let l:gy = s:grey_number(a:g)
-    let l:gz = s:grey_number(a:b)
-
-    " Get the closest colour
-    let l:x = s:rgb_number(a:r)
-    let l:y = s:rgb_number(a:g)
-    let l:z = s:rgb_number(a:b)
-
-    if l:gx == l:gy && l:gy == l:gz
-      " There are two possibilities
-      let l:dgr = s:grey_level(l:gx) - a:r
-      let l:dgg = s:grey_level(l:gy) - a:g
-      let l:dgb = s:grey_level(l:gz) - a:b
-      let l:dgrey = (l:dgr * l:dgr) + (l:dgg * l:dgg) + (l:dgb * l:dgb)
-      let l:dr = s:rgb_level(l:gx) - a:r
-      let l:dg = s:rgb_level(l:gy) - a:g
-      let l:db = s:rgb_level(l:gz) - a:b
-      let l:drgb = (l:dr * l:dr) + (l:dg * l:dg) + (l:db * l:db)
-      if l:dgrey < l:drgb
-        " Use the grey
-        return s:grey_colour(l:gx)
-      else
-        " Use the colour
-        return s:rgb_colour(l:x, l:y, l:z)
-      endif
-    else
-      " Only one possibility
-      return s:rgb_colour(l:x, l:y, l:z)
-    endif
-  endfun
-
-  " Returns the palette index to approximate the '#rrggbb' hex string
-  fun! s:to_256(rgb)
-    let l:r = ("0x" . strpart(a:rgb, 1, 2)) + 0
-    let l:g = ("0x" . strpart(a:rgb, 3, 2)) + 0
-    let l:b = ("0x" . strpart(a:rgb, 5, 2)) + 0
-
-    return s:colour(l:r, l:g, l:b)
-  endfun
-
-
-
-  " }}}
-endfun
-
-fun! s:load_256_to_GUI_converter()
-" 256-color To GUI-color: {{{
-
-""" Xterm 256 color dictionary
-" See: http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
-"
-let s:to_HEX = {
-      \ '00':  '#000000',  '01':  '#800000',  '02':  '#008000',  '03':  '#808000',  '04':  '#000080',
-      \ '05':  '#800080',  '06':  '#008080',  '07':  '#c0c0c0',  '08':  '#808080',  '09':  '#ff0000',
-      \ '10':  '#00ff00',  '11':  '#ffff00',  '12':  '#0000ff',  '13':  '#ff00ff',  '14':  '#00ffff',
-      \ '15':  '#ffffff',  '16':  '#000000',  '17':  '#00005f',  '18':  '#000087',  '19':  '#0000af',
-      \ '20':  '#0000d7',  '21':  '#0000ff',  '22':  '#005f00',  '23':  '#005f5f',  '24':  '#005f87',
-      \ '25':  '#005faf',  '26':  '#005fd7',  '27':  '#005fff',  '28':  '#008700',  '29':  '#00875f',
-      \ '30':  '#008787',  '31':  '#0087af',  '32':  '#0087d7',  '33':  '#0087ff',  '34':  '#00af00',
-      \ '35':  '#00af5f',  '36':  '#00af87',  '37':  '#00afaf',  '38':  '#00afd7',  '39':  '#00afff',
-      \ '40':  '#00d700',  '41':  '#00d75f',  '42':  '#00d787',  '43':  '#00d7af',  '44':  '#00d7d7',
-      \ '45':  '#00d7ff',  '46':  '#00ff00',  '47':  '#00ff5f',  '48':  '#00ff87',  '49':  '#00ffaf',
-      \ '50':  '#00ffd7',  '51':  '#00ffff',  '52':  '#5f0000',  '53':  '#5f005f',  '54':  '#5f0087',
-      \ '55':  '#5f00af',  '56':  '#5f00d7',  '57':  '#5f00ff',  '58':  '#5f5f00',  '59':  '#5f5f5f',
-      \ '60':  '#5f5f87',  '61':  '#5f5faf',  '62':  '#5f5fd7',  '63':  '#5f5fff',  '64':  '#5f8700',
-      \ '65':  '#5f875f',  '66':  '#5f8787',  '67':  '#5f87af',  '68':  '#5f87d7',  '69':  '#5f87ff',
-      \ '70':  '#5faf00',  '71':  '#5faf5f',  '72':  '#5faf87',  '73':  '#5fafaf',  '74':  '#5fafd7',
-      \ '75':  '#5fafff',  '76':  '#5fd700',  '77':  '#5fd75f',  '78':  '#5fd787',  '79':  '#5fd7af',
-      \ '80':  '#5fd7d7',  '81':  '#5fd7ff',  '82':  '#5fff00',  '83':  '#5fff5f',  '84':  '#5fff87',
-      \ '85':  '#5fffaf',  '86':  '#5fffd7',  '87':  '#5fffff',  '88':  '#870000',  '89':  '#87005f',
-      \ '90':  '#870087',  '91':  '#8700af',  '92':  '#8700d7',  '93':  '#8700ff',  '94':  '#875f00',
-      \ '95':  '#875f5f',  '96':  '#875f87',  '97':  '#875faf',  '98':  '#875fd7',  '99':  '#875fff',
-      \ '100': '#878700',  '101': '#87875f',  '102': '#878787',  '103': '#8787af',  '104': '#8787d7',
-      \ '105': '#8787ff',  '106': '#87af00',  '107': '#87af5f',  '108': '#87af87',  '109': '#87afaf',
-      \ '110': '#87afd7',  '111': '#87afff',  '112': '#87d700',  '113': '#87d75f',  '114': '#87d787',
-      \ '115': '#87d7af',  '116': '#87d7d7',  '117': '#87d7ff',  '118': '#87ff00',  '119': '#87ff5f',
-      \ '120': '#87ff87',  '121': '#87ffaf',  '122': '#87ffd7',  '123': '#87ffff',  '124': '#af0000',
-      \ '125': '#af005f',  '126': '#af0087',  '127': '#af00af',  '128': '#af00d7',  '129': '#af00ff',
-      \ '130': '#af5f00',  '131': '#af5f5f',  '132': '#af5f87',  '133': '#af5faf',  '134': '#af5fd7',
-      \ '135': '#af5fff',  '136': '#af8700',  '137': '#af875f',  '138': '#af8787',  '139': '#af87af',
-      \ '140': '#af87d7',  '141': '#af87ff',  '142': '#afaf00',  '143': '#afaf5f',  '144': '#afaf87',
-      \ '145': '#afafaf',  '146': '#afafd7',  '147': '#afafff',  '148': '#afd700',  '149': '#afd75f',
-      \ '150': '#afd787',  '151': '#afd7af',  '152': '#afd7d7',  '153': '#afd7ff',  '154': '#afff00',
-      \ '155': '#afff5f',  '156': '#afff87',  '157': '#afffaf',  '158': '#afffd7',  '159': '#afffff',
-      \ '160': '#d70000',  '161': '#d7005f',  '162': '#d70087',  '163': '#d700af',  '164': '#d700d7',
-      \ '165': '#d700ff',  '166': '#d75f00',  '167': '#d75f5f',  '168': '#d75f87',  '169': '#d75faf',
-      \ '170': '#d75fd7',  '171': '#d75fff',  '172': '#d78700',  '173': '#d7875f',  '174': '#d78787',
-      \ '175': '#d787af',  '176': '#d787d7',  '177': '#d787ff',  '178': '#d7af00',  '179': '#d7af5f',
-      \ '180': '#d7af87',  '181': '#d7afaf',  '182': '#d7afd7',  '183': '#d7afff',  '184': '#d7d700',
-      \ '185': '#d7d75f',  '186': '#d7d787',  '187': '#d7d7af',  '188': '#d7d7d7',  '189': '#d7d7ff',
-      \ '190': '#d7ff00',  '191': '#d7ff5f',  '192': '#d7ff87',  '193': '#d7ffaf',  '194': '#d7ffd7',
-      \ '195': '#d7ffff',  '196': '#ff0000',  '197': '#ff005f',  '198': '#ff0087',  '199': '#ff00af',
-      \ '200': '#ff00d7',  '201': '#ff00ff',  '202': '#ff5f00',  '203': '#ff5f5f',  '204': '#ff5f87',
-      \ '205': '#ff5faf',  '206': '#ff5fd7',  '207': '#ff5fff',  '208': '#ff8700',  '209': '#ff875f',
-      \ '210': '#ff8787',  '211': '#ff87af',  '212': '#ff87d7',  '213': '#ff87ff',  '214': '#ffaf00',
-      \ '215': '#ffaf5f',  '216': '#ffaf87',  '217': '#ffafaf',  '218': '#ffafd7',  '219': '#ffafff',
-      \ '220': '#ffd700',  '221': '#ffd75f',  '222': '#ffd787',  '223': '#ffd7af',  '224': '#ffd7d7',
-      \ '225': '#ffd7ff',  '226': '#ffff00',  '227': '#ffff5f',  '228': '#ffff87',  '229': '#ffffaf',
-      \ '230': '#ffffd7',  '231': '#ffffff',  '232': '#080808',  '233': '#121212',  '234': '#1c1c1c',
-      \ '235': '#262626',  '236': '#303030',  '237': '#3a3a3a',  '238': '#444444',  '239': '#4e4e4e',
-      \ '240': '#585858',  '241': '#626262',  '242': '#6c6c6c',  '243': '#767676',  '244': '#808080',
-      \ '245': '#8a8a8a',  '246': '#949494',  '247': '#9e9e9e',  '248': '#a8a8a8',  '249': '#b2b2b2',
-      \ '250': '#bcbcbc',  '251': '#c6c6c6',  '252': '#d0d0d0',  '253': '#dadada',  '254': '#e4e4e4',
-      \ '255': '#eeeeee' }
-
-" }}}
-endfun
-
-" ========================== ENVIRONMENT ADAPTER ==============================
-
-" Set Format Attributes: {{{
-
-fun! s:set_format_attributes()
-  " These are the default
-  if s:mode == s:MODE_GUI_COLOR
-    let s:ft_bold    = " gui=bold "
-    let s:ft_none    = " gui=none "
-    let s:ft_reverse = " gui=reverse "
-    let s:ft_italic  = " gui=italic "
-    let s:ft_italic_bold = " gui=italic,bold "
-  elseif s:mode == s:MODE_256_COLOR
-    let s:ft_bold    = " cterm=bold "
-    let s:ft_none    = " cterm=none "
-    let s:ft_reverse = " cterm=reverse "
-    let s:ft_italic  = " cterm=italic "
-    let s:ft_italic_bold = " cterm=italic,bold "
-  else
-    let s:ft_bold    = ""
-    let s:ft_none    = " cterm=none "
-    let s:ft_reverse = " cterm=reverse "
-    let s:ft_italic  = ""
-    let s:ft_italic_bold = ""
-  endif
-
-  " Unless instructed otherwise either by theme setting or user overriding
-
-  if s:themeOpt_allow_bold == 0
-    let s:ft_bold    = ""
-  endif
-  if s:themeOpt_allow_italic == 0
-    let s:ft_italic = ""
-    let s:ft_italic_bold = s:ft_bold
-  endif
-
-endfun
-
-" }}}
-
-" Convert Colors If Needed: {{{
-fun! s:convert_colors()
-  if s:theme_has_hint('NO_CONVERSION')
-    return
-  endif
-
-  if s:mode == s:MODE_GUI_COLOR
-    " if GUI color is not provided, convert from 256 color that must be available
-    call s:load_256_to_GUI_converter()
-
-    for l:color in keys(s:palette)
-      let l:value = s:palette[l:color]
-      if l:value[0] == ''
-        let l:value[0] = s:to_HEX[l:value[1]]
-      endif
-      let s:palette[l:color] = l:value
-    endfor
-
-  elseif s:mode == s:MODE_256_COLOR
-    " if 256 color is not provided, convert from GUI color that must be available
-    call s:load_GUI_to_256_converter()
-
-    for l:color in keys(s:palette)
-      let l:value = s:palette[l:color]
-      if l:value[1] == ''
-        let l:value[1] = s:to_256(l:value[0])
-      endif
-      let s:palette[l:color] = l:value
-    endfor
-  endif
-  " otherwise use the terminal colors and none of the theme colors are used
-endfun
-
-" }}}
-
-" ============================ COLOR POPULARIZER ===============================
-
-" Set Color Variables: {{{
-fun! s:set_color_variables()
-
-  " Helper: {{{
-  " -------
-  " Function to dynamically generate variables that store the color strings
-  " for setting highlighting. Each color name will have 2 variables with prefix
-  " s:fg_ and s:bg_. For example:
-  " if a:color_name is 'Normal' and a:color_value is ['#000000', '0', 'Black'],
-  " the following 2 variables will be created:
-  "   s:fg_Normal that stores the string ' guifg=#000000 '
-  "   s:bg_Normal that stores the string ' guibg=#000000 '
-  " Depending on the color mode, ctermfg and ctermbg will be either 0 or Black
-  "
-  " Rationale:
-  " The whole purpose is for speed. We generate these ahead of time so that we
-  " don't have to do look up or do any if-branch when we set the highlightings.
-  "
-  " Furthermore, multiple function definitions for each mode actually reduces
-  " the need for multiple if-branches inside a single function. This is not
-  " pretty, but Vim Script is slow, so reducing if-branches in function that is
-  " often called helps speeding things up quite a bit. Think of this like macro.
-  "
-  " If you are familiar with the old code base (v0.9 and ealier), this way of
-  " generate variables dramatically reduces the loading speed.
-  " None of previous optimization tricks gets anywhere near this.
-  if s:mode == s:MODE_GUI_COLOR
-    fun! s:create_color_variables(color_name, rich_color, term_color)
-      let {'s:fg_' . a:color_name} = ' guifg=' . a:rich_color[0] . ' '
-      let {'s:bg_' . a:color_name} = ' guibg=' . a:rich_color[0] . ' '
-    endfun
-  elseif s:mode == s:MODE_256_COLOR
-    fun! s:create_color_variables(color_name, rich_color, term_color)
-      let {'s:fg_' . a:color_name} = ' ctermfg=' . a:rich_color[1] . ' '
-      let {'s:bg_' . a:color_name} = ' ctermbg=' . a:rich_color[1] . ' '
-    endfun
-  else
-    fun! s:create_color_variables(color_name, rich_color, term_color)
-      let {'s:fg_' . a:color_name} = ' ctermfg=' . a:term_color . ' '
-      let {'s:bg_' . a:color_name} = ' ctermbg=' . a:term_color . ' '
-    endfun
-  endif
-  " }}}
-
-  " Color value format: Array [<GUI COLOR/HEX >, <256-Base>, <16-Base>]
-  " 16-Base is terminal's native color palette that can be alternated through
-  " the terminal settings. The 16-color names are according to `:h cterm-colors`
-
-  " BASIC COLORS:
-  " color00-15 are required by all themes.
-  " These are also how the terminal color palette for the target theme should be.
-  " See README for theme design guideline
-  "
-  " An example format of the below variable's value: ['#262626', '234', 'Black']
-  " Where the 1st value is HEX color for GUI Vim, 2nd value is for 256-color terminal,
-  " and the color name on the right is for 16-color terminal (the actual terminal colors
-  " can be different from what the color names suggest). See :h cterm-colors
-  "
-  " Depending on the provided color palette and current Vim, the 1st and 2nd
-  " parameter might not exist, for example, on 16-color terminal, the variables below
-  " only store the color names to use the terminal color palette which is the only
-  " thing available therefore no need for GUI-color or 256-color.
-
-  let color00 = get(s:palette, 'color00')
-  let color01 = get(s:palette, 'color01')
-  let color02 = get(s:palette, 'color02')
-  let color03 = get(s:palette, 'color03')
-  let color04 = get(s:palette, 'color04')
-  let color05 = get(s:palette, 'color05')
-  let color06 = get(s:palette, 'color06')
-  let color07 = get(s:palette, 'color07')
-  let color08 = get(s:palette, 'color08')
-  let color09 = get(s:palette, 'color09')
-  let color10 = get(s:palette, 'color10')
-  let color11 = get(s:palette, 'color11')
-  let color12 = get(s:palette, 'color12')
-  let color13 = get(s:palette, 'color13')
-  let color14 = get(s:palette, 'color14')
-  let color15 = get(s:palette, 'color15')
-
-  call s:create_color_variables('background', color00 , 'Black')
-  call s:create_color_variables('negative',   color01 , 'DarkRed')
-  call s:create_color_variables('positive',   color02 , 'DarkGreen')
-  call s:create_color_variables('olive',      color03 , 'DarkYellow') " string
-  call s:create_color_variables('neutral',    color04 , 'DarkBlue')
-  call s:create_color_variables('comment',    color05 , 'DarkMagenta')
-  call s:create_color_variables('navy',       color06 , 'DarkCyan') " storageclass
-  call s:create_color_variables('foreground', color07 , 'LightGray')
-
-  call s:create_color_variables('nontext',   color08 , 'DarkGray')
-  call s:create_color_variables('red',       color09 , 'LightRed') " import / try/catch
-  call s:create_color_variables('pink',      color10 , 'LightGreen') " statement, type
-  call s:create_color_variables('purple',    color11 , 'LightYellow') " if / conditional
-  call s:create_color_variables('accent',    color12 , 'LightBlue')
-  call s:create_color_variables('orange',    color13 , 'LightMagenta') " number
-  call s:create_color_variables('blue',      color14 , 'LightCyan') " other keyword
-  call s:create_color_variables('highlight', color15 , 'White')
-
-  " Note: special case for FoldColumn group. I want to get rid of this case.
-  call s:create_color_variables('transparent', [color00[0], 'none'], 'none')
-
-  " EXTENDED COLORS:
-  " From here on, all colors are optional and must have default values (3rd parameter of the
-  " `get` command) that point to the above basic colors in case the target theme doesn't
-  " provide the extended colors. The default values should be reasonably sensible.
-  " The terminal color must be provided also.
-
-  call s:create_color_variables('aqua',  get(s:palette, 'color16', color14) , 'LightCyan')
-  call s:create_color_variables('green', get(s:palette, 'color17', color13) , 'LightMagenta')
-  call s:create_color_variables('wine',  get(s:palette, 'color18', color11) , 'LightYellow')
-
-  " LineNumber: when set number
-  call s:create_color_variables('linenumber_fg', get(s:palette, 'linenumber_fg', color08) , 'DarkGray')
-  call s:create_color_variables('linenumber_bg', get(s:palette, 'linenumber_bg', color00) , 'Black')
-
-  " Vertical Split: when there are more than 1 window side by side, ex: <C-W><C-V>
-  call s:create_color_variables('vertsplit_fg', get(s:palette, 'vertsplit_fg', color15) , 'White')
-  call s:create_color_variables('vertsplit_bg', get(s:palette, 'vertsplit_bg', color00) , 'Black')
-
-  " Statusline: when set status=2
-  call s:create_color_variables('statusline_active_fg', get(s:palette, 'statusline_active_fg', color00) , 'Black')
-  call s:create_color_variables('statusline_active_bg', get(s:palette, 'statusline_active_bg', color15) , 'White')
-  call s:create_color_variables('statusline_inactive_fg', get(s:palette, 'statusline_inactive_fg', color07) , 'LightGray')
-  call s:create_color_variables('statusline_inactive_bg', get(s:palette, 'statusline_inactive_bg', color08) , 'DarkGray')
-
-
-  " Cursor: in normal mode
-  call s:create_color_variables('cursor_fg', get(s:palette, 'cursor_fg', color00) , 'Black')
-  call s:create_color_variables('cursor_bg', get(s:palette, 'cursor_bg', color07) , 'LightGray')
-
-  call s:create_color_variables('cursorline', get(s:palette, 'cursorline', color00) , 'Black')
-
-  " CursorColumn: when set cursorcolumn
-  call s:create_color_variables('cursorcolumn', get(s:palette, 'cursorcolumn', color00) , 'Black')
-
-  " CursorLine Number: when set cursorline number
-  call s:create_color_variables('cursorlinenr_fg', get(s:palette, 'cursorlinenr_fg', color13) , 'LightMagenta')
-  call s:create_color_variables('cursorlinenr_bg', get(s:palette, 'cursorlinenr_bg', color00) , 'Black')
-
-  " Popup Menu: when <C-X><C-N> for autocomplete
-  call s:create_color_variables('popupmenu_fg', get(s:palette, 'popupmenu_fg', color07) , 'LightGray')
-  call s:create_color_variables('popupmenu_bg', get(s:palette, 'popupmenu_bg', color08) , 'DarkGray') " TODO: double check this, might resolve an issue
-
-  " Search: ex: when * on a word
-  call s:create_color_variables('search_fg', get(s:palette, 'search_fg', color00) , 'Black')
-  call s:create_color_variables('search_bg', get(s:palette, 'search_bg', color15) , 'Yellow')
-
-  " Todo: ex: TODO
-  call s:create_color_variables('todo_fg', get(s:palette, 'todo_fg', color05) , 'LightYellow')
-  call s:create_color_variables('todo_bg', get(s:palette, 'todo_bg', color00) , 'Black')
-
-  " Error: ex: turn spell on and have invalid words
-  call s:create_color_variables('error_fg', get(s:palette, 'error_fg', color01) , 'DarkRed')
-  call s:create_color_variables('error_bg', get(s:palette, 'error_bg', color00) , 'Black')
-
-  " Match Parenthesis: selecting an opening/closing pair and the other one will be highlighted
-  call s:create_color_variables('matchparen_fg', get(s:palette, 'matchparen_fg', color00) , 'LightMagenta')
-  call s:create_color_variables('matchparen_bg', get(s:palette, 'matchparen_bg', color05) , 'Black')
-
-  " Visual:
-  call s:create_color_variables('visual_fg', get(s:palette, 'visual_fg', color08) , 'Black')
-  call s:create_color_variables('visual_bg', get(s:palette, 'visual_bg', color07) , 'White')
-
-  " Folded:
-  call s:create_color_variables('folded_fg', get(s:palette, 'folded_fg', color00) , 'Black')
-  call s:create_color_variables('folded_bg', get(s:palette, 'folded_bg', color05) , 'DarkYellow')
-
-  " WildMenu: Autocomplete command, ex: :color <tab><tab>
-  call s:create_color_variables('wildmenu_fg', get(s:palette, 'wildmenu_fg', color00) , 'Black')
-  call s:create_color_variables('wildmenu_bg', get(s:palette, 'wildmenu_bg', color06) , 'LightGray')
-
-  " Spelling: when spell on and there are spelling problems like this for example: papercolor. a vim color scheme
-  call s:create_color_variables('spellbad', get(s:palette, 'spellbad', color04) , 'DarkRed')
-  call s:create_color_variables('spellcap', get(s:palette, 'spellcap', color05) , 'DarkMagenta')
-  call s:create_color_variables('spellrare', get(s:palette, 'spellrare', color06) , 'DarkYellow')
-  call s:create_color_variables('spelllocal', get(s:palette, 'spelllocal', color01) , 'DarkBlue')
-
-  " Diff:
-  call s:create_color_variables('diffadd_fg', get(s:palette, 'diffadd_fg', color00) , 'Black')
-  call s:create_color_variables('diffadd_bg', get(s:palette, 'diffadd_bg', color02) , 'DarkGreen')
-
-  call s:create_color_variables('diffdelete_fg', get(s:palette, 'diffdelete_fg', color00) , 'Black')
-  call s:create_color_variables('diffdelete_bg', get(s:palette, 'diffdelete_bg', color04) , 'DarkRed')
-
-  call s:create_color_variables('difftext_fg', get(s:palette, 'difftext_fg', color00) , 'Black')
-  call s:create_color_variables('difftext_bg', get(s:palette, 'difftext_bg', color06) , 'DarkYellow')
-
-  call s:create_color_variables('diffchange_fg', get(s:palette, 'diffchange_fg', color00) , 'Black')
-  call s:create_color_variables('diffchange_bg', get(s:palette, 'diffchange_bg', color14) , 'LightYellow')
-
-  " Tabline: when having tabs, ex: :tabnew
-  call s:create_color_variables('tabline_bg',          get(s:palette, 'tabline_bg',          color00) , 'Black')
-  call s:create_color_variables('tabline_active_fg',   get(s:palette, 'tabline_active_fg',   color07) , 'LightGray')
-  call s:create_color_variables('tabline_active_bg',   get(s:palette, 'tabline_active_bg',   color00) , 'Black')
-  call s:create_color_variables('tabline_inactive_fg', get(s:palette, 'tabline_inactive_fg', color07) , 'Black')
-  call s:create_color_variables('tabline_inactive_bg', get(s:palette, 'tabline_inactive_bg', color08) , 'DarkMagenta')
-
-  " Plugin: BufTabLine https://github.com/ap/vim-buftabline
-  call s:create_color_variables('buftabline_bg',          get(s:palette, 'buftabline_bg',          color00) , 'Black')
-  call s:create_color_variables('buftabline_current_fg',  get(s:palette, 'buftabline_current_fg',  color07) , 'LightGray')
-  call s:create_color_variables('buftabline_current_bg',  get(s:palette, 'buftabline_current_bg',  color05) , 'DarkMagenta')
-  call s:create_color_variables('buftabline_active_fg',   get(s:palette, 'buftabline_active_fg',   color07) , 'LightGray')
-  call s:create_color_variables('buftabline_active_bg',   get(s:palette, 'buftabline_active_bg',   color12) , 'LightBlue')
-  call s:create_color_variables('buftabline_inactive_fg', get(s:palette, 'buftabline_inactive_fg', color07) , 'LightGray')
-  call s:create_color_variables('buftabline_inactive_bg', get(s:palette, 'buftabline_inactive_bg', color00) , 'Black')
-
-  " Neovim terminal colors https://neovim.io/doc/user/nvim_terminal_emulator.html#nvim-terminal-emulator-configuration
-  " TODO: Fix this
-  let g:terminal_color_0  = color00[0]
-  let g:terminal_color_1  = color01[0]
-  let g:terminal_color_2  = color02[0]
-  let g:terminal_color_3  = color03[0]
-  let g:terminal_color_4  = color04[0]
-  let g:terminal_color_5  = color05[0]
-  let g:terminal_color_6  = color06[0]
-  let g:terminal_color_7  = color07[0]
-  let g:terminal_color_8  = color08[0]
-  let g:terminal_color_9  = color09[0]
-  let g:terminal_color_10 = color10[0]
-  let g:terminal_color_11 = color11[0]
-  let g:terminal_color_12 = color12[0]
-  let g:terminal_color_13 = color13[0]
-  let g:terminal_color_14 = color14[0]
-  let g:terminal_color_15 = color15[0]
-
-endfun
-" }}}
-
-" Apply Syntax Highlightings: {{{
-
-fun! s:apply_syntax_highlightings()
-
-  if s:themeOpt_transparent_background
-    exec 'hi Normal' . s:fg_foreground
-    " Switching between dark & light variant through `set background`
-    " NOTE: Handle background switching right after `Normal` group because of
-    " God-know-why reason. Not doing this way had caused issue before
-    if s:is_dark " DARK VARIANT
-      set background=dark
-    else " LIGHT VARIANT
-      set background=light
-    endif
-
-    exec 'hi NonText' . s:fg_nontext
-    exec 'hi LineNr' . s:fg_linenumber_fg
-    exec 'hi Conceal' . s:fg_linenumber_fg
-    exec 'hi VertSplit' . s:fg_vertsplit_fg . s:ft_none
-    exec 'hi FoldColumn' . s:fg_folded_fg . s:bg_transparent . s:ft_none
-  else
-    exec 'hi Normal' . s:fg_foreground . s:bg_background
-    " Switching between dark & light variant through `set background`
-    if s:is_dark " DARK VARIANT
-      set background=dark
-    else " LIGHT VARIANT
-      set background=light
-    endif
-
-    exec 'hi NonText' . s:fg_nontext . s:bg_background
-    exec 'hi LineNr' . s:fg_linenumber_fg . s:bg_linenumber_bg
-    exec 'hi Conceal' . s:fg_linenumber_fg . s:bg_linenumber_bg
-    exec 'hi VertSplit' . s:fg_vertsplit_bg . s:bg_vertsplit_fg
-    exec 'hi FoldColumn' . s:fg_folded_fg . s:bg_background . s:ft_none
-  endif
-
-  exec 'hi Cursor' . s:fg_cursor_fg . s:bg_cursor_bg
-  exec 'hi SpecialKey' . s:fg_nontext
-  exec 'hi Search' . s:fg_search_fg . s:bg_search_bg
-  exec 'hi StatusLine' . s:fg_statusline_active_bg . s:bg_statusline_active_fg
-  exec 'hi StatusLineNC' . s:fg_statusline_inactive_bg . s:bg_statusline_inactive_fg
-  exec 'hi Visual' . s:fg_visual_fg . s:bg_visual_bg
-  exec 'hi Directory' . s:fg_blue
-  exec 'hi ModeMsg' . s:fg_olive
-  exec 'hi MoreMsg' . s:fg_olive
-  exec 'hi Question' . s:fg_olive
-  exec 'hi WarningMsg' . s:fg_pink
-  exec 'hi MatchParen' . s:fg_matchparen_fg . s:bg_matchparen_bg
-  exec 'hi Folded' . s:fg_folded_fg . s:bg_folded_bg
-  exec 'hi WildMenu' . s:fg_wildmenu_fg . s:bg_wildmenu_bg . s:ft_bold
-
-  if version >= 700
-    exec 'hi CursorLine'  . s:bg_cursorline . s:ft_none
-    if s:mode == s:MODE_16_COLOR
-      exec 'hi CursorLineNr' . s:fg_cursorlinenr_fg . s:bg_cursorlinenr_bg
-    else
-      exec 'hi CursorLineNr' . s:fg_cursorlinenr_fg . s:bg_cursorlinenr_bg . s:ft_none
-    endif
-    exec 'hi CursorColumn'  . s:bg_cursorcolumn . s:ft_none
-    exec 'hi PMenu' . s:fg_popupmenu_fg . s:bg_popupmenu_bg . s:ft_none
-    exec 'hi PMenuSel' . s:fg_popupmenu_fg . s:bg_popupmenu_bg . s:ft_reverse
-    if s:themeOpt_transparent_background
-      exec 'hi SignColumn' . s:fg_green . s:ft_none
-    else
-      exec 'hi SignColumn' . s:fg_green . s:bg_background . s:ft_none
-    endif
-  end
-  if version >= 703
-    exec 'hi ColorColumn'  . s:bg_cursorcolumn . s:ft_none
-  end
-
-  exec 'hi TabLine' . s:fg_tabline_inactive_fg . s:bg_tabline_inactive_bg . s:ft_none
-  exec 'hi TabLineFill' . s:fg_tabline_bg . s:bg_tabline_bg . s:ft_none
-  exec 'hi TabLineSel' . s:fg_tabline_active_fg . s:bg_tabline_active_bg . s:ft_none
-
-  exec 'hi BufTabLineCurrent' . s:fg_buftabline_current_fg . s:bg_buftabline_current_bg . s:ft_none
-  exec 'hi BufTabLineActive' . s:fg_buftabline_active_fg . s:bg_buftabline_active_bg . s:ft_none
-  exec 'hi BufTabLineHidden' . s:fg_buftabline_inactive_fg . s:bg_buftabline_inactive_bg . s:ft_none
-  exec 'hi BufTabLineFill'  . s:bg_buftabline_bg . s:ft_none
-
-  " Standard Group Highlighting:
-  exec 'hi Comment' . s:fg_comment . s:ft_italic
-
-  exec 'hi Constant' . s:fg_orange
-  exec 'hi String' . s:fg_olive
-  exec 'hi Character' . s:fg_olive
-  exec 'hi Number' . s:fg_orange
-  exec 'hi Boolean' . s:fg_green . s:ft_bold
-  exec 'hi Float' . s:fg_orange
-
-  exec 'hi Identifier' . s:fg_navy
-  exec 'hi Function' . s:fg_foreground
-
-  exec 'hi Statement' . s:fg_pink . s:ft_none
-  exec 'hi Conditional' . s:fg_purple . s:ft_bold
-  exec 'hi Repeat' . s:fg_purple . s:ft_bold
-  exec 'hi Label' . s:fg_blue
-  exec 'hi Operator' . s:fg_aqua . s:ft_none
-  exec 'hi Keyword' . s:fg_blue
-  exec 'hi Exception' . s:fg_red
-
-  exec 'hi PreProc' . s:fg_blue
-  exec 'hi Include' . s:fg_red
-  exec 'hi Define' . s:fg_blue
-  exec 'hi Macro' . s:fg_blue
-  exec 'hi PreCondit' . s:fg_aqua
-
-  exec 'hi Type' . s:fg_pink . s:ft_bold
-  exec 'hi StorageClass' . s:fg_navy . s:ft_bold
-  exec 'hi Structure' . s:fg_blue . s:ft_bold
-  exec 'hi Typedef' . s:fg_pink . s:ft_bold
-
-  exec 'hi Special' . s:fg_foreground
-  exec 'hi SpecialChar' . s:fg_foreground
-  exec 'hi Tag' . s:fg_green
-  exec 'hi Delimiter' . s:fg_aqua
-  exec 'hi SpecialComment' . s:fg_comment . s:ft_bold
-  exec 'hi Debug' . s:fg_orange
-
-  exec 'hi Error' . s:fg_error_fg . s:bg_error_bg
-  exec 'hi Todo' . s:fg_todo_fg . s:bg_todo_bg . s:ft_bold
-
-  exec 'hi Title' . s:fg_comment
-  exec 'hi Global' . s:fg_blue
-
-
-  " Extension {{{
-  " VimL Highlighting
-  exec 'hi vimCommand' . s:fg_pink
-  exec 'hi vimVar' . s:fg_navy
-  exec 'hi vimFuncKey' . s:fg_pink
-  exec 'hi vimFunction' . s:fg_blue . s:ft_bold
-  exec 'hi vimNotFunc' . s:fg_pink
-  exec 'hi vimMap' . s:fg_red
-  exec 'hi vimAutoEvent' . s:fg_aqua . s:ft_bold
-  exec 'hi vimMapModKey' . s:fg_aqua
-  exec 'hi vimFuncName' . s:fg_purple
-  exec 'hi vimIsCommand' . s:fg_foreground
-  exec 'hi vimFuncVar' . s:fg_aqua
-  exec 'hi vimLet' . s:fg_red
-  exec 'hi vimContinue' . s:fg_aqua
-  exec 'hi vimMapRhsExtend' . s:fg_foreground
-  exec 'hi vimCommentTitle' . s:fg_comment . s:ft_italic_bold
-  exec 'hi vimBracket' . s:fg_aqua
-  exec 'hi vimParenSep' . s:fg_aqua
-  exec 'hi vimNotation' . s:fg_aqua
-  exec 'hi vimOper' . s:fg_foreground
-  exec 'hi vimOperParen' . s:fg_foreground
-  exec 'hi vimSynType' . s:fg_purple
-  exec 'hi vimSynReg' . s:fg_pink . s:ft_none
-  exec 'hi vimSynRegion' . s:fg_foreground
-  exec 'hi vimSynMtchGrp' . s:fg_pink
-  exec 'hi vimSynNextgroup' . s:fg_pink
-  exec 'hi vimSynKeyRegion' . s:fg_green
-  exec 'hi vimSynRegOpt' . s:fg_blue
-  exec 'hi vimSynMtchOpt' . s:fg_blue
-  exec 'hi vimSynContains' . s:fg_pink
-  exec 'hi vimGroupName' . s:fg_foreground
-  exec 'hi vimGroupList' . s:fg_foreground
-  exec 'hi vimHiGroup' . s:fg_foreground
-  exec 'hi vimGroup' . s:fg_navy . s:ft_bold
-  exec 'hi vimOnlyOption' . s:fg_blue
-
-  " Makefile Highlighting
-  exec 'hi makeIdent' . s:fg_blue
-  exec 'hi makeSpecTarget' . s:fg_olive
-  exec 'hi makeTarget' . s:fg_red
-  exec 'hi makeStatement' . s:fg_aqua . s:ft_bold
-  exec 'hi makeCommands' . s:fg_foreground
-  exec 'hi makeSpecial' . s:fg_orange . s:ft_bold
-
-  " CMake Highlighting
-  exec 'hi cmakeStatement' . s:fg_pink
-  exec 'hi cmakeArguments' . s:fg_foreground
-  exec 'hi cmakeVariableValue' . s:fg_blue
-  exec 'hi cmakeOperators' . s:fg_red
-
-  " C Highlighting
-  exec 'hi cType' . s:fg_pink . s:ft_bold
-  exec 'hi cFormat' . s:fg_olive
-  exec 'hi cStorageClass' . s:fg_navy . s:ft_bold
-
-  exec 'hi cBoolean' . s:fg_green
-  exec 'hi cCharacter' . s:fg_olive
-  exec 'hi cConstant' . s:fg_green . s:ft_bold
-  exec 'hi cConditional' . s:fg_purple . s:ft_bold
-  exec 'hi cSpecial' . s:fg_olive . s:ft_bold
-  exec 'hi cDefine' . s:fg_blue
-  exec 'hi cNumber' . s:fg_orange
-  exec 'hi cPreCondit' . s:fg_aqua
-  exec 'hi cRepeat' . s:fg_purple . s:ft_bold
-  exec 'hi cLabel' . s:fg_aqua
-  " exec 'hi cAnsiFunction' . s:fg_aqua . s:ft_bold
-  " exec 'hi cAnsiName' . s:fg_pink
-  exec 'hi cDelimiter' . s:fg_blue
-  " exec 'hi cBraces' . s:fg_foreground
-  " exec 'hi cIdentifier' . s:fg_blue . s:bg_pink
-  " exec 'hi cSemiColon'  . s:bg_blue
-  exec 'hi cOperator' . s:fg_aqua
-  " exec 'hi cStatement' . s:fg_pink
-  " exec 'hi cTodo' . s:fg_comment . s:ft_bold
-  " exec 'hi cStructure' . s:fg_blue . s:ft_bold
-  exec 'hi cCustomParen' . s:fg_foreground
-  " exec 'hi cCustomFunc' . s:fg_foreground
-  " exec 'hi cUserFunction' . s:fg_blue . s:ft_bold
-  exec 'hi cOctalZero' . s:fg_purple . s:ft_bold
-  if s:langOpt_c__highlight_builtins == 1
-    exec 'hi cFunction' . s:fg_blue
-  else
-    exec 'hi cFunction' . s:fg_foreground
-  endif
-
-  " CPP highlighting
-  exec 'hi cppBoolean' . s:fg_navy
-  exec 'hi cppSTLnamespace' . s:fg_purple
-  exec 'hi cppSTLexception' . s:fg_pink
-  exec 'hi cppSTLfunctional' . s:fg_foreground . s:ft_bold
-  exec 'hi cppSTLiterator' . s:fg_foreground . s:ft_bold
-  exec 'hi cppExceptions' . s:fg_red
-  exec 'hi cppStatement' . s:fg_blue
-  exec 'hi cppStorageClass' . s:fg_navy . s:ft_bold
-  exec 'hi cppAccess' . s:fg_blue
-  if s:langOpt_cpp__highlight_standard_library == 1
-    exec 'hi cppSTLconstant' . s:fg_green . s:ft_bold
-    exec 'hi cppSTLtype' . s:fg_pink . s:ft_bold
-    exec 'hi cppSTLfunction' . s:fg_blue
-    exec 'hi cppSTLios' . s:fg_olive . s:ft_bold
-  else
-    exec 'hi cppSTLconstant' . s:fg_foreground
-    exec 'hi cppSTLtype' . s:fg_foreground
-    exec 'hi cppSTLfunction' . s:fg_foreground
-    exec 'hi cppSTLios' . s:fg_foreground
-  endif
-  " exec 'hi cppSTL' . s:fg_blue
-
-
-  " Lex highlighting
-  exec 'hi lexCFunctions' . s:fg_foreground
-  exec 'hi lexAbbrv' . s:fg_purple
-  exec 'hi lexAbbrvRegExp' . s:fg_aqua
-  exec 'hi lexAbbrvComment' . s:fg_comment
-  exec 'hi lexBrace' . s:fg_navy
-  exec 'hi lexPat' . s:fg_aqua
-  exec 'hi lexPatComment' . s:fg_comment
-  exec 'hi lexPatTag' . s:fg_orange
-  " exec 'hi lexPatBlock' . s:fg_foreground . s:ft_bold
-  exec 'hi lexSlashQuote' . s:fg_foreground
-  exec 'hi lexSep' . s:fg_foreground
-  exec 'hi lexStartState' . s:fg_orange
-  exec 'hi lexPatTagZone' . s:fg_olive . s:ft_bold
-  exec 'hi lexMorePat' . s:fg_olive . s:ft_bold
-  exec 'hi lexOptions' . s:fg_olive . s:ft_bold
-  exec 'hi lexPatString' . s:fg_olive
-
-  " Yacc highlighting
-  exec 'hi yaccNonterminal' . s:fg_navy
-  exec 'hi yaccDelim' . s:fg_orange
-  exec 'hi yaccInitKey' . s:fg_aqua
-  exec 'hi yaccInit' . s:fg_navy
-  exec 'hi yaccKey' . s:fg_purple
-  exec 'hi yaccVar' . s:fg_aqua
-
-  " NASM highlighting
-  exec 'hi nasmStdInstruction' . s:fg_navy
-  exec 'hi nasmGen08Register' . s:fg_aqua
-  exec 'hi nasmGen16Register' . s:fg_aqua
-  exec 'hi nasmGen32Register' . s:fg_aqua
-  exec 'hi nasmGen64Register' . s:fg_aqua
-  exec 'hi nasmHexNumber' . s:fg_purple
-  exec 'hi nasmStorage' . s:fg_aqua . s:ft_bold
-  exec 'hi nasmLabel' . s:fg_pink
-  exec 'hi nasmDirective' . s:fg_blue . s:ft_bold
-  exec 'hi nasmLocalLabel' . s:fg_orange
-
-  " GAS highlighting
-  exec 'hi gasSymbol' . s:fg_pink
-  exec 'hi gasDirective' . s:fg_blue . s:ft_bold
-  exec 'hi gasOpcode_386_Base' . s:fg_navy
-  exec 'hi gasDecimalNumber' . s:fg_purple
-  exec 'hi gasSymbolRef' . s:fg_pink
-  exec 'hi gasRegisterX86' . s:fg_blue
-  exec 'hi gasOpcode_P6_Base' . s:fg_navy
-  exec 'hi gasDirectiveStore' . s:fg_foreground . s:ft_bold
-
-  " MIPS highlighting
-  exec 'hi mipsInstruction' . s:fg_pink
-  exec 'hi mipsRegister' . s:fg_navy
-  exec 'hi mipsLabel' . s:fg_aqua . s:ft_bold
-  exec 'hi mipsDirective' . s:fg_purple . s:ft_bold
-
-  " Shell/Bash highlighting
-  exec 'hi bashStatement' . s:fg_foreground . s:ft_bold
-  exec 'hi shDerefVar' . s:fg_aqua . s:ft_bold
-  exec 'hi shDerefSimple' . s:fg_aqua
-  exec 'hi shFunction' . s:fg_orange . s:ft_bold
-  exec 'hi shStatement' . s:fg_foreground
-  exec 'hi shLoop' . s:fg_purple . s:ft_bold
-  exec 'hi shQuote' . s:fg_olive
-  exec 'hi shCaseEsac' . s:fg_aqua . s:ft_bold
-  exec 'hi shSnglCase' . s:fg_purple . s:ft_none
-  exec 'hi shFunctionOne' . s:fg_navy
-  exec 'hi shCase' . s:fg_navy
-  exec 'hi shSetList' . s:fg_navy
-  " @see Dockerfile Highlighting section for more sh*
-
-  " PowerShell Highlighting
-  exec 'hi ps1Type' . s:fg_green . s:ft_bold
-  exec 'hi ps1Variable' . s:fg_navy
-  exec 'hi ps1Boolean' . s:fg_navy . s:ft_bold
-  exec 'hi ps1FunctionInvocation' . s:fg_pink
-  exec 'hi ps1FunctionDeclaration' . s:fg_pink
-  exec 'hi ps1Keyword' . s:fg_blue . s:ft_bold
-  exec 'hi ps1Exception' . s:fg_red
-  exec 'hi ps1Operator' . s:fg_aqua . s:ft_bold
-  exec 'hi ps1CommentDoc' . s:fg_purple
-  exec 'hi ps1CDocParam' . s:fg_orange
-
-  " HTML Highlighting
-  exec 'hi htmlTitle' . s:fg_green . s:ft_bold
-  exec 'hi htmlH1' . s:fg_green . s:ft_bold
-  exec 'hi htmlH2' . s:fg_aqua . s:ft_bold
-  exec 'hi htmlH3' . s:fg_purple . s:ft_bold
-  exec 'hi htmlH4' . s:fg_orange . s:ft_bold
-  exec 'hi htmlTag' . s:fg_comment
-  exec 'hi htmlTagName' . s:fg_wine
-  exec 'hi htmlArg' . s:fg_pink
-  exec 'hi htmlEndTag' . s:fg_comment
-  exec 'hi htmlString' . s:fg_blue
-  exec 'hi htmlScriptTag' . s:fg_comment
-  exec 'hi htmlBold' . s:fg_foreground . s:ft_bold
-  exec 'hi htmlItalic' . s:fg_comment . s:ft_italic
-  exec 'hi htmlBoldItalic' . s:fg_navy . s:ft_italic_bold
-  " exec 'hi htmlLink' . s:fg_blue . s:ft_bold
-  exec 'hi htmlTagN' . s:fg_wine . s:ft_bold
-  exec 'hi htmlSpecialTagName' . s:fg_wine
-  exec 'hi htmlComment' . s:fg_comment . s:ft_italic
-  exec 'hi htmlCommentPart' . s:fg_comment . s:ft_italic
-
-  " CSS Highlighting
-  exec 'hi cssIdentifier' . s:fg_pink
-  exec 'hi cssPositioningProp' . s:fg_foreground
-  exec 'hi cssNoise' . s:fg_foreground
-  exec 'hi cssBoxProp' . s:fg_foreground
-  exec 'hi cssTableAttr' . s:fg_purple
-  exec 'hi cssPositioningAttr' . s:fg_navy
-  exec 'hi cssValueLength' . s:fg_orange
-  exec 'hi cssFunctionName' . s:fg_blue
-  exec 'hi cssUnitDecorators' . s:fg_aqua
-  exec 'hi cssColor' . s:fg_blue . s:ft_bold
-  exec 'hi cssBraces' . s:fg_pink
-  exec 'hi cssBackgroundProp' . s:fg_foreground
-  exec 'hi cssTextProp' . s:fg_foreground
-  exec 'hi cssDimensionProp' . s:fg_foreground
-  exec 'hi cssClassName' . s:fg_pink
-
-  " Markdown Highlighting
-  exec 'hi markdownHeadingRule' . s:fg_pink . s:ft_bold
-  exec 'hi markdownH1' . s:fg_pink . s:ft_bold
-  exec 'hi markdownH2' . s:fg_orange . s:ft_bold
-  exec 'hi markdownBlockquote' . s:fg_pink
-  exec 'hi markdownCodeBlock' . s:fg_olive
-  exec 'hi markdownCode' . s:fg_olive
-  exec 'hi markdownLink' . s:fg_blue . s:ft_bold
-  exec 'hi markdownUrl' . s:fg_blue
-  exec 'hi markdownLinkText' . s:fg_pink
-  exec 'hi markdownLinkTextDelimiter' . s:fg_purple
-  exec 'hi markdownLinkDelimiter' . s:fg_purple
-  exec 'hi markdownCodeDelimiter' . s:fg_blue
-
-  exec 'hi mkdCode' . s:fg_olive
-  exec 'hi mkdLink' . s:fg_blue . s:ft_bold
-  exec 'hi mkdURL' . s:fg_comment
-  exec 'hi mkdString' . s:fg_foreground
-  exec 'hi mkdBlockQuote' . s:fg_foreground . s:bg_popupmenu_bg
-  exec 'hi mkdLinkTitle' . s:fg_pink
-  exec 'hi mkdDelimiter' . s:fg_aqua
-  exec 'hi mkdRule' . s:fg_pink
-
-  " reStructuredText Highlighting
-  exec 'hi rstSections' . s:fg_pink . s:ft_bold
-  exec 'hi rstDelimiter' . s:fg_pink . s:ft_bold
-  exec 'hi rstExplicitMarkup' . s:fg_pink . s:ft_bold
-  exec 'hi rstDirective' . s:fg_blue
-  exec 'hi rstHyperlinkTarget' . s:fg_green
-  exec 'hi rstExDirective' . s:fg_foreground
-  exec 'hi rstInlineLiteral' . s:fg_olive
-  exec 'hi rstInterpretedTextOrHyperlinkReference' . s:fg_blue
-
-  " Python Highlighting
-  exec 'hi pythonImport' . s:fg_pink . s:ft_bold
-  exec 'hi pythonExceptions' . s:fg_red
-  exec 'hi pythonException' . s:fg_purple . s:ft_bold
-  exec 'hi pythonInclude' . s:fg_red
-  exec 'hi pythonStatement' . s:fg_pink
-  exec 'hi pythonConditional' . s:fg_purple . s:ft_bold
-  exec 'hi pythonRepeat' . s:fg_purple . s:ft_bold
-  exec 'hi pythonFunction' . s:fg_aqua . s:ft_bold
-  exec 'hi pythonPreCondit' . s:fg_purple
-  exec 'hi pythonExClass' . s:fg_orange
-  exec 'hi pythonOperator' . s:fg_purple . s:ft_bold
-  exec 'hi pythonBuiltin' . s:fg_foreground
-  exec 'hi pythonDecorator' . s:fg_orange
-
-  exec 'hi pythonString' . s:fg_olive
-  exec 'hi pythonEscape' . s:fg_olive . s:ft_bold
-  exec 'hi pythonStrFormatting' . s:fg_olive . s:ft_bold
-
-  exec 'hi pythonBoolean' . s:fg_green . s:ft_bold
-  exec 'hi pythonExClass' . s:fg_red
-  exec 'hi pythonBytesEscape' . s:fg_olive . s:ft_bold
-  exec 'hi pythonDottedName' . s:fg_purple
-  exec 'hi pythonStrFormat' . s:fg_foreground
-
-  if s:langOpt_python__highlight_builtins == 1
-    exec 'hi pythonBuiltinFunc' . s:fg_blue
-    exec 'hi pythonBuiltinObj' . s:fg_red
-  else
-    exec 'hi pythonBuiltinFunc' . s:fg_foreground
-    exec 'hi pythonBuiltinObj' . s:fg_foreground
-  endif
-
-  " Java Highlighting
-  exec 'hi javaExternal' . s:fg_pink
-  exec 'hi javaAnnotation' . s:fg_orange
-  exec 'hi javaTypedef' . s:fg_aqua
-  exec 'hi javaClassDecl' . s:fg_aqua . s:ft_bold
-  exec 'hi javaScopeDecl' . s:fg_blue . s:ft_bold
-  exec 'hi javaStorageClass' . s:fg_navy . s:ft_bold
-  exec 'hi javaBoolean' . s:fg_green . s:ft_bold
-  exec 'hi javaConstant' . s:fg_blue
-  exec 'hi javaCommentTitle' . s:fg_wine
-  exec 'hi javaDocTags' . s:fg_aqua
-  exec 'hi javaDocComment' . s:fg_comment
-  exec 'hi javaDocParam' . s:fg_foreground
-  exec 'hi javaStatement' . s:fg_pink
-
-  " JavaScript Highlighting
-  exec 'hi javaScriptBraces' . s:fg_blue
-  exec 'hi javaScriptParens' . s:fg_blue
-  exec 'hi javaScriptIdentifier' . s:fg_pink
-  exec 'hi javaScriptFunction' . s:fg_blue . s:ft_bold
-  exec 'hi javaScriptConditional' . s:fg_purple . s:ft_bold
-  exec 'hi javaScriptRepeat' . s:fg_purple . s:ft_bold
-  exec 'hi javaScriptBoolean' . s:fg_green . s:ft_bold
-  exec 'hi javaScriptNumber' . s:fg_orange
-  exec 'hi javaScriptMember' . s:fg_navy
-  exec 'hi javaScriptReserved' . s:fg_navy
-  exec 'hi javascriptNull' . s:fg_comment . s:ft_bold
-  exec 'hi javascriptGlobal' . s:fg_foreground
-  exec 'hi javascriptStatement' . s:fg_pink
-  exec 'hi javaScriptMessage' . s:fg_foreground
-  exec 'hi javaScriptMember' . s:fg_foreground
-
-  " @target https://github.com/pangloss/vim-javascript
-  exec 'hi jsFuncParens' . s:fg_blue
-  exec 'hi jsFuncBraces' . s:fg_blue
-  exec 'hi jsParens' . s:fg_blue
-  exec 'hi jsBraces' . s:fg_blue
-  exec 'hi jsNoise' . s:fg_blue
-
-  " Json Highlighting
-  " @target https://github.com/elzr/vim-json
-  exec 'hi jsonKeyword' . s:fg_blue
-  exec 'hi jsonString' . s:fg_olive
-  exec 'hi jsonQuote' . s:fg_comment
-  exec 'hi jsonNoise' . s:fg_foreground
-  exec 'hi jsonKeywordMatch' . s:fg_foreground
-  exec 'hi jsonBraces' . s:fg_foreground
-  exec 'hi jsonNumber' . s:fg_orange
-  exec 'hi jsonNull' . s:fg_purple . s:ft_bold
-  exec 'hi jsonBoolean' . s:fg_green . s:ft_bold
-  exec 'hi jsonCommentError' . s:fg_pink . s:bg_background 
-
-  " Go Highlighting
-  exec 'hi goDirective' . s:fg_red
-  exec 'hi goDeclaration' . s:fg_blue . s:ft_bold
-  exec 'hi goStatement' . s:fg_pink
-  exec 'hi goConditional' . s:fg_purple . s:ft_bold
-  exec 'hi goConstants' . s:fg_orange
-  exec 'hi goFunction' . s:fg_orange
-  " exec 'hi goTodo' . s:fg_comment . s:ft_bold
-  exec 'hi goDeclType' . s:fg_blue
-  exec 'hi goBuiltins' . s:fg_purple
-
-  " Systemtap Highlighting
-  " exec 'hi stapBlock' . s:fg_comment . s:ft_none
-  exec 'hi stapComment' . s:fg_comment . s:ft_none
-  exec 'hi stapProbe' . s:fg_aqua . s:ft_bold
-  exec 'hi stapStat' . s:fg_navy . s:ft_bold
-  exec 'hi stapFunc' . s:fg_foreground
-  exec 'hi stapString' . s:fg_olive
-  exec 'hi stapTarget' . s:fg_navy
-  exec 'hi stapStatement' . s:fg_pink
-  exec 'hi stapType' . s:fg_pink . s:ft_bold
-  exec 'hi stapSharpBang' . s:fg_comment
-  exec 'hi stapDeclaration' . s:fg_pink
-  exec 'hi stapCMacro' . s:fg_blue
-
-  " DTrace Highlighting
-  exec 'hi dtraceProbe' . s:fg_blue
-  exec 'hi dtracePredicate' . s:fg_purple . s:ft_bold
-  exec 'hi dtraceComment' . s:fg_comment
-  exec 'hi dtraceFunction' . s:fg_foreground
-  exec 'hi dtraceAggregatingFunction' . s:fg_blue . s:ft_bold
-  exec 'hi dtraceStatement' . s:fg_navy . s:ft_bold
-  exec 'hi dtraceIdentifier' . s:fg_pink
-  exec 'hi dtraceOption' . s:fg_pink
-  exec 'hi dtraceConstant' . s:fg_orange
-  exec 'hi dtraceType' . s:fg_pink . s:ft_bold
-
-  " PlantUML Highlighting
-  exec 'hi plantumlPreProc' . s:fg_orange . s:ft_bold
-  exec 'hi plantumlDirectedOrVerticalArrowRL' . s:fg_pink
-  exec 'hi plantumlDirectedOrVerticalArrowLR' . s:fg_pink
-  exec 'hi plantumlString' . s:fg_olive
-  exec 'hi plantumlActivityThing' . s:fg_purple
-  exec 'hi plantumlText' . s:fg_navy
-  exec 'hi plantumlClassPublic' . s:fg_olive . s:ft_bold
-  exec 'hi plantumlClassPrivate' . s:fg_red
-  exec 'hi plantumlColonLine' . s:fg_orange
-  exec 'hi plantumlClass' . s:fg_navy
-  exec 'hi plantumlHorizontalArrow' . s:fg_pink
-  exec 'hi plantumlTypeKeyword' . s:fg_blue . s:ft_bold
-  exec 'hi plantumlKeyword' . s:fg_pink . s:ft_bold
-
-  exec 'hi plantumlType' . s:fg_blue . s:ft_bold
-  exec 'hi plantumlBlock' . s:fg_pink . s:ft_bold
-  exec 'hi plantumlPreposition' . s:fg_orange
-  exec 'hi plantumlLayout' . s:fg_blue . s:ft_bold
-  exec 'hi plantumlNote' . s:fg_orange
-  exec 'hi plantumlLifecycle' . s:fg_aqua
-  exec 'hi plantumlParticipant' . s:fg_foreground . s:ft_bold
-
-
-  " Haskell Highlighting
-  exec 'hi haskellType' . s:fg_aqua . s:ft_bold
-  exec 'hi haskellIdentifier' . s:fg_orange . s:ft_bold
-  exec 'hi haskellOperators' . s:fg_pink
-  exec 'hi haskellWhere' . s:fg_foreground . s:ft_bold
-  exec 'hi haskellDelimiter' . s:fg_aqua
-  exec 'hi haskellImportKeywords' . s:fg_pink
-  exec 'hi haskellStatement' . s:fg_purple . s:ft_bold
-
-
-  " SQL/MySQL Highlighting
-  exec 'hi sqlStatement' . s:fg_pink . s:ft_bold
-  exec 'hi sqlType' . s:fg_blue . s:ft_bold
-  exec 'hi sqlKeyword' . s:fg_pink
-  exec 'hi sqlOperator' . s:fg_aqua
-  exec 'hi sqlSpecial' . s:fg_green . s:ft_bold
-
-  exec 'hi mysqlVariable' . s:fg_olive . s:ft_bold
-  exec 'hi mysqlType' . s:fg_blue . s:ft_bold
-  exec 'hi mysqlKeyword' . s:fg_pink
-  exec 'hi mysqlOperator' . s:fg_aqua
-  exec 'hi mysqlSpecial' . s:fg_green . s:ft_bold
-
-
-  " Octave/MATLAB Highlighting
-  exec 'hi octaveVariable' . s:fg_foreground
-  exec 'hi octaveDelimiter' . s:fg_pink
-  exec 'hi octaveQueryVar' . s:fg_foreground
-  exec 'hi octaveSemicolon' . s:fg_purple
-  exec 'hi octaveFunction' . s:fg_navy
-  exec 'hi octaveSetVar' . s:fg_blue
-  exec 'hi octaveUserVar' . s:fg_foreground
-  exec 'hi octaveArithmeticOperator' . s:fg_aqua
-  exec 'hi octaveBeginKeyword' . s:fg_purple . s:ft_bold
-  exec 'hi octaveElseKeyword' . s:fg_purple . s:ft_bold
-  exec 'hi octaveEndKeyword' . s:fg_purple . s:ft_bold
-  exec 'hi octaveStatement' . s:fg_pink
-
-  " Ruby Highlighting
-  exec 'hi rubyModule' . s:fg_navy . s:ft_bold
-  exec 'hi rubyClass' . s:fg_pink . s:ft_bold
-  exec 'hi rubyPseudoVariable' . s:fg_comment . s:ft_bold
-  exec 'hi rubyKeyword' . s:fg_pink
-  exec 'hi rubyInstanceVariable' . s:fg_purple
-  exec 'hi rubyFunction' . s:fg_foreground . s:ft_bold
-  exec 'hi rubyDefine' . s:fg_pink
-  exec 'hi rubySymbol' . s:fg_aqua
-  exec 'hi rubyConstant' . s:fg_blue
-  exec 'hi rubyAccess' . s:fg_navy
-  exec 'hi rubyAttribute' . s:fg_green
-  exec 'hi rubyInclude' . s:fg_red
-  exec 'hi rubyLocalVariableOrMethod' . s:fg_orange
-  exec 'hi rubyCurlyBlock' . s:fg_foreground
-  exec 'hi rubyCurlyBlockDelimiter' . s:fg_aqua
-  exec 'hi rubyArrayDelimiter' . s:fg_aqua
-  exec 'hi rubyStringDelimiter' . s:fg_olive
-  exec 'hi rubyInterpolationDelimiter' . s:fg_orange
-  exec 'hi rubyConditional' . s:fg_purple . s:ft_bold
-  exec 'hi rubyRepeat' . s:fg_purple . s:ft_bold
-  exec 'hi rubyControl' . s:fg_purple . s:ft_bold
-  exec 'hi rubyException' . s:fg_purple . s:ft_bold
-  exec 'hi rubyExceptional' . s:fg_purple . s:ft_bold
-  exec 'hi rubyBoolean' . s:fg_green . s:ft_bold
-
-  " Fortran Highlighting
-  exec 'hi fortranUnitHeader' . s:fg_foreground . s:ft_bold
-  exec 'hi fortranType' . s:fg_pink . s:ft_bold
-  exec 'hi fortranStructure' . s:fg_blue . s:ft_bold
-  exec 'hi fortranStorageClass' . s:fg_navy . s:ft_bold
-  exec 'hi fortranStorageClassR' . s:fg_navy . s:ft_bold
-  exec 'hi fortranKeyword' . s:fg_pink
-  exec 'hi fortranReadWrite' . s:fg_blue
-  exec 'hi fortranIO' . s:fg_navy
-
-  " R Highlighting
-  exec 'hi rType' . s:fg_blue
-  exec 'hi rArrow' . s:fg_pink
-  exec 'hi rDollar' . s:fg_blue
-
-  " XXD Highlighting
-  exec 'hi xxdAddress' . s:fg_navy
-  exec 'hi xxdSep' . s:fg_pink
-  exec 'hi xxdAscii' . s:fg_pink
-  exec 'hi xxdDot' . s:fg_aqua
-
-  " PHP Highlighting
-  exec 'hi phpIdentifier' . s:fg_foreground
-  exec 'hi phpVarSelector' . s:fg_pink
-  exec 'hi phpKeyword' . s:fg_blue
-  exec 'hi phpRepeat' . s:fg_purple . s:ft_bold
-  exec 'hi phpConditional' . s:fg_purple . s:ft_bold
-  exec 'hi phpStatement' . s:fg_pink
-  exec 'hi phpAssignByRef' . s:fg_aqua . s:ft_bold
-  exec 'hi phpSpecialFunction' . s:fg_blue
-  exec 'hi phpFunctions' . s:fg_blue
-  exec 'hi phpComparison' . s:fg_aqua
-  exec 'hi phpBackslashSequences' . s:fg_olive . s:ft_bold
-  exec 'hi phpMemberSelector' . s:fg_blue
-  exec 'hi phpStorageClass' . s:fg_purple . s:ft_bold
-  exec 'hi phpDefine' . s:fg_navy
-  exec 'hi phpIntVar' . s:fg_navy . s:ft_bold
-
-  " Perl Highlighting
-  exec 'hi perlFiledescRead' . s:fg_green
-  exec 'hi perlMatchStartEnd' . s:fg_pink
-  exec 'hi perlStatementFlow' . s:fg_pink
-  exec 'hi perlStatementStorage' . s:fg_pink
-  exec 'hi perlFunction' . s:fg_pink . s:ft_bold
-  exec 'hi perlMethod' . s:fg_foreground
-  exec 'hi perlStatementFiledesc' . s:fg_orange
-  exec 'hi perlVarPlain' . s:fg_navy
-  exec 'hi perlSharpBang' . s:fg_comment
-  exec 'hi perlStatementInclude' . s:fg_aqua . s:ft_bold
-  exec 'hi perlStatementScalar' . s:fg_purple
-  exec 'hi perlSubName' . s:fg_aqua . s:ft_bold
-  exec 'hi perlSpecialString' . s:fg_olive . s:ft_bold
-
-  " Pascal Highlighting
-  exec 'hi pascalType' . s:fg_pink . s:ft_bold
-  exec 'hi pascalStatement' . s:fg_blue . s:ft_bold
-  exec 'hi pascalPredefined' . s:fg_pink
-  exec 'hi pascalFunction' . s:fg_foreground
-  exec 'hi pascalStruct' . s:fg_navy . s:ft_bold
-  exec 'hi pascalOperator' . s:fg_aqua . s:ft_bold
-  exec 'hi pascalPreProc' . s:fg_green
-  exec 'hi pascalAcces' . s:fg_navy . s:ft_bold
-
-  " Lua Highlighting
-  exec 'hi luaFunc' . s:fg_foreground
-  exec 'hi luaIn' . s:fg_blue . s:ft_bold
-  exec 'hi luaFunction' . s:fg_pink
-  exec 'hi luaStatement' . s:fg_blue
-  exec 'hi luaRepeat' . s:fg_blue . s:ft_bold
-  exec 'hi luaCondStart' . s:fg_purple . s:ft_bold
-  exec 'hi luaTable' . s:fg_aqua . s:ft_bold
-  exec 'hi luaConstant' . s:fg_green . s:ft_bold
-  exec 'hi luaElse' . s:fg_purple . s:ft_bold
-  exec 'hi luaCondElseif' . s:fg_purple . s:ft_bold
-  exec 'hi luaCond' . s:fg_purple . s:ft_bold
-  exec 'hi luaCondEnd' . s:fg_purple
-
-  " Clojure highlighting:
-  exec 'hi clojureConstant' . s:fg_blue
-  exec 'hi clojureBoolean' . s:fg_orange
-  exec 'hi clojureCharacter' . s:fg_olive
-  exec 'hi clojureKeyword' . s:fg_pink
-  exec 'hi clojureNumber' . s:fg_orange
-  exec 'hi clojureString' . s:fg_olive
-  exec 'hi clojureRegexp' . s:fg_purple
-  exec 'hi clojureRegexpEscape' . s:fg_pink
-  exec 'hi clojureParen' . s:fg_aqua
-  exec 'hi clojureVariable' . s:fg_olive
-  exec 'hi clojureCond' . s:fg_blue
-  exec 'hi clojureDefine' . s:fg_blue . s:ft_bold
-  exec 'hi clojureException' . s:fg_red
-  exec 'hi clojureFunc' . s:fg_navy
-  exec 'hi clojureMacro' . s:fg_blue
-  exec 'hi clojureRepeat' . s:fg_blue
-  exec 'hi clojureSpecial' . s:fg_blue . s:ft_bold
-  exec 'hi clojureQuote' . s:fg_blue
-  exec 'hi clojureUnquote' . s:fg_blue
-  exec 'hi clojureMeta' . s:fg_blue
-  exec 'hi clojureDeref' . s:fg_blue
-  exec 'hi clojureAnonArg' . s:fg_blue
-  exec 'hi clojureRepeat' . s:fg_blue
-  exec 'hi clojureDispatch' . s:fg_aqua
-
-  " Dockerfile Highlighting
-  " @target https://github.com/docker/docker/tree/master/contrib/syntax/vim
-  exec 'hi dockerfileKeyword' . s:fg_blue
-  exec 'hi shDerefVar' . s:fg_purple . s:ft_bold
-  exec 'hi shOperator' . s:fg_aqua
-  exec 'hi shOption' . s:fg_navy
-  exec 'hi shLine' . s:fg_foreground
-  exec 'hi shWrapLineOperator' . s:fg_pink
-
-  " NGINX Highlighting
-  " @target https://github.com/evanmiller/nginx-vim-syntax
-  exec 'hi ngxDirectiveBlock' . s:fg_pink . s:ft_bold
-  exec 'hi ngxDirective' . s:fg_blue . s:ft_none
-  exec 'hi ngxDirectiveImportant' . s:fg_blue . s:ft_bold
-  exec 'hi ngxString' . s:fg_olive
-  exec 'hi ngxVariableString' . s:fg_purple
-  exec 'hi ngxVariable' . s:fg_purple . s:ft_none
-
-  " Yaml Highlighting
-  exec 'hi yamlBlockMappingKey' . s:fg_blue
-  exec 'hi yamlKeyValueDelimiter' . s:fg_pink
-  exec 'hi yamlBlockCollectionItemStart' . s:fg_pink
-
-  " Qt QML Highlighting
-  exec 'hi qmlObjectLiteralType' . s:fg_pink
-  exec 'hi qmlReserved' . s:fg_purple
-  exec 'hi qmlBindingProperty' . s:fg_navy
-  exec 'hi qmlType' . s:fg_navy
-
-  " Dosini Highlighting
-  exec 'hi dosiniHeader' . s:fg_pink
-  exec 'hi dosiniLabel' . s:fg_blue
-
-  " Mail highlighting
-  exec 'hi mailHeaderKey' . s:fg_blue
-  exec 'hi mailHeaderEmail' . s:fg_purple
-  exec 'hi mailSubject' . s:fg_pink
-  exec 'hi mailHeader' . s:fg_comment
-  exec 'hi mailURL' . s:fg_aqua
-  exec 'hi mailEmail' . s:fg_purple
-  exec 'hi mailQuoted1' . s:fg_olive
-  exec 'hi mailQuoted2' . s:fg_navy
-
-  " XML Highlighting
-  exec 'hi xmlProcessingDelim' . s:fg_pink
-  exec 'hi xmlString' . s:fg_olive
-  exec 'hi xmlEqual' . s:fg_orange
-  exec 'hi xmlAttrib' . s:fg_navy
-  exec 'hi xmlAttribPunct' . s:fg_pink
-  exec 'hi xmlTag' . s:fg_blue
-  exec 'hi xmlTagName' . s:fg_blue
-  exec 'hi xmlEndTag' . s:fg_blue
-  exec 'hi xmlNamespace' . s:fg_orange
-
-  " Exlixir Highlighting
-  " @target https://github.com/elixir-lang/vim-elixir
-  exec 'hi elixirAlias' . s:fg_blue . s:ft_bold
-  exec 'hi elixirAtom' . s:fg_navy
-  exec 'hi elixirVariable' . s:fg_navy
-  exec 'hi elixirUnusedVariable' . s:fg_foreground . s:ft_bold
-  exec 'hi elixirInclude' . s:fg_purple
-  exec 'hi elixirStringDelimiter' . s:fg_olive
-  exec 'hi elixirKeyword' . s:fg_purple . s:ft_bold
-  exec 'hi elixirFunctionDeclaration' . s:fg_aqua . s:ft_bold
-  exec 'hi elixirBlockDefinition' . s:fg_pink
-  exec 'hi elixirDefine' . s:fg_pink
-  exec 'hi elixirStructDefine' . s:fg_pink
-  exec 'hi elixirPrivateDefine' . s:fg_pink
-  exec 'hi elixirModuleDefine' . s:fg_pink
-  exec 'hi elixirProtocolDefine' . s:fg_pink
-  exec 'hi elixirImplDefine' . s:fg_pink
-  exec 'hi elixirModuleDeclaration' . s:fg_aqua . s:ft_bold
-  exec 'hi elixirDocString' . s:fg_olive
-  exec 'hi elixirDocTest' . s:fg_green . s:ft_bold
-
-  " Erlang Highlighting
-  exec 'hi erlangBIF' . s:fg_purple . s:ft_bold
-  exec 'hi erlangBracket' . s:fg_pink
-  exec 'hi erlangLocalFuncCall' . s:fg_foreground
-  exec 'hi erlangVariable' . s:fg_foreground
-  exec 'hi erlangAtom' . s:fg_navy
-  exec 'hi erlangAttribute' . s:fg_blue . s:ft_bold
-  exec 'hi erlangRecordDef' . s:fg_blue . s:ft_bold
-  exec 'hi erlangRecord' . s:fg_blue
-  exec 'hi erlangRightArrow' . s:fg_blue . s:ft_bold
-  exec 'hi erlangStringModifier' . s:fg_olive . s:ft_bold
-  exec 'hi erlangInclude' . s:fg_blue . s:ft_bold
-  exec 'hi erlangKeyword' . s:fg_pink
-  exec 'hi erlangGlobalFuncCall' . s:fg_foreground
-
-  " Cucumber Highlighting
-  exec 'hi cucumberFeature' . s:fg_blue . s:ft_bold
-  exec 'hi cucumberBackground' . s:fg_pink . s:ft_bold
-  exec 'hi cucumberScenario' . s:fg_pink . s:ft_bold
-  exec 'hi cucumberGiven' . s:fg_orange
-  exec 'hi cucumberGivenAnd' . s:fg_blue
-  exec 'hi cucumberThen' . s:fg_orange
-  exec 'hi cucumberThenAnd' . s:fg_blue
-  exec 'hi cucumberWhen' . s:fg_purple . s:ft_bold
-  exec 'hi cucumberScenarioOutline' . s:fg_pink . s:ft_bold
-  exec 'hi cucumberExamples' . s:fg_aqua
-  exec 'hi cucumberTags' . s:fg_aqua
-  exec 'hi cucumberPlaceholder' . s:fg_aqua
-
-  " Ada Highlighting
-  exec 'hi adaInc' . s:fg_aqua . s:ft_bold
-  exec 'hi adaSpecial' . s:fg_aqua . s:ft_bold
-  exec 'hi adaKeyword' . s:fg_pink
-  exec 'hi adaBegin' . s:fg_pink
-  exec 'hi adaEnd' . s:fg_pink
-  exec 'hi adaTypedef' . s:fg_navy . s:ft_bold
-  exec 'hi adaAssignment' . s:fg_aqua . s:ft_bold
-  exec 'hi adaAttribute' . s:fg_green
-
-  " COBOL Highlighting
-  exec 'hi cobolMarker' . s:fg_comment . s:bg_cursorline
-  exec 'hi cobolLine' . s:fg_foreground
-  exec 'hi cobolReserved' . s:fg_blue
-  exec 'hi cobolDivision' . s:fg_pink . s:ft_bold
-  exec 'hi cobolDivisionName' . s:fg_pink . s:ft_bold
-  exec 'hi cobolSection' . s:fg_navy . s:ft_bold
-  exec 'hi cobolSectionName' . s:fg_navy . s:ft_bold
-  exec 'hi cobolParagraph' . s:fg_purple
-  exec 'hi cobolParagraphName' . s:fg_purple
-  exec 'hi cobolDeclA' . s:fg_purple
-  exec 'hi cobolDecl' . s:fg_green
-  exec 'hi cobolCALLs' . s:fg_aqua . s:ft_bold
-  exec 'hi cobolEXECs' . s:fg_aqua . s:ft_bold
-
-  " GNU sed highlighting
-  exec 'hi sedST' . s:fg_purple . s:ft_bold
-  exec 'hi sedFlag' . s:fg_purple . s:ft_bold
-  exec 'hi sedRegexp47' . s:fg_pink
-  exec 'hi sedRegexpMeta' . s:fg_blue . s:ft_bold
-  exec 'hi sedReplacement47' . s:fg_olive
-  exec 'hi sedReplaceMeta' . s:fg_orange . s:ft_bold
-  exec 'hi sedAddress' . s:fg_pink
-  exec 'hi sedFunction' . s:fg_aqua . s:ft_bold
-  exec 'hi sedBranch' . s:fg_green . s:ft_bold
-  exec 'hi sedLabel' . s:fg_green . s:ft_bold
-
-  " GNU awk highlighting
-  exec 'hi awkPatterns' . s:fg_pink . s:ft_bold
-  exec 'hi awkSearch' . s:fg_pink
-  exec 'hi awkRegExp' . s:fg_blue . s:ft_bold
-  exec 'hi awkCharClass' . s:fg_blue . s:ft_bold
-  exec 'hi awkFieldVars' . s:fg_green . s:ft_bold
-  exec 'hi awkStatement' . s:fg_blue . s:ft_bold
-  exec 'hi awkFunction' . s:fg_blue
-  exec 'hi awkVariables' . s:fg_green . s:ft_bold
-  exec 'hi awkArrayElement' . s:fg_orange
-  exec 'hi awkOperator' . s:fg_foreground
-  exec 'hi awkBoolLogic' . s:fg_foreground
-  exec 'hi awkExpression' . s:fg_foreground
-  exec 'hi awkSpecialPrintf' . s:fg_olive . s:ft_bold
-
-  " Elm highlighting
-  exec 'hi elmImport' . s:fg_navy 
-  exec 'hi elmAlias' . s:fg_aqua
-  exec 'hi elmType' . s:fg_pink
-  exec 'hi elmOperator' . s:fg_aqua . s:ft_bold
-  exec 'hi elmBraces' . s:fg_aqua . s:ft_bold 
-  exec 'hi elmTypedef' . s:fg_blue .  s:ft_bold
-  exec 'hi elmTopLevelDecl' . s:fg_green . s:ft_bold
-
-  " Purescript highlighting
-  exec 'hi purescriptModuleKeyword' . s:fg_navy
-  exec 'hi purescriptImportKeyword' . s:fg_navy
-  exec 'hi purescriptModuleName' . s:fg_pink
-  exec 'hi purescriptOperator' . s:fg_aqua . s:ft_bold
-  exec 'hi purescriptType' . s:fg_pink
-  exec 'hi purescriptTypeVar' . s:fg_navy
-  exec 'hi purescriptStructure' . s:fg_blue . s:ft_bold
-  exec 'hi purescriptLet' . s:fg_blue . s:ft_bold
-  exec 'hi purescriptFunction' . s:fg_green . s:ft_bold
-  exec 'hi purescriptDelimiter' . s:fg_aqua . s:ft_bold
-  exec 'hi purescriptStatement' . s:fg_purple . s:ft_bold
-  exec 'hi purescriptConstructor' . s:fg_pink
-  exec 'hi purescriptWhere' . s:fg_purple . s:ft_bold
-
-  " F# highlighting
-  exec 'hi fsharpTypeName' . s:fg_pink
-  exec 'hi fsharpCoreClass' . s:fg_pink
-  exec 'hi fsharpType' . s:fg_pink
-  exec 'hi fsharpKeyword' . s:fg_blue . s:ft_bold
-  exec 'hi fsharpOperator' . s:fg_aqua . s:ft_bold
-  exec 'hi fsharpBoolean' . s:fg_green . s:ft_bold
-  exec 'hi fsharpFormat' . s:fg_foreground
-  exec 'hi fsharpLinq' . s:fg_blue
-  exec 'hi fsharpKeyChar' . s:fg_aqua . s:ft_bold
-  exec 'hi fsharpOption' . s:fg_orange
-  exec 'hi fsharpCoreMethod' . s:fg_purple
-  exec 'hi fsharpAttrib' . s:fg_orange
-  exec 'hi fsharpModifier' . s:fg_aqua
-  exec 'hi fsharpOpen' . s:fg_red
-  " }}}
-
-  " Plugin: Netrw
-  exec 'hi netrwVersion' . s:fg_red
-  exec 'hi netrwList' . s:fg_pink
-  exec 'hi netrwHidePat' . s:fg_olive
-  exec 'hi netrwQuickHelp' . s:fg_blue
-  exec 'hi netrwHelpCmd' . s:fg_blue
-  exec 'hi netrwDir' . s:fg_aqua . s:ft_bold
-  exec 'hi netrwClassify' . s:fg_pink
-  exec 'hi netrwExe' . s:fg_green
-  exec 'hi netrwSuffixes' . s:fg_comment
-  exec 'hi netrwTreeBar' . s:fg_linenumber_fg
-
-  " Plugin: NERDTree
-  exec 'hi NERDTreeUp' . s:fg_comment
-  exec 'hi NERDTreeHelpCommand' . s:fg_pink
-  exec 'hi NERDTreeHelpTitle' . s:fg_blue . s:ft_bold
-  exec 'hi NERDTreeHelpKey' . s:fg_pink
-  exec 'hi NERDTreeHelp' . s:fg_foreground
-  exec 'hi NERDTreeToggleOff' . s:fg_red
-  exec 'hi NERDTreeToggleOn' . s:fg_green
-  exec 'hi NERDTreeDir' . s:fg_blue . s:ft_bold
-  exec 'hi NERDTreeDirSlash' . s:fg_pink
-  exec 'hi NERDTreeFile' . s:fg_foreground
-  exec 'hi NERDTreeExecFile' . s:fg_green
-  exec 'hi NERDTreeOpenable' . s:fg_pink . s:ft_bold
-  exec 'hi NERDTreeClosable' . s:fg_pink
-
-  " Plugin: Tagbar
-  exec 'hi TagbarHelpTitle' . s:fg_blue . s:ft_bold
-  exec 'hi TagbarHelp' . s:fg_foreground
-  exec 'hi TagbarKind' . s:fg_pink
-  exec 'hi TagbarSignature' . s:fg_aqua
-
-  " Plugin: Vimdiff
-  exec 'hi DiffAdd' . s:fg_diffadd_fg . s:bg_diffadd_bg . s:ft_none
-  exec 'hi DiffChange' . s:fg_diffchange_fg . s:bg_diffchange_bg . s:ft_none
-  exec 'hi DiffDelete' . s:fg_diffdelete_fg . s:bg_diffdelete_bg . s:ft_none
-  exec 'hi DiffText' . s:fg_difftext_fg . s:bg_difftext_bg . s:ft_none
-
-  " Plugin: AGit
-  exec 'hi agitHead' . s:fg_green . s:ft_bold
-  exec 'hi agitHeader' . s:fg_olive
-  exec 'hi agitStatAdded' . s:fg_diffadd_fg
-  exec 'hi agitStatRemoved' . s:fg_diffdelete_fg
-  exec 'hi agitDiffAdd' . s:fg_diffadd_fg
-  exec 'hi agitDiffRemove' . s:fg_diffdelete_fg
-  exec 'hi agitDiffHeader' . s:fg_pink
-  exec 'hi agitDiff' . s:fg_foreground
-  exec 'hi agitDiffIndex' . s:fg_purple
-  exec 'hi agitDiffFileName' . s:fg_aqua
-  exec 'hi agitLog' . s:fg_foreground
-  exec 'hi agitAuthorMark' . s:fg_olive
-  exec 'hi agitDateMark' . s:fg_comment
-  exec 'hi agitHeaderLabel' . s:fg_aqua
-  exec 'hi agitDate' . s:fg_aqua
-  exec 'hi agitTree' . s:fg_pink
-  exec 'hi agitRef' . s:fg_blue . s:ft_bold
-  exec 'hi agitRemote' . s:fg_purple . s:ft_bold
-  exec 'hi agitTag' . s:fg_orange . s:ft_bold
-
-  " Plugin: Spell Checking
-  exec 'hi SpellBad' . s:fg_foreground . s:bg_spellbad
-  exec 'hi SpellCap' . s:fg_foreground . s:bg_spellcap
-  exec 'hi SpellRare' . s:fg_foreground . s:bg_spellrare
-  exec 'hi SpellLocal' . s:fg_foreground . s:bg_spelllocal
-
-  " Plugin: Indent Guides
-  exec 'hi IndentGuidesOdd'  . s:bg_background
-  exec 'hi IndentGuidesEven'  . s:bg_cursorline
-
-  " Plugin: Startify
-  exec 'hi StartifyFile' . s:fg_blue . s:ft_bold
-  exec 'hi StartifyNumber' . s:fg_orange
-  exec 'hi StartifyHeader' . s:fg_comment
-  exec 'hi StartifySection' . s:fg_pink
-  exec 'hi StartifyPath' . s:fg_foreground
-  exec 'hi StartifySlash' . s:fg_navy
-  exec 'hi StartifyBracket' . s:fg_aqua
-  exec 'hi StartifySpecial' . s:fg_aqua
-
-  " Git commit message
-  exec 'hi gitcommitSummary' . s:fg_blue
-  exec 'hi gitcommitHeader' . s:fg_green . s:ft_bold
-  exec 'hi gitcommitSelectedType' . s:fg_blue
-  exec 'hi gitcommitSelectedFile' . s:fg_pink
-  exec 'hi gitcommitUntrackedFile' . s:fg_diffdelete_fg
-  exec 'hi gitcommitBranch' . s:fg_aqua . s:ft_bold
-  exec 'hi gitcommitDiscardedType' . s:fg_diffdelete_fg
-
-  exec 'hi diffFile' . s:fg_aqua . s:ft_bold
-  exec 'hi diffIndexLine' . s:fg_purple
-  exec 'hi diffAdded' . s:fg_diffadd_fg
-  exec 'hi diffRemoved' . s:fg_diffdelete_fg
-  exec 'hi diffLine' . s:fg_orange . s:ft_bold
-
-endfun
-" }}}
-
-" ================================== MISC =====================================
-" Command to show theme information {{{
-fun! g:PaperColor()
-  echom 'PaperColor Theme Framework'
-  echom '  version ' . s:version
-  echom '  by Nikyle Nguyen et al.'
-  echom '  at https://github.com/NLKNguyen/papercolor-theme/'
-  echom ' '
-  echom 'Current theme: ' . s:theme_name
-  echom '  ' . s:selected_theme['description']
-  echom '  by ' . s:selected_theme['maintainer']
-  echom '  at ' . s:selected_theme['source']
-
-  " TODO: add diff display for theme color names between 'default' and current
-  " theme if it is a custom theme, i.e. child theme.
-endfun
-
-" @brief command alias for g:PaperColor()
-command! -nargs=0 PaperColor :call g:PaperColor()
-" }}}
-
-" =============================== MAIN ========================================
+" Modified from the theme 'Tomorrow'
 
 hi clear
 syntax reset
 let g:colors_name = "PaperColor"
 
-call s:acquire_theme_data()
-call s:identify_color_mode()
+" Helper Functions: {{{
+" Returns an approximate grey index for the given grey level
+fun s:grey_number(x)
+  if &t_Co == 88
+    if a:x < 23
+      return 0
+    elseif a:x < 69
+      return 1
+    elseif a:x < 103
+      return 2
+    elseif a:x < 127
+      return 3
+    elseif a:x < 150
+      return 4
+    elseif a:x < 173
+      return 5
+    elseif a:x < 196
+      return 6
+    elseif a:x < 219
+      return 7
+    elseif a:x < 243
+      return 8
+    else
+      return 9
+    endif
+  else
+    if a:x < 14
+      return 0
+    else
+      let l:n = (a:x - 8) / 10
+      let l:m = (a:x - 8) % 10
+      if l:m < 5
+        return l:n
+      else
+        return l:n + 1
+      endif
+    endif
+  endif
+endfun
 
-call s:generate_theme_option_variables()
-call s:generate_language_option_variables()
+" Returns the actual grey level represented by the grey index
+fun s:grey_level(n)
+  if &t_Co == 88
+    if a:n == 0
+      return 0
+    elseif a:n == 1
+      return 46
+    elseif a:n == 2
+      return 92
+    elseif a:n == 3
+      return 115
+    elseif a:n == 4
+      return 139
+    elseif a:n == 5
+      return 162
+    elseif a:n == 6
+      return 185
+    elseif a:n == 7
+      return 208
+    elseif a:n == 8
+      return 231
+    else
+      return 255
+    endif
+  else
+    if a:n == 0
+      return 0
+    else
+      return 8 + (a:n * 10)
+    endif
+  endif
+endfun
 
-call s:set_format_attributes()
-call s:set_overriding_colors()
+" Returns the palette index for the given grey index
+fun s:grey_colour(n)
+  if &t_Co == 88
+    if a:n == 0
+      return 16
+    elseif a:n == 9
+      return 79
+    else
+      return 79 + a:n
+    endif
+  else
+    if a:n == 0
+      return 16
+    elseif a:n == 25
+      return 231
+    else
+      return 231 + a:n
+    endif
+  endif
+endfun
 
-call s:convert_colors()
-call s:set_color_variables()
+" Returns an approximate colour index for the given colour level
+fun s:rgb_number(x)
+  if &t_Co == 88
+    if a:x < 69
+      return 0
+    elseif a:x < 172
+      return 1
+    elseif a:x < 230
+      return 2
+    else
+      return 3
+    endif
+  else
+    if a:x < 75
+      return 0
+    else
+      let l:n = (a:x - 55) / 40
+      let l:m = (a:x - 55) % 40
+      if l:m < 20
+        return l:n
+      else
+        return l:n + 1
+      endif
+    endif
+  endif
+endfun
 
-call s:apply_syntax_highlightings()
+" Returns the actual colour level for the given colour index
+fun s:rgb_level(n)
+  if &t_Co == 88
+    if a:n == 0
+      return 0
+    elseif a:n == 1
+      return 139
+    elseif a:n == 2
+      return 205
+    else
+      return 255
+    endif
+  else
+    if a:n == 0
+      return 0
+    else
+      return 55 + (a:n * 40)
+    endif
+  endif
+endfun
 
-" =============================================================================
-" Cheers!
-" vim: fdm=marker ff=unix
+" Returns the palette index for the given R/G/B colour indices
+fun s:rgb_colour(x, y, z)
+  if &t_Co == 88
+    return 16 + (a:x * 16) + (a:y * 4) + a:z
+  else
+    return 16 + (a:x * 36) + (a:y * 6) + a:z
+  endif
+endfun
+
+" Returns the palette index to approximate the given R/G/B colour levels
+fun s:colour(r, g, b)
+  " Get the closest grey
+  let l:gx = s:grey_number(a:r)
+  let l:gy = s:grey_number(a:g)
+  let l:gz = s:grey_number(a:b)
+
+  " Get the closest colour
+  let l:x = s:rgb_number(a:r)
+  let l:y = s:rgb_number(a:g)
+  let l:z = s:rgb_number(a:b)
+
+  if l:gx == l:gy && l:gy == l:gz
+    " There are two possibilities
+    let l:dgr = s:grey_level(l:gx) - a:r
+    let l:dgg = s:grey_level(l:gy) - a:g
+    let l:dgb = s:grey_level(l:gz) - a:b
+    let l:dgrey = (l:dgr * l:dgr) + (l:dgg * l:dgg) + (l:dgb * l:dgb)
+    let l:dr = s:rgb_level(l:gx) - a:r
+    let l:dg = s:rgb_level(l:gy) - a:g
+    let l:db = s:rgb_level(l:gz) - a:b
+    let l:drgb = (l:dr * l:dr) + (l:dg * l:dg) + (l:db * l:db)
+    if l:dgrey < l:drgb
+      " Use the grey
+      return s:grey_colour(l:gx)
+    else
+      " Use the colour
+      return s:rgb_colour(l:x, l:y, l:z)
+    endif
+  else
+    " Only one possibility
+    return s:rgb_colour(l:x, l:y, l:z)
+  endif
+endfun
+
+" Returns the palette index to approximate the '#rrggbb' hex string
+fun s:rgb(rgb)
+  let l:r = ("0x" . strpart(a:rgb, 1, 2)) + 0
+  let l:g = ("0x" . strpart(a:rgb, 3, 2)) + 0
+  let l:b = ("0x" . strpart(a:rgb, 5, 2)) + 0
+
+  return s:colour(l:r, l:g, l:b)
+endfun
+
+" Sets the highlighting for the given group
+fun s:HL(group, fg, bg, attr)
+  if !empty(a:fg)
+    " echo "['" . a:fg . "', " . s:rgb(a:fg) . "]"
+    exec "hi " . a:group . " guifg=" . a:fg[0] . " ctermfg=" . a:fg[1]
+  endif
+  if !empty(a:bg)
+    " echo  "['" . a:bg . "', " . s:rgb(a:bg) . "]"
+    exec "hi " . a:group . " guibg=" . a:bg[0] . " ctermbg=" . a:bg[1]
+  endif
+  if a:attr != ""
+    exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
+  endif
+endfun
+
+fun s:Load_Settings_Override(custom)
+  if has_key(a:custom, 'cursorline')
+    let s:cursorline = [a:custom['cursorline'], '' . s:rgb(a:custom['cursorline'])]
+  endif
+  if has_key(a:custom, 'background')
+    let s:background = [a:custom['background'], '' . s:rgb(a:custom['background'])]
+  endif
+  if has_key(a:custom, 'matchparen')
+    let s:matchparen = [a:custom['matchparen'], '' . s:rgb(a:custom['matchparen'])]
+  endif
+  if has_key(a:custom, 'comment')
+    let s:comment = [a:custom['comment'], '' . s:rgb(a:custom['comment'])]
+  endif
+endfun
+" }}}
+
+" Color Palette: {{{
+let s:is_dark=(&background == 'dark')
+
+if s:is_dark " DARK VARIANT
+  " These color names are corresponding to the original light version,
+  " and they don't represent the HEX code that they store in this block.
+  let s:red     = ['#5faf5f', '71'] "Include/Exception
+  let s:green   = ['#dfaf00', '178'] "Boolean/Special
+  let s:blue    = ['#00afaf', '37'] "Keyword
+
+  let s:pink    = ['#afdf00', '148'] "Type
+  let s:olive   = ['#dfaf5f', '179'] "String
+  let s:navy    = ['#df875f', '173'] "StorageClass
+
+  let s:orange  = ['#ff5faf', '205'] "Number
+  let s:purple  = ['#af87af', '139'] "Repeat/Conditional
+  let s:aqua    = ['#5fafdf', '74'] "Operator/Delimiter
+
+  let s:wine  = ['#af8787', '138']
+
+  " Basics:
+  let s:foreground   = ['#d0d0d0', '251']
+  let s:background   = ['#262626', '234']
+  let s:selection    = ['#3a3a3a', '236']
+  let s:nontext      = ['#444444', '237']
+  let s:window       = ['#3a3a3a', '236']
+  let s:divider      = ['#5f8787', '66']
+  let s:linenumber   = ['#606060', '240']
+  let s:comment      = ['#8a8a8a', '244']
+  let s:todo         = ['#ff8700', '208']
+  let s:cursorline   = ['#303030', '235']
+  let s:cursorlinenr = ['#ffff00', '226']
+  let s:cursorcolumn = ['#303030', '235']
+  let s:error        = ['#5f0000', '52']
+  let s:matchparen   = ['#4e4e4e', '239']
+
+  " Spelling:
+  let s:spellbad   = ['#5f0000', '52']
+  let s:spellcap   = ['#5f005f', '53']
+  let s:spellrare  = ['#005f00', '22']
+  let s:spelllocal = ['#00005f', '17']
+
+  " Tabline:
+  let s:tabline_bg          = ['#3a3a3a', '235']
+  let s:tabline_active_fg   = ['#1c1c1c', '233']
+  let s:tabline_active_bg   = ['#00afaf', '37']
+  let s:tabline_inactive_fg = ['#c6c6c6', '250']
+  let s:tabline_inactive_bg = ['#585858', '240']
+
+  " Statusline:
+  let s:statusline_active_fg   = ['#1c1c1c', '233']
+  let s:statusline_active_bg   = ['#5f8787', '66']
+  let s:statusline_inactive_fg = ['#c6c6c6', '250']
+  let s:statusline_inactive_bg = ['#444444', '237']
+
+  " Search:
+  let s:search_fg = ['#000000', '16']
+  let s:search_bg = ['#00875f', '29']
+
+  " Visual:
+  let s:visual_fg = ['#000000', '16']
+  let s:visual_bg = ['#8787af', '103']
+
+  " Folded:
+  let s:folded_fg = ['#afdf00', '148']
+  let s:folded_bg = ['#444444', '237']
+
+  " WildMenu:
+  let s:wildmenu_fg  = s:background
+  let s:wildmenu_bg  = ['#afdf00', '148']
+
+  " Diff:
+  let s:diffadd_fg    = ['#000000', '16']
+  let s:diffadd_bg    = ['#5faf00', '70']
+
+  let s:diffdelete_fg = ['#000000', '16']
+  let s:diffdelete_bg = ['#5f0000', '52']
+
+  let s:difftext_fg   = ['#000000', '16']
+  let s:difftext_bg   = ['#ffdf5f', '221']
+
+  let s:diffchange_fg = ['#000000', '16']
+  let s:diffchange_bg = ['#dfaf00', '178']
+
+  " User Override Settings:
+  if exists("g:PaperColor_Dark_Override")
+    call s:Load_Settings_Override(g:PaperColor_Dark_Override)
+  endif
+
+else " LIGHT VARIANT
+
+  let s:red     = ['#df0000', '160'] "Include/Exception
+  let s:green   = ['#008700', '28'] "Boolean/Special
+  let s:blue    = ['#4271ae', '25'] "Keyword
+
+  let s:pink    = ['#d7005f', '161'] "Type
+  let s:olive   = ['#718c00', '64'] "String
+  let s:navy    = ['#005f87', '24'] "StorageClass
+
+  let s:orange  = ['#d75f00', '166'] "Number
+  let s:purple  = ['#8959a8', '97'] "Repeat/Conditional
+  let s:aqua    = ['#3e999f', '31'] "Operator/Delimiter
+
+  let s:wine  = ['#870087', '90']
+
+  " Basics:
+  let s:foreground   = ['#444444', '238']
+  let s:background   = ['#F5F5F5', '255']
+  let s:selection    = ['#d0d0d0', '252']
+  let s:nontext      = ['#dfafff', '189']
+  let s:window       = ['#e4e4e4', '254']
+  let s:divider      = s:navy
+  let s:linenumber   = ['#bcbcbc', '249']
+  let s:comment      = ['#878787', '102']
+  let s:todo         = ['#00af5f', '35']
+  let s:cursorline   = ['#e4e4e4', '254']
+  let s:cursorlinenr = ['#af0000', '124']
+  let s:cursorcolumn = ['#e4e4e4', '254']
+  let s:error        = ['#ffafdf', '218']
+  let s:matchparen   = ['#c6c6c6', '251']
+
+  " Spelling:
+  let s:spellbad   = ['#ffafdf', '218']
+  let s:spellcap   = ['#ffffaf', '229']
+  let s:spellrare  = ['#afff87', '156']
+  let s:spelllocal = ['#dfdfff', '189']
+
+  " Tabline:
+  let s:tabline_bg          = s:navy
+  let s:tabline_active_fg   = s:foreground
+  let s:tabline_active_bg   = s:window
+  let s:tabline_inactive_fg = s:background
+  let s:tabline_inactive_bg = s:aqua
+
+  " Statusline:
+  let s:statusline_active_fg   = s:window
+  let s:statusline_active_bg   = s:navy
+  let s:statusline_inactive_fg = s:foreground
+  let s:statusline_inactive_bg = ['#d0d0d0', '252']
+
+  " Search:
+  let s:search_fg = s:foreground
+  let s:search_bg = ['#ffff5f', '227']
+
+  " Visual:
+  let s:visual_fg = s:background
+  let s:visual_bg = s:blue
+
+  " Folded:
+  let s:folded_fg = s:navy
+  let s:folded_bg = ['#afdfff', '153']
+
+  " WildMenu:
+  let s:wildmenu_fg  = s:foreground
+  let s:wildmenu_bg  = ['#ffff00', '226']
+
+  " Diff:
+  let s:diffadd_fg    = []
+  let s:diffadd_bg    = ['#afffaf', '157']
+
+  let s:diffdelete_fg = []
+  let s:diffdelete_bg = ['#ffdfff', '225']
+
+  let s:difftext_fg   = []
+  let s:difftext_bg   = ['#ffffdf', '230']
+
+  let s:diffchange_fg = []
+  let s:diffchange_bg = ['#ffffaf', '229']
+
+  " User Override Settings:
+  if exists("g:PaperColor_Light_Override")
+    call s:Load_Settings_Override(g:PaperColor_Light_Override)
+  endif
+endif
+" }}}
+
+" Syntax Highlighting: {{{
+if has("gui_running") || &t_Co == 88 || &t_Co == 256
+
+  " Vim Highlighting
+  call s:HL("Normal", s:foreground, s:background, "")
+
+  " Switching between dark & light variant through `set background`
+  " https://github.com/NLKNguyen/papercolor-theme/pull/20
+  if s:is_dark " DARK VARIANT
+    set background=dark
+  else " LIGHT VARIANT
+    set background=light
+  endif
+
+  highlight LineNr term=bold cterm=NONE ctermfg=darkgrey ctermbg=NONE gui=NONE guifg=darkgrey guibg=NONE
+  call s:HL("NonText", s:nontext, "", "")
+  call s:HL("SpecialKey", s:nontext, "", "")
+  call s:HL("Search", s:search_fg, s:search_bg, "")
+  call s:HL("LineNr", s:linenumber, "", "")
+  call s:HL("TabLine", s:tabline_inactive_fg, s:tabline_inactive_bg, "None")
+  call s:HL("TabLineFill", "", s:tabline_bg, "None")
+  call s:HL("TabLineSel", s:tabline_active_fg, s:tabline_active_bg, "None")
+  call s:HL("StatusLine", s:statusline_active_fg, s:statusline_active_bg, "bold")
+  call s:HL("StatusLineNC", s:statusline_inactive_fg, s:statusline_inactive_bg, "None")
+  call s:HL("VertSplit", s:divider, s:background, "none")
+  " call s:HL("VertSplit", s:red, s:background, "none")
+  call s:HL("Visual", s:visual_fg, s:visual_bg, "")
+  call s:HL("Directory", s:blue, "", "")
+  call s:HL("ModeMsg", s:olive, "", "")
+  call s:HL("MoreMsg", s:olive, "", "")
+  call s:HL("Question", s:olive, "", "")
+  call s:HL("WarningMsg", s:pink, "", "")
+  call s:HL("MatchParen", "", s:matchparen, "")
+  call s:HL("Folded", s:folded_fg, s:folded_bg, "")
+  call s:HL("FoldColumn", "", s:background, "")
+  call s:HL("WildMenu", s:wildmenu_fg, s:wildmenu_bg, "bold")
+  if version >= 700
+    call s:HL("CursorLine", "", s:cursorline, "none")
+    call s:HL("CursorLineNr", s:cursorlinenr, "", "none")
+    call s:HL("CursorColumn", "", s:cursorcolumn, "none")
+    call s:HL("PMenu", s:foreground, s:selection, "none")
+    call s:HL("PMenuSel", s:foreground, s:selection, "reverse")
+    call s:HL("SignColumn", s:green, s:background, "none")
+  end
+  if version >= 703
+    call s:HL("ColorColumn", "", s:cursorcolumn, "none")
+  end
+
+  " Standard Group Highlighting:
+  call s:HL("Comment", s:comment, "", "")
+
+  call s:HL("Constant", s:orange, "", "")
+  call s:HL("String", s:olive, "", "")
+  call s:HL("Character", s:olive, "", "")
+  call s:HL("Number", s:orange, "", "")
+  call s:HL("Boolean", s:green, "", "bold")
+  call s:HL("Float", s:orange, "", "")
+
+  call s:HL("Identifier", s:navy, "", "")
+  call s:HL("Function", s:foreground, "", "")
+
+  call s:HL("Statement", s:pink, "", "none")
+  call s:HL("Conditional", s:purple, "", "bold")
+  call s:HL("Repeat", s:purple, "", "bold")
+  call s:HL("Label", s:blue, "", "")
+  call s:HL("Operator", s:aqua, "", "none")
+  call s:HL("Keyword", s:blue, "", "")
+  call s:HL("Exception", s:red, "", "")
+
+  call s:HL("PreProc", s:blue, "", "")
+  call s:HL("Include", s:red, "", "")
+  call s:HL("Define", s:blue, "", "")
+  call s:HL("Macro", s:blue, "", "")
+  call s:HL("PreCondit", s:aqua, "", "")
+
+  call s:HL("Type", s:pink, "", "bold")
+  call s:HL("StorageClass", s:navy, "", "bold")
+  call s:HL("Structure", s:blue, "", "bold")
+  call s:HL("Typedef", s:pink, "", "bold")
+
+  call s:HL("Special", s:foreground, "", "")
+  call s:HL("SpecialChar", s:foreground, "", "")
+  call s:HL("Tag", s:green, "", "")
+  call s:HL("Delimiter",s:aqua, "", "")
+  call s:HL("SpecialComment", s:comment, "", "bold")
+  call s:HL("Debug", s:orange, "", "")
+
+  "call s:HL("Ignore", "666666", "", "")
+
+  call s:HL("Error", s:foreground, s:error, "")
+  call s:HL("Todo", s:todo, s:background, "bold")
+
+  call s:HL("Title", s:comment, "", "")
+  call s:HL("Global", s:blue, "", "")
+
+
+  " Extension {{{
+  " VimL Highlighting
+  call s:HL("vimCommand", s:pink, "", "none")
+  call s:HL("vimVar", s:navy, "", "")
+  call s:HL("vimFuncKey", s:pink, "", "")
+  call s:HL("vimFunction", s:blue, "", "bold")
+  call s:HL("vimNotFunc", s:pink, "", "")
+  call s:HL("vimMap", s:red, "", "")
+  call s:HL("vimAutoEvent", s:aqua, "", "bold")
+  call s:HL("vimMapModKey", s:aqua, "", "")
+  call s:HL("vimFuncName", s:purple, "", "")
+  call s:HL("vimIsCommand", s:foreground, "", "")
+  call s:HL("vimFuncVar", s:aqua, "", "")
+  call s:HL("vimLet", s:red, "", "")
+  call s:HL("vimMapRhsExtend", s:foreground, "", "")
+  call s:HL("vimCommentTitle", s:comment, "", "bold")
+  call s:HL("vimBracket", s:aqua, "", "")
+  call s:HL("vimParenSep", s:aqua, "", "")
+  call s:HL("vimSynType", s:olive, "", "bold")
+  call s:HL("vimNotation", s:aqua, "", "")
+  call s:HL("vimOper", s:foreground, "", "")
+  call s:HL("vimOperParen", s:foreground, "", "")
+  call s:HL("vimSynType", s:purple, "", "none")
+  call s:HL("vimSynReg", s:pink, "", "none")
+  call s:HL("vimSynKeyRegion", s:green, "", "")
+  call s:HL("vimSynRegOpt", s:blue, "", "")
+  call s:HL("vimSynMtchOpt", s:blue, "", "")
+  call s:HL("vimSynContains", s:pink, "", "")
+  call s:HL("vimGroupName", s:foreground, "", "")
+  call s:HL("vimGroupList", s:foreground, "", "")
+  call s:HL("vimHiGroup", s:foreground, "", "")
+  call s:HL("vimGroup", s:navy, "", "bold")
+
+  " Makefile Highlighting
+  call s:HL("makeIdent", s:blue, "", "")
+  call s:HL("makeSpecTarget", s:olive, "", "")
+  call s:HL("makeTarget", s:red, "", "")
+  call s:HL("makeStatement", s:aqua, "", "bold")
+  call s:HL("makeCommands", s:foreground, "", "")
+  call s:HL("makeSpecial", s:orange, "", "bold")
+
+  " CMake Highlighting
+  call s:HL("cmakeStatement", s:pink, "", "")
+  call s:HL("cmakeArguments", s:foreground, "", "")
+  call s:HL("cmakeVariableValue", s:blue, "", "")
+  call s:HL("cmakeOperators", s:red, "", "")
+
+  " C Highlighting
+  call s:HL("cType", s:pink, "", "bold")
+  call s:HL("cFormat", s:olive, "", "")
+  call s:HL("cStorageClass", s:navy, "", "bold")
+
+  call s:HL("cBoolean", s:green, "", "")
+  call s:HL("cCharacter", s:olive, "", "")
+  call s:HL("cConstant", s:green, "", "bold")
+  call s:HL("cConditional", s:purple, "", "bold")
+  call s:HL("cSpecial", s:olive, "", "bold")
+  call s:HL("cDefine", s:blue, "", "")
+  call s:HL("cNumber", s:orange, "", "")
+  call s:HL("cPreCondit", s:aqua, "", "")
+  call s:HL("cRepeat", s:purple, "", "bold")
+  call s:HL("cLabel",s:aqua, "", "")
+  " call s:HL("cAnsiFunction",s:aqua, "", "bold")
+  " call s:HL("cAnsiName",s:pink, "", "")
+  call s:HL("cDelimiter",s:blue, "", "")
+  " call s:HL("cBraces",s:foreground, "", "")
+  " call s:HL("cIdentifier",s:blue, s:pink, "")
+  " call s:HL("cSemiColon","", s:blue, "")
+  call s:HL("cOperator",s:aqua, "", "")
+  " call s:HL("cStatement",s:pink, "", "")
+  call s:HL("cFunction", s:foreground, "", "")
+  " call s:HL("cTodo", s:comment, "", "bold")
+  " call s:HL("cStructure", s:blue, "", "bold")
+  call s:HL("cCustomParen", s:foreground, "", "")
+  " call s:HL("cCustomFunc", s:foreground, "", "")
+  " call s:HL("cUserFunction",s:blue, "", "bold")
+  call s:HL("cOctalZero", s:purple, "", "bold")
+
+  " CPP highlighting
+  call s:HL("cppBoolean", s:navy, "", "")
+  call s:HL("cppSTLnamespace", s:purple, "", "")
+  call s:HL("cppSTLconstant", s:foreground, "", "")
+  call s:HL("cppSTLtype", s:foreground, "", "")
+  call s:HL("cppSTLexception", s:pink, "", "")
+  call s:HL("cppSTLfunctional", s:foreground, "", "bold")
+  call s:HL("cppSTLiterator", s:foreground, "", "bold")
+  " call s:HL("cppSTLfunction", s:aqua, "", "bold")
+  call s:HL("cppExceptions", s:red, "", "")
+  call s:HL("cppStatement", s:blue, "", "")
+  call s:HL("cppStorageClass", s:navy, "", "bold")
+  call s:HL("cppAccess",s:blue, "", "")
+  " call s:HL("cppSTL",s:blue, "", "")
+
+
+  " Lex highlighting
+  call s:HL("lexCFunctions", s:foreground, "", "")
+  call s:HL("lexAbbrv", s:purple, "", "")
+  call s:HL("lexAbbrvRegExp", s:aqua, "", "")
+  call s:HL("lexAbbrvComment", s:comment, "", "")
+  call s:HL("lexBrace", s:navy, "", "")
+  call s:HL("lexPat", s:aqua, "", "")
+  call s:HL("lexPatComment", s:comment, "", "")
+  call s:HL("lexPatTag", s:orange, "", "")
+  " call s:HL("lexPatBlock", s:foreground, "", "bold")
+  call s:HL("lexSlashQuote", s:foreground, "", "")
+  call s:HL("lexSep", s:foreground, "", "")
+  call s:HL("lexStartState", s:orange, "", "")
+  call s:HL("lexPatTagZone", s:olive, "", "bold")
+  call s:HL("lexMorePat", s:olive, "", "bold")
+  call s:HL("lexOptions", s:olive, "", "bold")
+  call s:HL("lexPatString", s:olive, "", "")
+
+  " Yacc highlighting
+  call s:HL("yaccNonterminal", s:navy, "", "")
+  call s:HL("yaccDelim", s:orange, "", "")
+  call s:HL("yaccInitKey", s:aqua, "", "")
+  call s:HL("yaccInit", s:navy, "", "")
+  call s:HL("yaccKey", s:purple, "", "")
+  call s:HL("yaccVar", s:aqua, "", "")
+
+  " NASM highlighting
+  call s:HL("nasmStdInstruction", s:navy, "", "")
+  call s:HL("nasmGen08Register", s:aqua, "", "")
+  call s:HL("nasmGen16Register", s:aqua, "", "")
+  call s:HL("nasmGen32Register", s:aqua, "", "")
+  call s:HL("nasmGen64Register", s:aqua, "", "")
+  call s:HL("nasmHexNumber", s:purple, "", "")
+  call s:HL("nasmStorage", s:aqua, "", "bold")
+  call s:HL("nasmLabel", s:pink, "", "")
+  call s:HL("nasmDirective", s:blue, "", "bold")
+  call s:HL("nasmLocalLabel", s:orange, "", "")
+
+  " GAS highlighting
+  call s:HL("gasSymbol", s:pink, "", "")
+  call s:HL("gasDirective", s:blue, "", "bold")
+  call s:HL("gasOpcode_386_Base", s:navy, "", "")
+  call s:HL("gasDecimalNumber", s:purple, "", "")
+  call s:HL("gasSymbolRef", s:pink, "", "")
+  call s:HL("gasRegisterX86", s:blue, "", "")
+  call s:HL("gasOpcode_P6_Base", s:navy, "", "")
+  call s:HL("gasDirectiveStore", s:foreground, "", "bold")
+
+  " MIPS highlighting
+  call s:HL("mipsInstruction", s:pink, "", "")
+  call s:HL("mipsRegister", s:navy, "", "")
+  call s:HL("mipsLabel", s:aqua, "", "bold")
+  call s:HL("mipsDirective", s:purple, "", "bold")
+
+  " Shell/Bash highlighting
+  call s:HL("bashStatement", s:foreground, "", "bold")
+  call s:HL("shDerefVar", s:aqua, "", "bold")
+  call s:HL("shDerefSimple", s:aqua, "", "")
+  call s:HL("shFunction", s:orange, "", "bold")
+  call s:HL("shStatement", s:foreground, "", "")
+  call s:HL("shLoop", s:purple, "", "bold")
+  call s:HL("shQuote", s:olive, "", "")
+  call s:HL("shCaseEsac", s:aqua, "", "bold")
+  call s:HL("shSnglCase", s:purple, "", "none")
+  call s:HL("shFunctionOne", s:navy, "", "")
+  call s:HL("shCase", s:navy, "", "")
+  call s:HL("shSetList", s:navy, "", "")
+  " @see Dockerfile Highlighting section for more sh*
+
+  " HTML Highlighting
+  call s:HL("htmlTitle", s:green, "", "bold")
+  call s:HL("htmlH1", s:green, "", "bold")
+  call s:HL("htmlH2", s:aqua, "", "bold")
+  call s:HL("htmlH3", s:purple, "", "bold")
+  call s:HL("htmlH4", s:orange, "", "bold")
+  call s:HL("htmlTag", s:comment, "", "")
+  call s:HL("htmlTagName", s:wine, "", "")
+  call s:HL("htmlArg", s:pink, "", "")
+  call s:HL("htmlEndTag", s:comment, "", "")
+  call s:HL("htmlString", s:blue, "", "")
+  call s:HL("htmlScriptTag", s:comment, "", "")
+  call s:HL("htmlBold", s:foreground, "", "bold")
+  call s:HL("htmlItalic", s:comment, "", "bold")
+  call s:HL("htmlBoldItalic", s:navy, "", "bold")
+  " call s:HL("htmlLink", s:blue, "", "bold")
+  call s:HL("htmlTagN", s:wine, "", "bold")
+  call s:HL("htmlSpecialTagName", s:wine, "", "")
+  call s:HL("htmlComment", s:comment, "", "")
+  call s:HL("htmlCommentPart", s:comment, "", "")
+
+  " CSS Highlighting
+  call s:HL("cssIdentifier", s:pink, "", "")
+  call s:HL("cssPositioningProp", s:foreground, "", "")
+  call s:HL("cssNoise", s:foreground, "", "")
+  call s:HL("cssBoxProp", s:foreground, "", "")
+  call s:HL("cssTableAttr", s:purple, "", "")
+  call s:HL("cssPositioningAttr", s:navy, "", "")
+  call s:HL("cssValueLength", s:orange, "", "")
+
+call s:HL("cssFunctionName", s:blue, "", "")
+call s:HL("cssUnitDecorators", s:aqua, "", "")
+call s:HL("cssColor", s:blue, "", "bold")
+call s:HL("cssBraces", s:pink, "", "")
+call s:HL("cssBackgroundProp", s:foreground, "", "")
+call s:HL("cssTextProp", s:foreground, "", "")
+call s:HL("cssDimensionProp", s:foreground, "", "")
+call s:HL("cssClassName", s:pink, "", "")
+
+  " Markdown Highlighting
+  call s:HL("markdownHeadingRule", s:pink, "", "bold")
+  call s:HL("markdownH1", s:pink, "", "bold")
+  call s:HL("markdownH2", s:orange, "", "bold")
+  call s:HL("markdownBlockquote", s:pink, "", "")
+  call s:HL("markdownCodeBlock", s:olive, "", "")
+  call s:HL("markdownCode", s:olive, "", "")
+  call s:HL("markdownLink", s:blue, "", "bold")
+  call s:HL("markdownUrl", s:blue, "", "")
+  call s:HL("markdownLinkText", s:pink, "", "")
+  call s:HL("markdownLinkTextDelimiter", s:purple, "", "")
+  call s:HL("markdownLinkDelimiter", s:purple, "", "")
+  call s:HL("markdownCodeDelimiter", s:blue, "", "")
+
+  call s:HL("mkdCode", s:olive, "", "none")
+  call s:HL("mkdLink", s:blue, "", "bold")
+  call s:HL("mkdURL", s:comment, "", "none")
+  call s:HL("mkdString", s:foreground, "", "none")
+  call s:HL("mkdBlockQuote", s:foreground, s:window, "none")
+  call s:HL("mkdLinkTitle", s:pink, "", "none")
+  call s:HL("mkdDelimiter", s:aqua, "", "")
+  call s:HL("mkdRule", s:pink, "", "")
+
+  " reStructuredText Highlighting
+  call s:HL("rstSections", s:pink, "", "bold")
+  call s:HL("rstDelimiter", s:pink, "", "bold")
+  call s:HL("rstExplicitMarkup", s:pink, "", "bold")
+  call s:HL("rstDirective", s:blue, "", "")
+  call s:HL("rstHyperlinkTarget", s:green, "", "")
+  call s:HL("rstExDirective", s:foreground, "", "")
+  call s:HL("rstInlineLiteral", s:olive, "", "")
+  call s:HL("rstInterpretedTextOrHyperlinkReference", s:blue, "", "")
+
+  " Python Highlighting
+  call s:HL("pythonImport", s:pink, "", "bold")
+  call s:HL("pythonExceptions", s:red, "", "")
+  call s:HL("pythonException", s:purple, "", "bold")
+  call s:HL("pythonInclude", s:red, "", "")
+  call s:HL("pythonStatement", s:pink, "", "")
+  call s:HL("pythonConditional", s:purple, "", "bold")
+  call s:HL("pythonRepeat", s:purple, "", "bold")
+  call s:HL("pythonFunction", s:aqua, "", "bold")
+  call s:HL("pythonPreCondit", s:purple, "", "")
+  call s:HL("pythonExClass", s:orange, "", "")
+  call s:HL("pythonOperator", s:purple, "", "bold")
+  call s:HL("pythonBuiltin", s:foreground, "", "")
+  call s:HL("pythonDecorator", s:orange, "", "")
+
+  call s:HL("pythonString", s:olive, "", "")
+  call s:HL("pythonEscape", s:olive, "", "bold")
+  call s:HL("pythonStrFormatting", s:olive, "", "bold")
+
+  call s:HL("pythonBoolean", s:green, "", "bold")
+  call s:HL("pythonExClass", s:red, "", "")
+  call s:HL("pythonBytesEscape", s:olive, "", "bold")
+  call s:HL("pythonDottedName", s:purple, "", "")
+  call s:HL("pythonStrFormat", s:foreground, "", "")
+  call s:HL("pythonBuiltinFunc", s:foreground, "", "")
+  call s:HL("pythonBuiltinObj", s:foreground, "", "")
+
+  " Java Highlighting
+  call s:HL("javaExternal", s:pink, "", "")
+  call s:HL("javaAnnotation", s:orange, "", "")
+  call s:HL("javaTypedef", s:aqua, "", "")
+  call s:HL("javaClassDecl", s:aqua, "", "bold")
+  call s:HL("javaScopeDecl", s:blue, "", "bold")
+  call s:HL("javaStorageClass", s:navy, "", "bold")
+  call s:HL("javaBoolean", s:green, "", "bold")
+  call s:HL("javaConstant", s:blue, "", "")
+  call s:HL("javaCommentTitle", s:wine, "", "")
+  call s:HL("javaDocTags", s:aqua, "", "")
+  call s:HL("javaDocComment", s:comment, "", "")
+  call s:HL("javaDocParam", s:foreground, "", "")
+
+  " JavaScript Highlighting
+  call s:HL("javaScriptBraces", s:blue, "", "")
+  call s:HL("javaScriptParens", s:blue, "", "")
+  call s:HL("javaScriptIdentifier", s:pink, "", "")
+  call s:HL("javaScriptFunction", s:blue, "", "bold")
+  call s:HL("javaScriptConditional", s:purple, "", "bold")
+  call s:HL("javaScriptRepeat", s:purple, "", "bold")
+  call s:HL("javaScriptBoolean", s:green, "", "bold")
+  call s:HL("javaScriptNumber", s:orange, "", "")
+  call s:HL("javaScriptMember", s:navy, "", "")
+  call s:HL("javaScriptReserved", s:navy, "", "")
+  call s:HL("javascriptNull", s:comment, "", "bold")
+  call s:HL("javascriptGlobal", s:foreground, "", "")
+  call s:HL("javascriptStatement", s:pink, "", "")
+  call s:HL("javaScriptMessage", s:foreground, "", "")
+  call s:HL("javaScriptMember", s:foreground, "", "")
+
+  " @target https://github.com/pangloss/vim-javascript
+  call s:HL("jsFuncParens", s:blue, "", "")
+  call s:HL("jsFuncBraces", s:blue, "", "")
+  call s:HL("jsParens", s:blue, "", "")
+  call s:HL("jsBraces", s:blue, "", "")
+  call s:HL("jsNoise", s:blue, "", "")
+
+  " Json Highlighting
+  " @target https://github.com/elzr/vim-json
+  call s:HL("jsonKeyword", s:blue, "", "")
+  call s:HL("jsonString", s:olive, "", "")
+  call s:HL("jsonQuote", s:comment, "", "")
+  call s:HL("jsonNoise", s:foreground, "", "")
+  call s:HL("jsonKeywordMatch", s:foreground, "", "")
+  call s:HL("jsonBraces", s:foreground, "", "")
+  call s:HL("jsonNumber", s:orange, "", "")
+  call s:HL("jsonNull", s:purple, "", "bold")
+  call s:HL("jsonBoolean", s:green, "", "bold")
+  call s:HL("jsonCommentError", s:pink, s:background , "")
+
+  " Go Highlighting
+  call s:HL("goDirective", s:red, "", "")
+  call s:HL("goDeclaration", s:blue, "", "bold")
+  call s:HL("goStatement", s:pink, "", "")
+  call s:HL("goConditional", s:purple, "", "bold")
+  call s:HL("goConstants", s:orange, "", "")
+  call s:HL("goFunction", s:orange, "", "")
+  " call s:HL("goTodo", s:comment, "", "bold")
+  call s:HL("goDeclType", s:blue, "", "")
+  call s:HL("goBuiltins", s:purple, "", "")
+
+  " Systemtap Highlighting
+  " call s:HL("stapBlock", s:comment, "", "none")
+  call s:HL("stapComment", s:comment, "", "none")
+  call s:HL("stapProbe", s:aqua, "", "bold")
+  call s:HL("stapStat", s:navy, "", "bold")
+  call s:HL("stapFunc", s:foreground, "", "")
+  call s:HL("stapString", s:olive, "", "")
+  call s:HL("stapTarget", s:navy, "", "")
+  call s:HL("stapStatement", s:pink, "", "")
+  call s:HL("stapType", s:pink, "", "bold")
+  call s:HL("stapSharpBang", s:comment, "", "")
+  call s:HL("stapDeclaration", s:pink, "", "")
+  call s:HL("stapCMacro", s:blue, "", "")
+
+  " DTrace Highlighting
+  call s:HL("dtraceProbe", s:blue, "", "")
+  call s:HL("dtracePredicate", s:purple, "", "bold")
+  call s:HL("dtraceComment", s:comment, "", "")
+  call s:HL("dtraceFunction", s:foreground, "", "")
+  call s:HL("dtraceAggregatingFunction", s:blue, "", "bold")
+  call s:HL("dtraceStatement", s:navy, "", "bold")
+  call s:HL("dtraceIdentifier", s:pink, "", "")
+  call s:HL("dtraceOption", s:pink, "", "")
+  call s:HL("dtraceConstant", s:orange, "", "")
+  call s:HL("dtraceType", s:pink, "", "bold")
+
+  " PlantUML Highlighting
+  call s:HL("plantumlPreProc", s:orange, "", "bold")
+  call s:HL("plantumlDirectedOrVerticalArrowRL", s:pink, "", "")
+  call s:HL("plantumlDirectedOrVerticalArrowLR", s:pink, "", "")
+  call s:HL("plantumlString", s:olive, "", "")
+  call s:HL("plantumlActivityThing", s:purple, "", "")
+  call s:HL("plantumlText", s:navy, "", "")
+  call s:HL("plantumlClassPublic", s:olive, "", "bold")
+  call s:HL("plantumlClassPrivate", s:red, "", "")
+  call s:HL("plantumlColonLine", s:orange, "", "")
+  call s:HL("plantumlClass", s:navy, "", "")
+  call s:HL("plantumlHorizontalArrow", s:pink, "", "")
+  call s:HL("plantumlTypeKeyword", s:blue, "", "bold")
+  call s:HL("plantumlKeyword", s:pink, "", "bold")
+
+  call s:HL("plantumlType", s:blue, "", "bold")
+  call s:HL("plantumlBlock", s:pink, "", "bold")
+  call s:HL("plantumlPreposition", s:orange, "", "")
+  call s:HL("plantumlLayout", s:blue, "", "bold")
+  call s:HL("plantumlNote", s:orange, "", "")
+  call s:HL("plantumlLifecycle", s:aqua, "", "")
+  call s:HL("plantumlParticipant", s:foreground, "", "bold")
+
+
+  " Haskell Highlighting
+  call s:HL("haskellType", s:aqua, "", "bold")
+  call s:HL("haskellIdentifier", s:orange, "", "bold")
+  call s:HL("haskellOperators", s:pink, "", "")
+  call s:HL("haskellWhere", s:foreground, "", "bold")
+  call s:HL("haskellDelimiter", s:aqua, "", "")
+  call s:HL("haskellImportKeywords", s:pink, "", "")
+  call s:HL("haskellStatement", s:purple, "", "bold")
+
+
+  " SQL/MySQL Highlighting
+  call s:HL("sqlStatement", s:pink, "", "bold")
+  call s:HL("sqlType", s:blue, "", "bold")
+  call s:HL("sqlKeyword", s:pink, "", "")
+  call s:HL("sqlOperator", s:aqua, "", "")
+  call s:HL("sqlSpecial", s:green, "", "bold")
+
+  call s:HL("mysqlVariable", s:olive, "", "bold")
+  call s:HL("mysqlType", s:blue, "", "bold")
+  call s:HL("mysqlKeyword", s:pink, "", "")
+  call s:HL("mysqlOperator", s:aqua, "", "")
+  call s:HL("mysqlSpecial", s:green, "", "bold")
+
+
+  " Octave/MATLAB Highlighting
+  call s:HL("octaveVariable", s:foreground, "", "")
+  call s:HL("octaveDelimiter", s:pink, "", "")
+  call s:HL("octaveQueryVar", s:foreground, "", "")
+  call s:HL("octaveSemicolon", s:purple, "", "")
+  call s:HL("octaveFunction", s:navy, "", "")
+  call s:HL("octaveSetVar", s:blue, "", "")
+  call s:HL("octaveUserVar", s:foreground, "", "")
+  call s:HL("octaveArithmeticOperator", s:aqua, "", "")
+  call s:HL("octaveBeginKeyword", s:purple, "", "bold")
+  call s:HL("octaveElseKeyword", s:purple, "", "bold")
+  call s:HL("octaveEndKeyword", s:purple, "", "bold")
+  call s:HL("octaveStatement", s:pink, "", "")
+
+  " Ruby Highlighting
+  call s:HL("rubyModule", s:navy, "", "bold")
+  call s:HL("rubyClass", s:pink, "", "bold")
+  call s:HL("rubyPseudoVariable", s:comment, "", "bold")
+  call s:HL("rubyKeyword", s:pink, "", "")
+  call s:HL("rubyInstanceVariable", s:purple, "", "")
+  call s:HL("rubyFunction", s:foreground, "", "bold")
+  call s:HL("rubyDefine", s:pink, "", "")
+  call s:HL("rubySymbol", s:aqua, "", "")
+  call s:HL("rubyConstant", s:blue, "", "")
+  call s:HL("rubyAccess", s:navy, "", "")
+  call s:HL("rubyAttribute", s:green, "", "")
+  call s:HL("rubyInclude", s:red, "", "")
+  call s:HL("rubyLocalVariableOrMethod", s:orange, "", "")
+  call s:HL("rubyCurlyBlock", s:foreground, "", "")
+  call s:HL("rubyCurlyBlockDelimiter", s:aqua, "", "")
+  call s:HL("rubyArrayDelimiter", s:aqua, "", "")
+  call s:HL("rubyStringDelimiter", s:olive, "", "")
+  call s:HL("rubyInterpolationDelimiter", s:orange, "", "")
+  call s:HL("rubyConditional", s:purple, "", "bold")
+  call s:HL("rubyRepeat", s:purple, "", "bold")
+  call s:HL("rubyControl", s:purple, "", "bold")
+  call s:HL("rubyException", s:purple, "", "bold")
+  call s:HL("rubyExceptional", s:purple, "", "bold")
+  call s:HL("rubyBoolean", s:green, "", "bold")
+
+  " Fortran Highlighting
+  call s:HL("fortranUnitHeader", s:foreground, "", "bold")
+  call s:HL("fortranType", s:pink, "", "bold")
+  call s:HL("fortranStructure", s:blue, "", "bold")
+  call s:HL("fortranStorageClass", s:navy, "", "bold")
+  call s:HL("fortranStorageClassR", s:navy, "", "bold")
+  call s:HL("fortranKeyword", s:pink, "", "")
+  call s:HL("fortranReadWrite", s:blue, "", "")
+  call s:HL("fortranIO", s:navy, "", "")
+
+  " R Highlighting
+  call s:HL("rType", s:blue, "", "")
+  call s:HL("rArrow", s:pink, "", "")
+  call s:HL("rDollar", s:blue, "", "")
+
+  " XXD Highlighting
+  call s:HL("xxdAddress", s:navy, "", "")
+  call s:HL("xxdSep", s:pink, "", "")
+  call s:HL("xxdAscii", s:pink, "", "")
+  call s:HL("xxdDot", s:aqua, "", "")
+
+  " PHP Highlighting
+  call s:HL("phpIdentifier", s:foreground, "", "")
+  call s:HL("phpVarSelector", s:pink, "", "")
+  call s:HL("phpKeyword", s:blue, "", "")
+  call s:HL("phpRepeat", s:purple, "", "bold")
+  call s:HL("phpConditional", s:purple, "", "bold")
+  call s:HL("phpStatement", s:pink, "", "")
+  call s:HL("phpAssignByRef", s:aqua, "", "bold")
+  call s:HL("phpSpecialFunction", s:blue, "", "")
+  call s:HL("phpFunctions", s:blue, "", "")
+  call s:HL("phpComparison", s:aqua, "", "")
+  call s:HL("phpBackslashSequences", s:olive, "", "bold")
+  call s:HL("phpMemberSelector", s:blue, "", "")
+  call s:HL("phpStorageClass", s:purple, "", "bold")
+  call s:HL("phpDefine", s:navy, "", "")
+
+  " Perl Highlighting
+  call s:HL("perlFiledescRead", s:green, "", "")
+  call s:HL("perlMatchStartEnd", s:pink, "", "")
+  call s:HL("perlStatementFlow", s:pink, "", "")
+  call s:HL("perlStatementStorage", s:pink, "", "")
+  call s:HL("perlFunction", s:pink, "", "bold")
+  call s:HL("perlMethod", s:foreground, "", "")
+  call s:HL("perlStatementFiledesc", s:orange, "", "")
+  call s:HL("perlVarPlain", s:navy, "", "")
+  call s:HL("perlSharpBang", s:comment, "", "")
+  call s:HL("perlStatementInclude", s:aqua, "", "bold")
+  call s:HL("perlStatementScalar", s:purple, "", "")
+  call s:HL("perlSubName", s:aqua, "", "bold")
+  call s:HL("perlSpecialString", s:olive, "", "bold")
+
+  " Pascal Highlighting
+  call s:HL("pascalType", s:pink, "", "bold")
+  call s:HL("pascalStatement", s:blue, "", "bold")
+  call s:HL("pascalPredefined", s:pink, "", "")
+  call s:HL("pascalFunction", s:foreground, "", "")
+  call s:HL("pascalStruct", s:navy, "", "bold")
+  call s:HL("pascalOperator", s:aqua, "", "bold")
+  call s:HL("pascalPreProc", s:green, "", "")
+  call s:HL("pascalAcces", s:navy, "", "bold")
+
+  " Lua Highlighting
+  call s:HL("luaFunc", s:foreground, "", "")
+  call s:HL("luaIn", s:blue, "", "bold")
+  call s:HL("luaFunction", s:pink, "", "")
+  call s:HL("luaStatement", s:blue, "", "")
+  call s:HL("luaRepeat", s:blue, "", "bold")
+  call s:HL("luaCondStart", s:purple, "", "bold")
+  call s:HL("luaTable", s:aqua, "", "bold")
+  call s:HL("luaConstant", s:green, "", "bold")
+  call s:HL("luaElse", s:purple, "", "bold")
+  call s:HL("luaCondElseif", s:purple, "", "bold")
+  call s:HL("luaCond", s:purple, "", "bold")
+  call s:HL("luaCondEnd", s:purple, "", "")
+
+  " Clojure highlighting:
+  call s:HL("clojureConstant", s:blue, "", "")
+  call s:HL("clojureBoolean", s:orange, "", "")
+  call s:HL("clojureCharacter", s:olive, "", "")
+  call s:HL("clojureKeyword", s:pink, "", "")
+  call s:HL("clojureNumber", s:orange, "", "")
+  call s:HL("clojureString", s:olive, "", "")
+  call s:HL("clojureRegexp", s:purple, "", "")
+  call s:HL("clojureRegexpEscape", s:pink, "", "")
+  call s:HL("clojureParen", s:aqua, "", "")
+  call s:HL("clojureVariable", s:olive, "", "")
+  call s:HL("clojureCond", s:blue, "", "")
+  call s:HL("clojureDefine", s:blue, "", "bold")
+  call s:HL("clojureException", s:red, "", "")
+  call s:HL("clojureFunc", s:navy, "", "")
+  call s:HL("clojureMacro", s:blue, "", "")
+  call s:HL("clojureRepeat", s:blue, "", "")
+  call s:HL("clojureSpecial", s:blue, "", "bold")
+  call s:HL("clojureQuote", s:blue, "", "")
+  call s:HL("clojureUnquote", s:blue, "", "")
+  call s:HL("clojureMeta", s:blue, "", "")
+  call s:HL("clojureDeref", s:blue, "", "")
+  call s:HL("clojureAnonArg", s:blue, "", "")
+  call s:HL("clojureRepeat", s:blue, "", "")
+  call s:HL("clojureDispatch", s:aqua, "", "")
+
+  " Dockerfile Highlighting
+  " @target https://github.com/docker/docker/tree/master/contrib/syntax/vim
+  call s:HL("dockerfileKeyword", s:blue, "", "")
+  call s:HL("shDerefVar", s:purple, "", "bold")
+  call s:HL("shOperator", s:aqua, "", "")
+  call s:HL("shOption", s:navy, "", "")
+  call s:HL("shLine", s:foreground, "", "")
+  call s:HL("shWrapLineOperator", s:pink, "", "")
+
+  " NGINX Highlighting
+  " @target https://github.com/evanmiller/nginx-vim-syntax
+  call s:HL("ngxDirectiveBlock", s:pink, "", "bold")
+  call s:HL("ngxDirective", s:blue, "", "none")
+  call s:HL("ngxDirectiveImportant", s:blue, "", "bold")
+  call s:HL("ngxString", s:olive, "", "")
+  call s:HL("ngxVariableString", s:purple, "", "")
+  call s:HL("ngxVariable", s:purple, "", "none")
+
+  " Yaml Highlighting
+  call s:HL("yamlBlockMappingKey", s:blue, "", "")
+  call s:HL("yamlKeyValueDelimiter", s:pink, "", "")
+  call s:HL("yamlBlockCollectionItemStart", s:pink, "", "")
+
+  " Qt QML Highlighting
+  call s:HL("qmlObjectLiteralType", s:pink, "", "")
+  call s:HL("qmlReserved", s:purple, "", "")
+  call s:HL("qmlBindingProperty", s:navy, "", "")
+  call s:HL("qmlType", s:navy, "", "")
+
+  " Dosini Highlighting
+  call s:HL("dosiniHeader", s:pink, "", "")
+  call s:HL("dosiniLabel", s:blue, "", "")
+
+  " Mail highlighting
+  call s:HL("mailHeaderKey", s:blue, "", "")
+  call s:HL("mailHeaderEmail", s:purple, "", "")
+  call s:HL("mailSubject", s:pink, "", "")
+  call s:HL("mailHeader", s:comment, "", "")
+  call s:HL("mailURL", s:aqua, "", "")
+  call s:HL("mailEmail", s:purple, "", "")
+  call s:HL("mailQuoted1", s:olive, "", "")
+  call s:HL("mailQuoted2", s:navy, "", "")
+
+  " XML Highlighting
+  call s:HL("xmlProcessingDelim", s:pink, "", "")
+  call s:HL("xmlString", s:olive, "", "")
+  call s:HL("xmlEqual", s:orange, "", "")
+  call s:HL("xmlAttrib", s:navy, "", "")
+  call s:HL("xmlAttribPunct", s:pink, "", "")
+  call s:HL("xmlTag", s:blue, "", "")
+  call s:HL("xmlTagName", s:blue, "", "")
+  call s:HL("xmlEndTag", s:blue, "", "")
+  call s:HL("xmlNamespace", s:orange, "", "")
+
+  " Exlixir Highlighting
+  " @target https://github.com/elixir-lang/vim-elixir
+  call s:HL("elixirAlias", s:blue, "", "bold")
+  call s:HL("elixirAtom", s:navy, "", "")
+  call s:HL("elixirVariable", s:navy, "", "")
+  call s:HL("elixirUnusedVariable", s:comment, "", "")
+  call s:HL("elixirInclude", s:purple, "", "")
+  call s:HL("elixirStringDelimiter", s:olive, "", "")
+  call s:HL("elixirKeyword", s:purple, "", "bold")
+  call s:HL("elixirFunctionDeclaration", s:foreground, "", "bold")
+  call s:HL("elixirBlockDefinition", s:pink, "", "")
+  call s:HL("elixirDefine", s:pink, "", "")
+  call s:HL("elixirStructDefine", s:pink, "", "")
+  call s:HL("elixirPrivateDefine", s:pink, "", "")
+  call s:HL("elixirModuleDefine", s:pink, "", "")
+  call s:HL("elixirProtocolDefine", s:pink, "", "")
+  call s:HL("elixirImplDefine", s:pink, "", "")
+
+  " Erlang Highlighting
+  call s:HL("erlangBIF", s:purple, "", "bold,")
+  call s:HL("erlangBracket", s:pink, "", "")
+  call s:HL("erlangLocalFuncCall", s:foreground, "", "")
+  call s:HL("erlangVariable", s:foreground, "", "")
+  call s:HL("erlangAtom", s:navy, "", "")
+  call s:HL("erlangAttribute", s:blue, "", "bold")
+  call s:HL("erlangRecordDef", s:blue, "", "bold")
+  call s:HL("erlangRecord", s:blue, "", "")
+  call s:HL("erlangRightArrow", s:blue, "", "bold")
+  call s:HL("erlangStringModifier", s:olive, "", "bold")
+  call s:HL("erlangInclude", s:blue, "", "bold")
+  call s:HL("erlangKeyword", s:pink, "", "")
+  call s:HL("erlangGlobalFuncCall", s:foreground, "", "")
+
+  " Cucumber Highlighting
+  call s:HL("cucumberFeature", s:blue, "", "bold")
+  call s:HL("cucumberBackground", s:pink, "", "bold")
+  call s:HL("cucumberScenario", s:pink, "", "bold")
+  call s:HL("cucumberGiven", s:orange, "", "")
+  call s:HL("cucumberGivenAnd", s:blue, "", "")
+  call s:HL("cucumberThen", s:orange, "", "")
+  call s:HL("cucumberThenAnd", s:blue, "", "")
+  call s:HL("cucumberWhen", s:purple, "", "bold")
+  call s:HL("cucumberScenarioOutline", s:pink, "", "bold")
+  call s:HL("cucumberExamples", s:aqua, "", "")
+  call s:HL("cucumberTags", s:aqua, "", "")
+  call s:HL("cucumberPlaceholder", s:aqua, "", "")
+  " }}}
+
+  " Plugin: Netrw
+  call s:HL("netrwVersion", s:red, "", "")
+  call s:HL("netrwList", s:pink, "", "")
+  call s:HL("netrwHidePat", s:olive, "", "")
+  call s:HL("netrwQuickHelp", s:blue, "", "")
+  call s:HL("netrwHelpCmd", s:blue, "", "")
+  call s:HL("netrwDir", s:aqua, "", "bold")
+  call s:HL("netrwClassify", s:pink, "", "")
+  call s:HL("netrwExe", s:green, "", "")
+  call s:HL("netrwSuffixes", s:comment, "", "")
+  call s:HL("netrwTreeBar", s:linenumber, "", "")
+
+  " Plugin: NERDTree
+  call s:HL("NERDTreeUp", s:comment, "", "")
+  call s:HL("NERDTreeHelpCommand", s:pink, "", "")
+  call s:HL("NERDTreeHelpTitle", s:blue, "", "bold")
+  call s:HL("NERDTreeHelpKey", s:pink, "", "")
+  call s:HL("NERDTreeHelp", s:foreground, "", "")
+  call s:HL("NERDTreeToggleOff", s:red, "", "")
+  call s:HL("NERDTreeToggleOn", s:green, "", "")
+  call s:HL("NERDTreeDir", s:blue, "", "bold")
+  call s:HL("NERDTreeDirSlash", s:pink, "", "")
+  call s:HL("NERDTreeFile", s:foreground, "", "")
+  call s:HL("NERDTreeExecFile", s:green, "", "")
+  call s:HL("NERDTreeOpenable", s:pink, "", "bold")
+  call s:HL("NERDTreeClosable", s:pink, "", "")
+
+  " Plugin: Tagbar
+  call s:HL("TagbarHelpTitle", s:blue, "", "bold")
+  call s:HL("TagbarHelp", s:foreground, "", "")
+  call s:HL("TagbarKind", s:pink, "", "")
+  call s:HL("TagbarSignature", s:aqua, "", "")
+
+  " Plugin: Vimdiff
+  call s:HL("DiffAdd",    s:diffadd_fg,    s:diffadd_bg,    "none")
+  call s:HL("DiffChange", s:diffchange_fg, s:diffchange_bg, "none")
+  call s:HL("DiffDelete", s:diffdelete_fg, s:diffdelete_bg, "none")
+  call s:HL("DiffText",   s:difftext_fg,   s:difftext_bg,   "none")
+
+  " Plugin: Spell Checking
+  call s:HL("SpellBad",   s:foreground, s:spellbad,   "")
+  call s:HL("SpellCap",   s:foreground, s:spellcap,   "")
+  call s:HL("SpellRare",  s:foreground, s:spellrare,  "")
+  call s:HL("SpellLocal", s:foreground, s:spelllocal, "")
+
+  " Plugin: Indent Guides
+  call s:HL("IndentGuidesOdd", "", s:background, "")
+  call s:HL("IndentGuidesEven", "", s:cursorline, "")
+
+  " Plugin: Startify
+  call s:HL("StartifyFile", s:blue, "", "bold")
+  call s:HL("StartifyPath", s:foreground, "", "")
+  call s:HL("StartifySlash", s:navy, "", "")
+  call s:HL("StartifyBracket", s:aqua, "", "")
+  call s:HL("StartifySpecial", s:aqua, "", "")
+
+  "=====================================================================
+  " SYNTAX HIGHLIGHTING CODE BELOW THIS LINE ISN'T TESTED FOR THIS THEME
+  "=====================================================================
+
+
+  " " CoffeeScript Highlighting
+  " call s:HL("coffeeRepeat", s:purple, "", "")
+  " call s:HL("coffeeConditional", s:purple, "", "")
+  " call s:HL("coffeeKeyword", s:purple, "", "")
+  " call s:HL("coffeeObject", s:yellow, "", "")
+
+
+  " " ShowMarks Highlighting
+  " call s:HL("ShowMarksHLl", s:orange, s:background, "none")
+  " call s:HL("ShowMarksHLo", s:purple, s:background, "none")
+  " call s:HL("ShowMarksHLu", s:yellow, s:background, "none")
+  " call s:HL("ShowMarksHLm", s:aqua, s:background, "none")
+
+
+
+
+
+  " " Scala "highlighting
+  " call s:HL("scalaKeyword", s:purple, "", "")
+  " call s:HL("scalaKeywordModifier", s:purple, "", "")
+  " call s:HL("scalaOperator", s:blue, "", "")
+  " call s:HL("scalaPackage", s:pink, "", "")
+  " call s:HL("scalaFqn", s:foreground, "", "")
+  " call s:HL("scalaFqnSet", s:foreground, "", "")
+  " call s:HL("scalaImport", s:purple, "", "")
+  " call s:HL("scalaBoolean", s:orange, "", "")
+  " call s:HL("scalaDef", s:purple, "", "")
+  " call s:HL("scalaVal", s:purple, "", "")
+  " call s:HL("scalaVar", s:aqua, "", "")
+  " call s:HL("scalaClass", s:purple, "", "")
+  " call s:HL("scalaObject", s:purple, "", "")
+  " call s:HL("scalaTrait", s:purple, "", "")
+  " call s:HL("scalaDefName", s:blue, "", "")
+  " call s:HL("scalaValName", s:foreground, "", "")
+  " call s:HL("scalaVarName", s:foreground, "", "")
+  " call s:HL("scalaClassName", s:foreground, "", "")
+  " call s:HL("scalaType", s:yellow, "", "")
+  " call s:HL("scalaTypeSpecializer", s:yellow, "", "")
+  " call s:HL("scalaAnnotation", s:orange, "", "")
+  " call s:HL("scalaNumber", s:orange, "", "")
+  " call s:HL("scalaDefSpecializer", s:yellow, "", "")
+  " call s:HL("scalaClassSpecializer", s:yellow, "", "")
+  " call s:HL("scalaBackTick", s:olive, "", "")
+  " call s:HL("scalaRoot", s:foreground, "", "")
+  " call s:HL("scalaMethodCall", s:blue, "", "")
+  " call s:HL("scalaCaseType", s:yellow, "", "")
+  " call s:HL("scalaLineComment", s:comment, "", "")
+  " call s:HL("scalaComment", s:comment, "", "")
+  " call s:HL("scalaDocComment", s:comment, "", "")
+  " call s:HL("scalaDocTags", s:comment, "", "")
+  " call s:HL("scalaEmptyString", s:olive, "", "")
+  " call s:HL("scalaMultiLineString", s:olive, "", "")
+  " call s:HL("scalaUnicode", s:orange, "", "")
+  " call s:HL("scalaString", s:olive, "", "")
+  " call s:HL("scalaStringEscape", s:olive, "", "")
+  " call s:HL("scalaSymbol", s:orange, "", "")
+  " call s:HL("scalaChar", s:orange, "", "")
+  " call s:HL("scalaXml", s:olive, "", "")
+  " call s:HL("scalaConstructorSpecializer", s:yellow, "", "")
+  " call s:HL("scalaBackTick", s:blue, "", "")
+
+  " Git
+  call s:HL("diffAdded", s:olive, "", "")
+  call s:HL("diffRemoved", s:pink, "", "")
+  call s:HL("gitcommitSummary", "", "", "bold")
+
+endif
+" }}}
+
+" Delete Helper Functions: {{{
+delf s:Load_Settings_Override
+delf s:HL
+delf s:rgb
+delf s:colour
+delf s:rgb_colour
+delf s:rgb_level
+delf s:rgb_number
+delf s:grey_colour
+delf s:grey_level
+delf s:grey_number
+" }}}
+
+" vim: fdm=marker
