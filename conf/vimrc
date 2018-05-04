@@ -1,4 +1,4 @@
-colorscheme rdark-terminal2
+colorscheme hybrid_material
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors
 
@@ -6,6 +6,9 @@ colorscheme rdark-terminal2
 autocmd!
 " Set Numbers
 set nu  
+set cursorline
+set wrap
+set ttyfast
 
 set nofoldenable
 set foldmethod=indent
