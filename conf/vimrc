@@ -2,7 +2,7 @@ set nocompatible
 
 
 
-inoremap <Space><Space> <Esc>/<..><Enter>"_c4l
+inoremap ;; <Esc>/<..><Enter>"_c4l
 
 colorscheme focuspoint
 "Chose colorscheme, copy to folder: ~/.vim/colors
