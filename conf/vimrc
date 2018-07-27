@@ -322,13 +322,13 @@ syntax on
 " Custom FileType
 " PYTHON
 "Function builder
-autocmd FileType python inoremap ;f def <..>:<Enter>
+autocmd FileType python inoremap ;f def <..>():<Enter><esc>kca<
 " Class Builder
-autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..>=<..><esc>
+autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..> = <..><esc>ggi
 
 
 autocmd BufNewFile,BufRead * if match(getline(1),"*.hpp") >= 0 | set filetype=cpp | endif
 autocmd BufNewFile,BufRead * if match(getline(1),"*.h") >= 0 | set filetype=c | endif
-autocmd FileType c,cpp inoremap ;c #ifndef _<..>_H_<Enter>#define _<..>_H_<Enter><Enter>using namespace std;<Enter><Enter>class <..>:<Enter>{<Enter>public:<Enter><..>()<Enter>private:<Enter>};<Enter>#endif<esc>
-autocmd FileType c,cpp inoremap ;f  <..> <..>(<..>)<Enter>{<Enter><..><Enter>}<esc>
-autocmd FileType c,cpp inoremap ;m  int main(argc, argv[])<Enter>{<Enter><..><Enter>}<esc>
+autocmd FileType c,cpp inoremap ;c #ifndef _<..>_H_<Enter>#define _<..>_H_<Enter><Enter>using namespace std;<Enter><Enter>class <..>:<Enter>{<Enter>public:<Enter><..>()<Enter>private:<Enter>};<Enter>#endif<esc>ggi
+autocmd FileType c,cpp inoremap ;f  <..> <..>(<..>)<Enter>{<Enter><..><Enter>}<esc>kkkcw
+autocmd FileType c,cpp inoremap ;m  int main(argc, argv[])<Enter>{<Enter><..><Enter>}<esc>kwcw
