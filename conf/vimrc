@@ -1,3 +1,7 @@
+set nocompatible
+
+
+
 inoremap <Space><Space> <Esc>/<..><Enter>"_c4l
 
 colorscheme focuspoint
@@ -130,7 +134,7 @@ set nomodeline
 set nowrap
 
 " use indents of 2 spaces, and have them copied down lines:
-set shiftwidth=2
+set shiftwidth=4
 set shiftround
 set expandtab
 set autoindent
