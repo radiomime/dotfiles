@@ -1,4 +1,10 @@
-colorscheme hybrid_material
+set nocompatible
+
+
+
+inoremap <Space><Space> <Esc>/<..><Enter>"_c4l
+
+colorscheme focuspoint
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors
 
@@ -156,7 +162,7 @@ set comments+=n::
 " * Text Formatting -- Specific File Formats
 
 " enable filetype detection:
-filetype on
+"filetype on
 
 " recognize anything in my .Postponed directory as a news article, and anything
 " at all with a .txt extension as being human-language text [this clobbers the
@@ -221,7 +227,7 @@ set whichwrap=h,l,~,[,]
 " page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
 " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
 " or <BkSpc> (like in `Netscape Navigator'):
-noremap <Space> <PageDown>
+"noremap <Space> <PageDown>
 noremap <BS> <PageUp>
 noremap - <PageUp>
 " [<Space> by default is like l, <BkSpc> like h, and - like k.]
@@ -312,3 +318,17 @@ inoremap <S-Tab> <C-D>
 " [<Ctrl>+V <Tab> still inserts an actual tab character.]
 
 syntax on
+
+" Custom FileType
+" PYTHON
+"Function builder
+autocmd FileType python inoremap ;f def <..>:<Enter>
+" Class Builder
+autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..>=<..><esc>
+
+
+autocmd BufNewFile,BufRead * if match(getline(1),"*.hpp") >= 0 | set filetype=cpp | endif
+autocmd BufNewFile,BufRead * if match(getline(1),"*.h") >= 0 | set filetype=c | endif
+autocmd FileType c,cpp inoremap ;c #ifndef _<..>_H_<Enter>#define _<..>_H_<Enter><Enter>using namespace std;<Enter><Enter>class <..>:<Enter>{<Enter>public:<Enter><..>()<Enter>private:<Enter>};<Enter>#endif<esc>
+autocmd FileType c,cpp inoremap ;f  <..> <..>(<..>)<Enter>{<Enter><..><Enter>}<esc>
+autocmd FileType c,cpp inoremap ;m  int main(argc, argv[])<Enter>{<Enter><..><Enter>}<esc>
