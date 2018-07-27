@@ -1,7 +1,3 @@
-set nocompatible
-
-
-
 inoremap <Space><Space> <Esc>/<..><Enter>"_c4l
 
 colorscheme focuspoint
