@@ -8,14 +8,17 @@
 #include <sys/utsname.h>
 #define PATH_MAX 1024
 
+#include "DirOps.h"
+
 /* Prototypes  */
 int copy(char* from, char* to);
 char* get_home_dir(int OS);
 int make_file(char *home_path, char* file_name);
-void make_vim_color(char *color_file, char *home_path);
-void make_vim(char *home_path);
+void make_vim_color(char *color_file);
+void make_vim();
 void check_arg(char* homedir, char* arg);
 
+char *home_path;
 
 int copy(char* from, char* to){
    char ch, source_file[PATH_MAX], target_file[PATH_MAX];
@@ -92,7 +95,7 @@ int make_file(char *home_path, char* file_name){
   strcat(file_path, file_name);
 
   /* Build the path to file to be coppied */ 
-  char *conf_file_path = "conf/";
+  char *conf_file_path = "../conf/";
   char *local_new = malloc(PATH_MAX * sizeof(char));
   strcpy(local_new, conf_file_path);
   strcat(local_new, file_name);
@@ -112,7 +115,7 @@ int make_file(char *home_path, char* file_name){
 }
 
 
-void make_vim_color(char *color_file, char *home_path){
+void make_vim_color(char *color_file){
   /* Create given color scheme   */
    char *color= malloc(PATH_MAX * sizeof(char));
    strcpy(color, home_path);
@@ -123,7 +126,7 @@ void make_vim_color(char *color_file, char *home_path){
    /* Add the relative path to the configuration file  */
    char *local = malloc(PATH_MAX * sizeof(char));
    /* Add the route to the vim color files  */
-   char *conf = "conf/";
+   char *conf = "../conf/vim_colors/";
    strcpy(local, conf);
    strcat(local, color_file);
    if(copy(local, color) != 0){
@@ -134,7 +137,7 @@ void make_vim_color(char *color_file, char *home_path){
 }
 
 
-void make_vim(char *home_path){
+void make_vim(){
   /* Add the vimrc file */
   char *file_name = "vimrc";
   if(make_file(home_path, file_name) != 0){
@@ -144,6 +147,7 @@ void make_vim(char *home_path){
   /* Make directory for .vim */
   char *vim = "/.vim";
   strcat(home_path, vim);
+  remove_directory(home_path);
   mkdir(home_path, 0777);
 
   /* Make directory for colors */
@@ -151,29 +155,25 @@ void make_vim(char *home_path){
   strcat(home_path, colors);
   mkdir(home_path, 0777);
 
-  /* Add different color schemes   */
-  char *color = "badwolf.vim";
-  make_vim_color(color, home_path);
-
-  color = "goodwolf.vim";
-  make_vim_color(color, home_path);
-
-  color = "onedark.vim";
-  make_vim_color(color, home_path);
+  /*  Copy all vim colors */
+  ls("../conf/vim_colors", make_vim_color);
 }
 
 
 void check_arg(char* homedir, char* arg){
+  char *file_path = malloc(PATH_MAX * sizeof(char));
+  strcpy(file_path, homedir);
+    home_path = homedir;
   /*  Add vim files  */
   if(!strcmp(arg, "-v") || !strcmp(arg, "-a")){
-   make_vim(homedir);
+   make_vim();
    printf("Added vim files\n");
   }
 
   /* Add the bashrc   */
   if(!strcmp(arg, "-b") || !strcmp(arg, "-a")){
    char* file_name = "bashrc";
-   if(make_file(homedir, file_name) != 0){
+   if(make_file(file_path, file_name) != 0){
      printf("Couldn't copy the bashrc\n");
    }
    else{
@@ -184,17 +184,29 @@ void check_arg(char* homedir, char* arg){
   /* Add tmux file  */
   if(!strcmp(arg, "-t") || !strcmp(arg, "-a")){
   char* file_name = "tmux.conf";
-  if(make_file(homedir, file_name) != 0){
+  if(make_file(file_path, file_name) != 0){
       printf("Couldn't copy tmux \n");
       }
   else{
-    printf("Added tmux.conf file\n");
+    printf("Added tmux.conf\n");
     }
   }
 }
 
+void print_usage()
+{
+    printf("Usage: \n");
+    printf("  -v for vim \n");
+    printf("  -t for tmux \n");
+    printf("  -b for bashrc \n");
+    printf("  -a for all \n");
+}
+
 int main(int argc ,char *argv[]){  
-  /* Get info about OS  */
+    if ( argc <= 1 ) {
+        print_usage();
+    }   
+    /* Get info about OS  */
    struct utsname unameData;
    uname(&unameData);
 
