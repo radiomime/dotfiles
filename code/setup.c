@@ -195,6 +195,7 @@ void check_arg(char* homedir, char* arg){
 
 void print_usage()
 {
+    printf("* please run from dotfiles/bin \n");
     printf("Usage: \n");
     printf("  -v for vim \n");
     printf("  -t for tmux \n");
