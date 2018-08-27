@@ -11,7 +11,6 @@
 #include "DirOps.h"
 
 /* Prototypes  */
-int copy(char* from, char* to);
 char* get_home_dir(int OS);
 int make_file(char *home_path, char* file_name);
 void make_vim_color(char *color_file);
@@ -19,40 +18,6 @@ void make_vim();
 void check_arg(char* homedir, char* arg);
 
 char *home_path;
-
-int copy(char* from, char* to){
-   char ch, source_file[PATH_MAX], target_file[PATH_MAX];
-   FILE *source, *target;
- 
-   source = fopen(from, "r");
- 
-   if( source == NULL )
-   {
-     printf("Could not locate file to copy: %s\n", from);
-     return -1;
-
-     
-   }
-   
-   /* Set to w+ because we want to overwrite the contents of the file   */
-   target = fopen(to, "w+");
- 
-   if( target == NULL )
-   {
-     printf("Could not locate destination at: %s\n", to);
-     fclose(source);
-     return -1;
-   }
- 
-   while( ( ch = fgetc(source) ) != EOF )
-      fputc(ch, target);
-
-
-   fclose(source);
-   fclose(target);
-   return 0;
-
-}
 
 char* get_home_dir(int OS){
   char *user = malloc(PATH_MAX * sizeof(char));

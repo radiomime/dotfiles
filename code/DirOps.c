@@ -1,5 +1,39 @@
 #include "DirOps.h"
 
+int copy(char* from, char* to){
+   char ch, source_file[PATH_MAX], target_file[PATH_MAX];
+   FILE *source, *target;
+
+   source = fopen(from, "r");
+
+   if( source == NULL )
+   {
+     printf("Could not locate file to copy: %s\n", from);
+     return -1;
+
+
+   }
+
+   /* Set to w+ because we want to overwrite the contents of the file   */
+   target = fopen(to, "w+");
+
+   if( target == NULL )
+   {
+     printf("Could not locate destination at: %s\n", to);
+     fclose(source);
+     return -1;
+   }
+
+   while( ( ch = fgetc(source) ) != EOF )
+      fputc(ch, target);
+
+
+   fclose(source);
+   fclose(target);
+   return 0;
+
+}
+
 int remove_directory(const char *path)
 {
    DIR *d = opendir(path);

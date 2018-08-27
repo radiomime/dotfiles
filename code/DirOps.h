@@ -10,6 +10,7 @@
 #include <ftw.h>
 #include <unistd.h>
 
+int copy(char* from, char* to);
 int remove_directory(const char *path);
 void ls( char* dir_name, void (*lambda)(char*) );
 
