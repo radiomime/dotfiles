@@ -182,10 +182,14 @@ int main(int argc ,char *argv[]){
    int OS;
    if(!strcmp(unameData.sysname, mac_os)){
      OS = 0;
+   } else {
+       OS = 1;
    }
+/*
    if(!strcmp(unameData.sysname, linux_os)){
      OS = 1;
-   }
+   } 
+*/
    char *homedir = get_home_dir(OS);
 
    for(int i = 0; i < argc; i++){
