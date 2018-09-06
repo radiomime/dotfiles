@@ -4,7 +4,12 @@ set nocompatible
 
 inoremap ;; <Esc>/<..><Enter>"_c4l
 
-colorscheme monokai
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+colorscheme onedark
+
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors
 
