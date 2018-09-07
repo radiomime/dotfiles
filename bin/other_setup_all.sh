@@ -6,6 +6,7 @@ mkdir -p ~/.vim/autoload
 mkdir -p ~/.vim/bundle
 cp ../conf/autoload/* ~/.vim/autoload/
 git clone https://github.com/sheerun/vim-polyglot ~/.vim/bundle/vim-polyglot
+git clone https://github.com/dikiaap/minimalist ~/.vim/bundle/minimalist
 cp ../conf/vim_colors/*.vim ~/.vim/colors
 cp ../conf/vimrc ~/.vimrc
 cp ../conf/tmux.conf ~/.tmux.conf

@@ -6,9 +6,15 @@ inoremap ;; <Esc>/<..><Enter>"_c4l
 
 execute pathogen#infect()
 syntax on
+set t_Co=256
 filetype plugin indent on
+set background=dark
 
-colorscheme onedark
+
+"colorscheme gruvbox
+colorscheme minimalist
+"colorscheme hybrid
+"colorscheme onedark
 
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors
