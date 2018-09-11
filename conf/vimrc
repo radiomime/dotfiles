@@ -10,6 +10,13 @@ set t_Co=256
 filetype plugin indent on
 set background=dark
 
+" In ~/.vim/vimrc, or somewhere similar.
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'python': ['add_blank_lines_for_python_control_statements', 'autopep8'],
+\}
+
 
 "colorscheme gruvbox
 colorscheme minimalist
