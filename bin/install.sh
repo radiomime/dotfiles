@@ -6,7 +6,6 @@ setup_vim_plugins () {
     cp ../conf/autoload/* ~/.vim/autoload/
     git clone https://github.com/sheerun/vim-polyglot ~/.vim/bundle/vim-polyglot
     git clone https://github.com/dikiaap/minimalist ~/.vim/bundle/minimalist
-    git clone https://github.com/w0rp/ale.git ~/.vim/bundle/ale
 }
 
 setup_vim () {
@@ -26,11 +25,13 @@ tmux () {
     cp ../conf/tmux.conf ~/.tmux.conf
 }
 
-vim () {
+bash () {
     cp ../conf/bashrc ~/.bashrc
 }
 
 install_linter () {
+    setup_linter_config
+    git clone https://github.com/w0rp/ale.git ~/.vim/bundle/ale
 	unamestr=`uname`
 	if [[ "$unamestr" == 'Linux' ]]; then
         installer='sudo apt-get install'
@@ -40,4 +41,17 @@ install_linter () {
     $installer eslint autopep8 flake8 -y
 }
 
-setup_vim && setup_vim_plugins && setup_linter_config && install_linter && vim && tmux
+
+bash && tmux && setup_vim && setup_vim_plugins 
+
+RED='\033[0;31m'
+NC='\033[0m' 
+
+if [[ $1 = "-l" ]]; then
+    echo -e "${RED}Adding Linter to install.${NC}"
+    install_linter
+else
+    echo -e "${RED}No Linter installed. run with -l flag to install linter."
+fi
+
+
