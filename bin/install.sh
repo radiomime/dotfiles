@@ -1,5 +1,8 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+NC='\033[0m' 
+
 setup_vim_plugins () {
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
@@ -29,23 +32,37 @@ bash () {
     cp ../conf/bashrc ~/.bashrc
 }
 
+function eslint () {   
+  if which node > /dev/null
+    then
+        npm install -g eslint
+    else
+        echo -e "${RED}Please Install NPM and run again for NPM Linter..${NC}"
+    fi
+}
+
+function python_lint () {
+  if which pip3 > /dev/null
+    then
+        sudo -H pip3 install autopep8 flake8
+    elif which pip > /dev/null
+    then
+        sudo -H pip install autopep8 flake8
+    else
+        echo -e "${RED}Please Install pip or pip3 and run again for Python Linter..${NC}"
+    fi
+}
+
 install_linter () {
     setup_linter_config
     git clone https://github.com/w0rp/ale.git ~/.vim/bundle/ale
-	unamestr=`uname`
-	if [[ "$unamestr" == 'Linux' ]]; then
-        installer='sudo apt-get install'
-	elif [[ "$unamestr" == 'Darwin' ]]; then
-		installer='brew install'
-	fi
-    $installer eslint autopep8 flake8 -y
+    eslint
+    python_lint
 }
 
 
 bash && tmux && setup_vim && setup_vim_plugins 
 
-RED='\033[0;31m'
-NC='\033[0m' 
 
 if [[ $1 = "-l" ]]; then
     echo -e "${RED}Adding Linter to install.${NC}"
