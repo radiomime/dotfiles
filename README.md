@@ -6,23 +6,17 @@ includes
 * vim 
 * tmux
 
-The code in the bin/ directory used to setup the dot files easily in a given environment 
-* linux_setup
-* mac_setup
-* other_setup_all.sh
+## To install:
+```
+cd ~/dotfiles/bin
+./install.sh
+```
 
-The mac and linux setup allows for flags to specify the files to install, e.g.
+### If you want the linter plugin setup:
 ```
-bin/mac_setup -a 
-bin/mac_setup -v
-bin/mac_setup -t 
-bin/mac_setup -b 
+cd ~/dotfiles/bin
+./install.sh -l
 ```
-These flags will set up: 
-* all dotfiles
-* vim dotfiles and config
-* tmux config file
-* bashrc file
 
 If an existing version of the file exists it will be overwritten
 
