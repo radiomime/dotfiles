@@ -7,8 +7,20 @@ setup_vim_plugins () {
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
     cp ../conf/autoload/* ~/.vim/autoload/
+    # Better syntax highlighting
     git clone https://github.com/sheerun/vim-polyglot ~/.vim/bundle/vim-polyglot
+    # Color theme
     git clone https://github.com/dikiaap/minimalist ~/.vim/bundle/minimalist
+    # File Finder Plugin ( :F to search files )
+    git clone https://github.com/junegunn/fzf.git ~/.vim/bundle/fzf
+    git clone https://github.com/junegunn/fzf.vim.git ~/.vim/bundle/fzf-vim
+
+    # Lightline install
+    git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
+
+    # NERDTree, Ctrl O to open 
+    git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+
 }
 
 setup_vim () {
