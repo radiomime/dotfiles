@@ -44,10 +44,10 @@ function eslint () {
 function python_lint () {
   if which pip3 > /dev/null
     then
-        sudo -H pip3 install autopep8 flake8
+        sudo -H pip3 install flake8 autopep8 
     elif which pip > /dev/null
     then
-        sudo -H pip install autopep8 flake8
+        sudo -H pip install flake8 autopep8
     else
         echo -e "${RED}Please Install pip or pip3 and run again for Python Linter..${NC}"
     fi
