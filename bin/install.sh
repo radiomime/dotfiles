@@ -18,8 +18,11 @@ setup_vim_plugins () {
     # Lightline install
     git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
 
-    # NERDTree, Ctrl O to open 
+    # NERDTree, Ctrl o to open 
     git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+
+    # TagBar, Ctrl u to open
+    git clone https://github.com/majutsushi/tagbar.git ~/.vim/bundle/tagbar
 
 }
 

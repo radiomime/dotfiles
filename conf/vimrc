@@ -10,6 +10,9 @@ set t_Co=256
 filetype plugin indent on
 set background=dark
 
+"TagBar Remap
+map <C-u> :TagbarToggle<CR>
+
 " FZF Remap
 command F Files
 set hidden
