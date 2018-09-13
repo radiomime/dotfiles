@@ -23,6 +23,7 @@ set hidden
 
 " Nerdtree remap and close if last open
 map <C-o> :NERDTreeToggle<CR>
+let g:NERDTreeMinimalUI = 1
 function! s:CloseIfOnlyControlWinLeft()
   if winnr("$") != 1
     return
