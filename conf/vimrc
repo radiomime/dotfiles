@@ -16,6 +16,16 @@ set background=dark
 
 "TagBar Remap
 map <C-u> :TagbarToggle<CR>
+command Tj TagbarOpen<Space>j
+
+function! View()
+    :NERDTreeToggle
+    :TagbarToggle
+    :wincmd p
+endfunction
+
+
+command V :call View()
 
 " FZF Remap
 command F Files
@@ -24,6 +34,7 @@ set hidden
 " Nerdtree remap and close if last open
 map <C-o> :NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI = 1
+" Close Nerdtree when file closes
 function! s:CloseIfOnlyControlWinLeft()
   if winnr("$") != 1
     return
@@ -37,6 +48,7 @@ augroup CloseIfOnlyControlWinLeft
   au!
   au BufEnter * call s:CloseIfOnlyControlWinLeft()
 augroup END
+
 
 
 " Lightline fix
@@ -112,47 +124,6 @@ set ruler
 " Ignore case when searching
 set ignorecase
 
-
-
-" ---------------------- Custom Ends Here
-
-"---" * Terminal Settings
-"---
-"---" `XTerm', `RXVT', `Gnome Terminal', and `Konsole' all claim to be "xterm";
-"---" `KVT' claims to be "xterm-color":
-"---if &term =~ 'xterm'
-"---
-"---  " `Gnome Terminal' fortunately sets $COLORTERM; it needs <BkSpc> and <Del>
-"---  " fixing, and it has a bug which causes spurious "c"s to appear, which can be
-"---  " fixed by unsetting t_RV:
-"---  if $COLORTERM == 'gnome-terminal'
-"---    execute 'set t_kb=' . nr2char(8)
-"---    " [Char 8 is <Ctrl>+H.]
-"---    fixdel
-"---    set t_RV=
-"---
-"---  " `XTerm', `Konsole', and `KVT' all also need <BkSpc> and <Del> fixing;
-"---  " there's no easy way of distinguishing these terminals from other things
-"---  " that claim to be "xterm", but `RXVT' sets $COLORTERM to "rxvt" and these
-"---  " don't:
-"---  elseif $COLORTERM == ''
-"---    execute 'set t_kb=' . nr2char(8)
-"---    fixdel
-"---
-"---  " The above won't work if an `XTerm' or `KVT' is started from within a `Gnome
-"---  " Terminal' or an `RXVT': the $COLORTERM setting will propagate; it's always
-"---  " OK with `Konsole' which explicitly sets $COLORTERM to "".
-"---
-"---  endif
-"---endif
-
-
-" * User Interface
-
-" have syntax highlighting in terminals which can display colours:
-"if has('syntax') && (&t_Co > 2)
-"  syntax on
-"endif
 
 " have fifty lines of command-line (etc) history:
 set history=50
@@ -377,8 +348,8 @@ inoremap <S-Tab> <C-D>
 
 syntax on
 
-" Custom FileType
 
+" Add custom filling in of printing, classes, functions, etc. based on the language
 autocmd BufNewFile,BufRead * if match(getline(1),"node") >= 0 | set filetype=javascript | endif
 autocmd FileType javascript inoremap ;f function <..>(<..>) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;l for ( var i = 0; i < <..>; i++ ) {<Enter><..><Enter>}<esc>kkt>ca<
