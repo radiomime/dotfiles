@@ -16,7 +16,8 @@ set background=dark
 
 "TagBar Remap
 map <C-u> :TagbarToggle<CR>
-command Tj TagbarOpen<Space>j
+command T TagbarOpen<Space>j
+let g:tagbar_compact = 1
 
 function! View()
     :NERDTreeToggle
@@ -32,6 +33,7 @@ command F Files
 set hidden
 
 " Nerdtree remap and close if last open
+command D :NERDTreeFocus
 map <C-o> :NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI = 1
 " Close Nerdtree when file closes
