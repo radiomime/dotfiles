@@ -24,6 +24,9 @@ setup_vim_plugins () {
     # TagBar, Ctrl u to open
     git clone https://github.com/majutsushi/tagbar.git ~/.vim/bundle/tagbar
 
+    # Auto close brackets 
+    git clone https://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
+
 }
 
 setup_vim () {
