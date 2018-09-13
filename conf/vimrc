@@ -77,6 +77,7 @@ colorscheme minimalist
 "colorscheme hybrid
 "colorscheme onedark
 
+
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors
 
@@ -351,6 +352,8 @@ inoremap <S-Tab> <C-D>
 syntax on
 
 
+
+
 " Add custom filling in of printing, classes, functions, etc. based on the language
 autocmd BufNewFile,BufRead * if match(getline(1),"node") >= 0 | set filetype=javascript | endif
 autocmd FileType javascript inoremap ;f function <..>(<..>) {<Enter><..><Enter>}<esc>kkt>ca<
@@ -373,4 +376,12 @@ autocmd FileType c,cpp inoremap ;f  <..> <..>(<..>)<Enter>{<Enter><..><Enter>}<e
 autocmd FileType c,cpp inoremap ;m  int main(int argc, char *argv[])<Enter>{<Enter><..><Enter>}<esc>kwcw
 autocmd FileType c,cpp inoremap ;l  for ( int i = 0; i < <..>; i++ )<Enter>{<Enter><..><Enter>}<esc>kkkt>ca<
 autocmd FileType c,cpp inoremap ;p  cout << "<..>" << endl;<esc>0t>ca<
+
+
+
+" Reload from place last closed
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
 
