@@ -21,7 +21,7 @@ setup_vim_plugins () {
     # NERDTree, Ctrl o to open 
     git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
 
-    # TagBar, Ctrl u to open
+    # TagBar, Ctrl t to open
     git clone https://github.com/majutsushi/tagbar.git ~/.vim/bundle/tagbar
 
     # Auto close brackets 
