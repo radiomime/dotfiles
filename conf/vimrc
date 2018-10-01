@@ -359,6 +359,8 @@ autocmd BufNewFile,BufRead * if match(getline(1),"node") >= 0 | set filetype=jav
 autocmd FileType javascript inoremap ;f function <..>(<..>) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;l for ( var i = 0; i < <..>; i++ ) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;p console.log("<..>");<esc>0/<..><Enter>ca<
+autocmd FileType javascript inoremap ;t <right>.then( (<..>) => {<Enter><..><Enter>} );<esc>kkt>ca<
+
 " PYTHON
 "Function builder
 autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..> = <..><esc>ggi
