@@ -50,6 +50,14 @@ bash () {
     cp ../conf/bashrc ~/.bashrc
 }
 
+functions () {
+    cp ../conf/functions ~/.functions
+}
+
+aliases () {
+    cp ../conf/public_aliases ~/.public_aliases
+}
+
 function eslint () {   
   if which node > /dev/null
     then
@@ -79,7 +87,7 @@ install_linter () {
 }
 
 
-bash && tmux && setup_vim && setup_vim_plugins 
+bash && functions && aliases && tmux && setup_vim && setup_vim_plugins 
 
 
 if [[ $1 = "-l" ]]; then

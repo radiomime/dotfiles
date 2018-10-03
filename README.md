@@ -1,9 +1,9 @@
-Ethan Wright dotfiles with setup </br>
+dotfiles with setup. </br>
 
 All dotfiles are stored in the conf/ directory of this repo. Current list
-includes 
+includes
 * bashrc
-* vim 
+* vim
 * tmux
 
 ## To install:
@@ -21,9 +21,9 @@ cd ~/dotfiles/bin
 If an existing version of the file exists it will be overwritten
 
 Utility also exists to remove all currently existing versions of the dot files
-with 
+with
 ```
 bin/cleanup.sh
 ```
 
-
+Original commit courtesy of [Ethan Wright](https://github.com/EthanJWright).
