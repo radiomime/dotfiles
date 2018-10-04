@@ -270,7 +270,6 @@ set whichwrap=h,l,~,[,]
 " or <BkSpc> (like in `Netscape Navigator'):
 "noremap <Space> <PageDown>
 noremap <BS> <PageUp>
-noremap - <PageUp>
 " [<Space> by default is like l, <BkSpc> like h, and - like k.]
 
 " scroll the window (but leaving the cursor in the same place) by a couple of
