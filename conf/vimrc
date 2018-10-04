@@ -397,23 +397,27 @@ if has("autocmd")
 endif
 
 
-set tags=tags
+set tags=./tags,tags;$HOME
 
 
 fun! SPLITAG() range
   let oldfile=expand("%:p")
   split
   set switchbuf=split
-  exe "tag ". expand("<cword>")
-  let curfile=expand("%:p")
-  if curfile == oldfile
-    let pos=getpos(".")
-    if &modified
-      " if we have split before:
-      quit
+  try
+    exe "tag ". expand("<cword>")
+    let curfile=expand("%:p")
+    if curfile == oldfile
+        let pos=getpos(".")
+        if &modified
+        " if we have split before:
+        quit
+        endif
+        call setpos('.', pos)
     endif
-    call setpos('.', pos)
-  endif
+  catch
+      exec ":q!"
+  endtry
 endfun
 nmap <C-]> :call SPLITAG()<CR>z.
 
