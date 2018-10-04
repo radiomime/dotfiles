@@ -1,7 +1,7 @@
 #!/bin/bash
 
 RED='\033[0;31m'
-NC='\033[0m' 
+NC='\033[0m'
 
 setup_vim_plugins () {
     mkdir -p ~/.vim/autoload
@@ -18,13 +18,13 @@ setup_vim_plugins () {
     # Lightline install
     git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
 
-    # NERDTree, Ctrl o to open 
+    # NERDTree, Ctrl o to open
     git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
 
     # TagBar, Ctrl t to open
     git clone https://github.com/majutsushi/tagbar.git ~/.vim/bundle/tagbar
 
-    # Auto close brackets 
+    # Auto close brackets
     git clone https://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
 
 }
@@ -58,7 +58,7 @@ aliases () {
     cp ../conf/public_aliases ~/.public_aliases
 }
 
-function eslint () {   
+function eslint () {
   if which node > /dev/null
     then
         npm install -g eslint
@@ -67,10 +67,26 @@ function eslint () {
     fi
 }
 
+function ctags () {
+    platform='unknown'
+    unamestr=`uname`
+    if [[ "$unamestr" == 'Linux' ]]; then
+    platform='linux'
+    elif [[ "$unamestr" == 'Darwin' ]]; then
+    platform='mac'
+    fi
+
+    if [[ $platform == 'mac' ]]; then
+        brew install ctags
+    else
+        sudo apt-get install ctags
+    fi
+}
+
 function python_lint () {
   if which pip3 > /dev/null
     then
-        sudo -H pip3 install flake8 autopep8 
+        sudo -H pip3 install flake8 autopep8
     elif which pip > /dev/null
     then
         sudo -H pip install flake8 autopep8
@@ -87,7 +103,7 @@ install_linter () {
 }
 
 
-bash && functions && aliases && tmux && setup_vim && setup_vim_plugins 
+bash && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags
 
 
 if [[ $1 = "-l" ]]; then
@@ -96,5 +112,3 @@ if [[ $1 = "-l" ]]; then
 else
     echo -e "${RED}No Linter installed. run with -l flag to install linter."
 fi
-
-
