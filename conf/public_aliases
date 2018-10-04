@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#Useful
+alias bot='cd $(dirname $(find . | tail -n 1))'
+alias lsl="ls -ltrh"
+
+#Docker
+alias build="docker-compose build"
+alias up="docker-compose up"
+alias upbuild="docker-compose up --build"
+alias dlogs="docker logs -f"
+
+#AWS ECS
+alias ecslogin="aws ecr get-login --no-include-email --region us-east-1 | bash"
