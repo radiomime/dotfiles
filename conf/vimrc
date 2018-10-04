@@ -6,6 +6,15 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" <> and +- to adjust pane sizes
+nnoremap > :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap < :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+
+
+nnoremap + :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap - :exe "resize " . (winheight(0) * 2/3)<CR>
+
+
 inoremap ;; <Esc>/<..><Enter>"_c4l
 
 execute pathogen#infect()
@@ -359,7 +368,7 @@ autocmd BufNewFile,BufRead * if match(getline(1),"node") >= 0 | set filetype=jav
 autocmd FileType javascript inoremap ;f function <..>(<..>) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;l for ( var i = 0; i < <..>; i++ ) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;p console.log("<..>");<esc>0/<..><Enter>ca<
-autocmd FileType javascript inoremap ;t <esc>A.then( (<..>) => {<Enter><..><Enter>} );<esc>kkt>ca<
+autocmd FileType javascript inoremap ;t <esc>A.then( (<..>) => {<Enter><..><Enter>});<esc>kkt>ca<
 
 " PYTHON
 "Function builder
@@ -386,4 +395,5 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
+
 
