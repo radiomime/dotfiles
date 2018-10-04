@@ -416,7 +416,7 @@ fun! SPLITAG() range
         call setpos('.', pos)
     endif
   catch
-      exec ":q!"
+      exec ":q"
   endtry
 endfun
 nmap <C-]> :call SPLITAG()<CR>z.
