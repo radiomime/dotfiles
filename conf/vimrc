@@ -43,7 +43,7 @@ set hidden
 
 " Nerdtree remap and close if last open
 command D :NERDTreeFocus
-map <C-o> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI = 1
 " Close Nerdtree when file closes
 function! s:CloseIfOnlyControlWinLeft()
@@ -400,7 +400,9 @@ set tags=./tags,tags;$HOME
 
 fun! SPLITAG() range
   let oldfile=expand("%:p")
-  split
+  if &modified
+    split
+  endif
   set switchbuf=split
   try
     exe "tag ". expand("<cword>")
@@ -418,6 +420,6 @@ fun! SPLITAG() range
   endtry
 endfun
 
-nmap <C-p> :call SPLITAG()<CR>z.
+nmap <C-]> :call SPLITAG()<CR>z.
 
 
