@@ -398,7 +398,6 @@ endif
 
 set tags=./tags,tags;$HOME
 
-
 fun! SPLITAG() range
   let oldfile=expand("%:p")
   split
@@ -418,6 +417,7 @@ fun! SPLITAG() range
       exec ":q"
   endtry
 endfun
-nmap <C-]> :call SPLITAG()<CR>z.
+
+nmap <C-p> :call SPLITAG()<CR>z.
 
 
