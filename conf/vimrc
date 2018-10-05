@@ -416,7 +416,9 @@ fun! SPLITAG() range
         call setpos('.', pos)
     endif
   catch
-      exec ":q"
+      if &modified
+        exec ":q"
+      endif
   endtry
 endfun
 
