@@ -3,6 +3,8 @@
 #Useful
 alias bot='cd $(dirname $(find . | tail -n 1))'
 alias lsl="ls -ltrh"
+alias ctags='ctags -R --exclude=.git --exclude=log *'
+
 
 #Docker
 alias build="docker-compose build"
