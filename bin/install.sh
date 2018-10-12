@@ -3,6 +3,17 @@
 RED='\033[0;31m'
 NC='\033[0m'
 
+fix_mac_bash() {
+    echo "Updating MacOS Bash shell..."
+    unamestr=`uname`
+    if [[ "$unamestr" == 'Darwin' ]]; then
+        brew install bash
+        chsh -s /usr/local/bin/bash
+        sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+        ln -s /usr/local/bin/bash /usr/local/bin/bash-terminal-app
+    fi
+}
+
 setup_vim_plugins () {
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
@@ -103,7 +114,7 @@ install_linter () {
 }
 
 
-bash && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags
+bash && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags && fix_mac_bash
 
 
 if [[ $1 = "-l" ]]; then
