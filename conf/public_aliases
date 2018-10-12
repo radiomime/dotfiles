@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#Quick aliases
+alias v="vim"
+alias ls='ls -hN --color=auto --group-directories-first'
+alias grep='grep --color=auto' # Color grep - highlight desired sequence
+alias ccat='highlight --out-format-ansi' # Color cat - print file with syntax highlight
+alias mkd='mkdir -pv'
+
 #Useful
 alias bot='cd $(dirname $(find . | tail -n 1))'
 alias lsl="ls -ltrh"
