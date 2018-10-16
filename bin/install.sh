@@ -94,6 +94,19 @@ function ctags () {
     fi
 }
 
+function powerline () {
+    if which pip3 > /dev/null; then
+        pip3 install --user powerline-status
+        pip3 install --user powerline-gitstatus
+        cp ../conf/bash_profile ~/.bash_profile
+        git clone https://github.com/powerline/fonts.git --depth=1
+        cd fonts
+        ./install.sh
+        cd ..
+        rm -rf fonts
+    fi
+}
+
 function python_lint () {
   if which pip3 > /dev/null
     then
@@ -114,12 +127,13 @@ install_linter () {
 }
 
 
-bash && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags && fix_mac_bash
+bash && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags && powerline && fix_mac_bash
 
 
-if [[ $1 = "-l" ]]; then
-    echo -e "${RED}Adding Linter to install.${NC}"
+if [[ $1 = "-a" ]]; then
+    echo -e "${RED}Adding Linter and Powerline to install.${NC}"
     install_linter
+    powerline
 else
-    echo -e "${RED}No Linter installed. run with -l flag to install linter."
+    echo -e "${RED}No linter or powerline installed."
 fi
