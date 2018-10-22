@@ -447,4 +447,4 @@ endfun
 nmap <C-]> :call SPLITAG()<CR>z.
 nmap <C-P> :call VTAG()<CR>z.
 
-nnoremap <F3> :grep! "\<<cword>\>" . -r<CR>:copen<CR>
+nnoremap <F3> :grep! "\<<cword>\>" . -r<CR>:botright copen<CR>
