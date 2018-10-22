@@ -448,3 +448,16 @@ nmap <C-]> :call SPLITAG()<CR>z.
 nmap <C-P> :call VTAG()<CR>z.
 
 nnoremap <F3> :grep! "\<<cword>\>" . -r<CR>:botright copen<CR>
+
+fun! PANEHOR() 
+    wincmd t
+    wincmd H
+endfun
+
+fun! PANEVERT() 
+    wincmd t
+    wincmd K
+endfun
+
+nnoremap <C-y> :call PANEHOR()<CR>
+nnoremap <C-n> :call PANEVERT()<CR>
