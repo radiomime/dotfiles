@@ -398,6 +398,28 @@ endif
 
 set tags=./tags,tags;$HOME
 
+fun! VTAG() range
+  let oldfile=expand("%:p")
+  vsplit
+  set switchbuf=split
+  try
+    exe "tag ". expand("<cword>")
+    let curfile=expand("%:p")
+    if curfile == oldfile
+        let pos=getpos(".")
+        if &modified
+        " if we have split before:
+        quit
+        endif
+        call setpos('.', pos)
+    endif
+  catch
+      if &modified
+        exec ":q"
+      endif
+  endtry
+endfun
+
 fun! SPLITAG() range
   let oldfile=expand("%:p")
   if &modified
@@ -423,5 +445,6 @@ fun! SPLITAG() range
 endfun
 
 nmap <C-]> :call SPLITAG()<CR>z.
+nmap <C-P> :call VTAG()<CR>z.
 
-
+nnoremap <F3> :grep! "\<<cword>\>" . -r<CR>:copen<CR>
