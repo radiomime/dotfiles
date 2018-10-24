@@ -41,6 +41,9 @@ setup_vim_plugins () {
     # Surround ( ys and then any text object to add )
     git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
 
+    # Use dot commands for plugin files
+    https://github.com/tpope/vim-repeat.git ~/.vim/bundle/vim-repeat
+
 }
 
 setup_vim () {
