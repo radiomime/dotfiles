@@ -38,6 +38,9 @@ setup_vim_plugins () {
     # Auto close brackets
     git clone https://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
 
+    # Surround ( ys and then any text object to add )
+    git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
+
 }
 
 setup_vim () {
