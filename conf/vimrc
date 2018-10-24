@@ -1,5 +1,7 @@
 set nocompatible
 
+set number relativenumber
+
 " Vim like pane navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
