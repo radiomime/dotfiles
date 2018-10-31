@@ -41,11 +41,11 @@ setup_vim_plugins () {
     # Use dot commands for plugin files
     git clone https://github.com/tpope/vim-repeat.git ~/.vim/bundle/vim-repeat
 
-    # Relative line plugin, toggle numbers w/ F1
-    git clone https://github.com/ericbn/vim-relativize.git ~/.vim/bundle/vim-relativize
-
     # Peekabo for registers
     git clone https://github.com/junegunn/vim-peekaboo.git ~/.vim/bundle/vim-peekaboo
+
+    # Peekabo for markbar
+    git clone https://github.com/Yilin-Yang/vim-markbar.git ~/.vim/bundle/vim-markbar
 
 }
 

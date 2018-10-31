@@ -444,7 +444,3 @@ endfun
 
 nnoremap <C-y> :call PANEHOR()<CR>
 nnoremap <C-n> :call PANEVERT()<CR>
-
-nnoremap <silent> <F1> :let [&number, &relativenumber] =
-  \ [!&number && (g:relativize_with_number \|\| !g:relativize_enabled),
-  \ !&relativenumber && g:relativize_enabled]<CR>
