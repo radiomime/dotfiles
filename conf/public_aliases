@@ -6,11 +6,12 @@ alias v="vim"
 alias grep='grep --color=auto' # Color grep - highlight desired sequence
 alias ccat='highlight --out-format=ansi' # Color cat - print file with syntax highlight
 alias mkd='mkdir -pv'
+alias fz='fzf-tmux'
 
 #Useful
 alias bot='cd $(dirname $(find . | tail -n 1))'
 alias lsl="ls -ltrh"
-alias ctags='ctags -R --exclude=.git --exclude=log *'
+alias ctags='ctags -R --exclude=.git --exclude=log --exclude=node_modules .'
 
 
 #Docker

@@ -68,6 +68,8 @@ tmux () {
 
 bash () {
     cp ../conf/bashrc ~/.bashrc
+    cp -r ../conf/bin ~/.bin
+    PATH=~/.bin:$PATH
 }
 
 functions () {
