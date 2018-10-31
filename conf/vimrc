@@ -31,7 +31,6 @@ command T TagbarOpen<Space>j
 let g:tagbar_compact = 1
 
 function! View()
-    :NERDTreeToggle
     :TagbarToggle
     :wincmd p
 endfunction
@@ -43,24 +42,6 @@ command V :call View()
 command F Files
 set hidden
 
-" Nerdtree remap and close if last open
-command D :NERDTreeFocus
-map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeMinimalUI = 1
-" Close Nerdtree when file closes
-function! s:CloseIfOnlyControlWinLeft()
-  if winnr("$") != 1
-    return
-  endif
-  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-        \ || &buftype == 'quickfix'
-    q
-  endif
-endfunction
-augroup CloseIfOnlyControlWinLeft
-  au!
-  au BufEnter * call s:CloseIfOnlyControlWinLeft()
-augroup END
 
 
 
@@ -463,3 +444,7 @@ endfun
 
 nnoremap <C-y> :call PANEHOR()<CR>
 nnoremap <C-n> :call PANEVERT()<CR>
+
+nnoremap <silent> <F1> :let [&number, &relativenumber] =
+  \ [!&number && (g:relativize_with_number \|\| !g:relativize_enabled),
+  \ !&relativenumber && g:relativize_enabled]<CR>

@@ -29,9 +29,6 @@ setup_vim_plugins () {
     # Lightline install
     git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
 
-    # NERDTree, Ctrl o to open
-    git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-
     # TagBar, Ctrl t to open
     git clone https://github.com/majutsushi/tagbar.git ~/.vim/bundle/tagbar
 
@@ -42,7 +39,13 @@ setup_vim_plugins () {
     git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
 
     # Use dot commands for plugin files
-    https://github.com/tpope/vim-repeat.git ~/.vim/bundle/vim-repeat
+    git clone https://github.com/tpope/vim-repeat.git ~/.vim/bundle/vim-repeat
+
+    # Relative line plugin, toggle numbers w/ F1
+    git clone https://github.com/ericbn/vim-relativize.git ~/.vim/bundle/vim-relativize
+
+    # Peekabo for registers
+    git clone https://github.com/junegunn/vim-peekaboo.git ~/.vim/bundle/vim-peekaboo
 
 }
 
