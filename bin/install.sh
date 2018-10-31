@@ -45,7 +45,7 @@ setup_vim_plugins () {
     git clone https://github.com/junegunn/vim-peekaboo.git ~/.vim/bundle/vim-peekaboo
 
     # Peekabo for markbar
-    git clone https://github.com/Yilin-Yang/vim-markbar.git ~/.vim/bundle/vim-markbar
+    # git clone https://github.com/Yilin-Yang/vim-markbar.git ~/.vim/bundle/vim-markbar
 
 }
 
