@@ -69,7 +69,10 @@ tmux () {
 bash () {
     cp ../conf/bashrc ~/.bashrc
     cp -r ../conf/bin ~/.bin
+    cp ../conf/fzf_functions ~/.fzf_functions
     PATH=~/.bin:$PATH
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
 }
 
 functions () {
