@@ -104,7 +104,9 @@ function ctags () {
     if [[ $platform == 'mac' ]]; then
         brew install ctags fd
     else
-        sudo apt-get install ctags fd
+        sudo apt-get install ctags
+        wget https://github.com/sharkdp/fd/releases/download/v7.2.0/fd-musl_7.2.0_amd64.deb
+        sudo dpkg -i fd-musl_7.2.0_amd64.deb
     fi
 }
 
