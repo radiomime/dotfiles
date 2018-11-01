@@ -117,9 +117,12 @@ function powerline () {
         cd fonts
         ./install.sh
         cd ..
+        pip3 show powerline-status|grep Location: | awk '{print $2}' | xargs  printf 'source %s' >> ~/.bash_profile
+        printf '%s' "/powerline/bindings/bash/powerline.sh" >> ~/.bash_profile
         rm -rf fonts
     fi
 }
+
 
 function python_lint () {
   if which pip3 > /dev/null
