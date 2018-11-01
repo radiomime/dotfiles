@@ -137,3 +137,13 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude "node_modules" --exclude ".git" . "$1"
+}
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude "node_modules" --exclude ".git" . "$1"
+}
+
+export FZF_DEFAULT_COMMAND='fd --exclude "node_modules"'

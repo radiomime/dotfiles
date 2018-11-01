@@ -102,9 +102,9 @@ function ctags () {
     fi
 
     if [[ $platform == 'mac' ]]; then
-        brew install ctags
+        brew install ctags fd
     else
-        sudo apt-get install ctags
+        sudo apt-get install ctags fd
     fi
 }
 
