@@ -14,6 +14,18 @@ fix_mac_bash() {
     fi
 }
 
+setup_completion () {
+    git clone https://github.com/Valloric/YouCompleteMe ~/.vim/bundle/YouCompleteMe
+    ( cd ~/.vim/bundle/YouCompleteMe ; git submodule update --init --recursive)
+    unamestr=`uname`
+    if [[ "$unamestr" == 'Linux' ]]; then
+        sudo apt-get install build-essential cmake python-dev
+    elif [[ "$unamestr" == 'Darwin' ]]; then
+        brew install clang
+    fi
+    ( cd ~/.vim/bundle/YouCompleteMe ; ./install.py --clang-completer )
+}
+
 setup_vim_plugins () {
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
@@ -44,8 +56,8 @@ setup_vim_plugins () {
     # Peekabo for registers
     git clone https://github.com/junegunn/vim-peekaboo.git ~/.vim/bundle/vim-peekaboo
 
-    # Peekabo for markbar
-    # git clone https://github.com/Yilin-Yang/vim-markbar.git ~/.vim/bundle/vim-markbar
+    # Vim autocompletion
+    setup_completion
 
 }
 
@@ -104,9 +116,10 @@ function ctags () {
     if [[ $platform == 'mac' ]]; then
         brew install ctags fd
     else
-        sudo apt-get install ctags
+        sudo apt-get install ctags highlight
         wget https://github.com/sharkdp/fd/releases/download/v7.2.0/fd-musl_7.2.0_amd64.deb
         sudo dpkg -i fd-musl_7.2.0_amd64.deb
+        rm fd-musl_7.2.0_amd64.deb
     fi
 }
 
