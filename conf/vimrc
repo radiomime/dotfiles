@@ -428,7 +428,7 @@ fun! SPLITAG() range
 endfun
 
 nmap <C-]> :call SPLITAG()<CR>z.
-nmap <C-P> :call VTAG()<CR>z.
+nmap <C-P> :GFiles<CR>z.
 
 nnoremap <F3> :grep! "\<<cword>\>" . -r<CR>:botright copen<CR>
 
