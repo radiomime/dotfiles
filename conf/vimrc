@@ -349,7 +349,7 @@ syntax on
 autocmd BufNewFile,BufRead * if match(getline(1),"node") >= 0 | set filetype=javascript | endif
 autocmd FileType javascript inoremap ;f function <..>(<..>) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;l for ( var i = 0; i < <..>; i++ ) {<Enter><..><Enter>}<esc>kkt>ca<
-autocmd FileType javascript inoremap ;p console.log("<..>");<esc>0/<..><Enter>ca<
+autocmd FileType javascript inoremap ;p console.log(`<..>`);<esc>0/<..><Enter>ca<
 autocmd FileType javascript inoremap ;t <esc>A.then( (<..>) => {<Enter><..><Enter>});<esc>kkt>ca<
 
 " PYTHON
