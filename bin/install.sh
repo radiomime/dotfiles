@@ -24,6 +24,7 @@ setup_completion () {
         brew install clang
     fi
     ( cd ~/.vim/bundle/YouCompleteMe ; ./install.py --clang-completer )
+    ( cd ~/.vim/bundle/YouCompleteMe ; sudo bash ./install.sh )
 }
 
 setup_vim_plugins () {
