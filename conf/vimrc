@@ -104,7 +104,7 @@ nnoremap ; :
 nnoremap j gj
 nnoremap k gk
 " Remap escape to ;;
-ino jk <esc>
+ino jk <esc>:w<CR>
 
 " :W sudo saves the file (no permission denied)
 command W w !sudo tee % > /dev/null
@@ -357,7 +357,8 @@ autocmd FileType javascript inoremap ;t <esc>A.then( (<..>) => {<Enter><..><Ente
 autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..> = <..><esc>ggi
 autocmd FileType python inoremap ;f def <..>(<..>):<Enter><..><esc>0kt>ca<
 autocmd FileType python inoremap ;l for i in range(0, <..>):<Enter><..><esc>kt>ca<
-autocmd FileType python inoremap ;p print("<..>")<esc>0t>ca<
+autocmd FileType python inoremap ;p print(f'<..>')<esc>0t>ca<
+autocmd FileType python inoremap ;m def main(argv):<Enter><..><Enter>pass<Enter><esc>I<Enter><Enter>if __name__ == "__main__":<Enter>main(sys.argv)<esc>5k0f>ca<
 
 
 
@@ -368,7 +369,7 @@ autocmd FileType c,cpp inoremap ;c #ifndef _<..>_H_<Enter>#define _<..>_H_<Enter
 autocmd FileType c,cpp inoremap ;f  <..> <..>(<..>)<Enter>{<Enter><..><Enter>}<esc>kkkcw
 autocmd FileType c,cpp inoremap ;m  int main(int argc, char *argv[])<Enter>{<Enter><..><Enter>}<esc>kwcw
 autocmd FileType c,cpp inoremap ;l  for ( int i = 0; i < <..>; i++ )<Enter>{<Enter><..><Enter>}<esc>kkkt>ca<
-autocmd FileType c,cpp inoremap ;p  cout << "<..>" << endl;<esc>0t>ca<
+autocmd FileType c,cpp inoremap ;p  printf("<..>\n")<esc>0t>ca<
 
 
 
