@@ -47,8 +47,13 @@ set hidden
 
 " Lightline fix
 set laststatus=2
+
+
 let g:lightline = {
       \ 'colorscheme': 'jellybeans',
+        \ 'component': {
+        \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
+        \ },
       \ }
 
 " In ~/.vim/vimrc, or somewhere similar.
@@ -445,3 +450,9 @@ endfun
 
 nnoremap <C-y> :call PANEHOR()<CR>
 nnoremap <C-n> :call PANEVERT()<CR>
+
+fun! ALIGN()
+    :execute "normal! ggvG=<C-o><C-o>" 
+endfun
+
+command AL :call ALIGN()
