@@ -452,7 +452,7 @@ nnoremap <C-y> :call PANEHOR()<CR>
 nnoremap <C-n> :call PANEVERT()<CR>
 
 fun! ALIGN()
-    :execute "normal! ggvG=<C-o><C-o>" 
+    :execute "normal! mtggvG='t" 
 endfun
 
 command AL :call ALIGN()
