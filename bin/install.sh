@@ -15,47 +15,98 @@ fix_mac_bash() {
 }
 
 setup_completion () {
-    git clone https://github.com/Valloric/YouCompleteMe ~/.vim/bundle/YouCompleteMe
-    ( cd ~/.vim/bundle/YouCompleteMe ; git submodule update --init --recursive)
-    unamestr=`uname`
-    if [[ "$unamestr" == 'Linux' ]]; then
-        sudo apt-get install build-essential cmake python-dev
-    elif [[ "$unamestr" == 'Darwin' ]]; then
-        brew install clang
+
+    if ls ~/.vim/bundle/YouCompleteMe > /dev/null;then
+        echo "YouCompleteMe Plugin installed."
+    else
+        git clone https://github.com/Valloric/YouCompleteMe ~/.vim/bundle/YouCompleteMe
+        ( cd ~/.vim/bundle/YouCompleteMe ; git submodule update --init --recursive)
+        unamestr=`uname`
+        if [[ "$unamestr" == 'Linux' ]]; then
+            sudo apt-get install build-essential cmake python-dev
+        elif [[ "$unamestr" == 'Darwin' ]]; then
+            brew install clang
+        fi
+        ( cd ~/.vim/bundle/YouCompleteMe ; ./install.py --clang-completer )
+        ( cd ~/.vim/bundle/YouCompleteMe ; sudo bash ./install.sh )
+
     fi
-    ( cd ~/.vim/bundle/YouCompleteMe ; ./install.py --clang-completer )
-    ( cd ~/.vim/bundle/YouCompleteMe ; sudo bash ./install.sh )
 }
 
 setup_vim_plugins () {
+    cat ../conf/vimrc_plugin >> ~/.vimrc
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
     cp ../conf/autoload/* ~/.vim/autoload/
     # Better syntax highlighting
-    git clone https://github.com/sheerun/vim-polyglot ~/.vim/bundle/vim-polyglot
+    if ls ~/.vim/bundle/vim-polygot > /dev/null;
+    then
+        echo "Polygot Vim Plugin installed."
+    else
+        git clone https://github.com/sheerun/vim-polyglot ~/.vim/bundle/vim-polyglot
+    fi
     # Color theme
-    git clone https://github.com/dikiaap/minimalist ~/.vim/bundle/minimalist
+    if ls ~/.vim/bundle/minimalist > /dev/null;then
+        echo "Minimalist Plugin installed."
+    else
+        git clone https://github.com/dikiaap/minimalist ~/.vim/bundle/minimalist
+    fi
+
     # File Finder Plugin ( :F to search files )
-    git clone https://github.com/junegunn/fzf.git ~/.vim/bundle/fzf
-    git clone https://github.com/junegunn/fzf.vim.git ~/.vim/bundle/fzf-vim
+    if ls ~/.vim/bundle/fzf > /dev/null;then
+        echo "Fzf Plugin installed."
+    else
+        git clone https://github.com/junegunn/fzf.git ~/.vim/bundle/fzf
+        git clone https://github.com/junegunn/fzf.vim.git ~/.vim/bundle/fzf-vim
+    fi
 
     # Lightline install
-    git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
+
+    if ls ~/.vim/bundle/lightline > /dev/null;then
+        echo "Lightline Plugin installed."
+    else
+        git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
+    fi
 
     # TagBar, Ctrl t to open
-    git clone https://github.com/majutsushi/tagbar.git ~/.vim/bundle/tagbar
+
+    if ls ~/.vim/bundle/tagbar > /dev/null;then
+        echo "Tagbar Plugin installed."
+    else
+        git clone https://github.com/majutsushi/tagbar.git ~/.vim/bundle/tagbar
+    fi
 
     # Auto close brackets
-    git clone https://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
+
+    if ls ~/.vim/bundle/auto-pairs > /dev/null;then
+        echo "Auto Pairs Plugin installed."
+    else
+        git clone https://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
+    fi
 
     # Surround ( ys and then any text object to add )
-    git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
+
+    if ls ~/.vim/bundle/vim-surround > /dev/null;then
+        echo "Vim Surround Plugin installed."
+    else
+        git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
+    fi
 
     # Use dot commands for plugin files
-    git clone https://github.com/tpope/vim-repeat.git ~/.vim/bundle/vim-repeat
+
+    if ls ~/.vim/bundle/vim-repeat > /dev/null;then
+        echo "Vim Repeat Plugin installed."
+    else
+        git clone https://github.com/tpope/vim-repeat.git ~/.vim/bundle/vim-repeat
+    fi
 
     # Peekabo for registers
-    git clone https://github.com/junegunn/vim-peekaboo.git ~/.vim/bundle/vim-peekaboo
+
+    if ls ~/.vim/bundle/vim-peekaboo > /dev/null;then
+        echo "Vim Peekaboo Plugin installed."
+    else
+        git clone https://github.com/junegunn/vim-peekaboo.git ~/.vim/bundle/vim-peekaboo
+    fi
 
     # Vim autocompletion
     setup_completion
@@ -63,7 +114,6 @@ setup_vim_plugins () {
 }
 
 setup_vim () {
-    rm -rf ~/.vim
     mkdir -p ~/.vim 2>/dev/null
     mkdir -p ~/.vim/colors
     cp ../conf/vim_colors/*.vim ~/.vim/colors
@@ -79,13 +129,20 @@ tmux () {
     cp ../conf/tmux.conf ~/.tmux.conf
 }
 
+fzf_install () {
+    cp ../conf/fzf_functions ~/.fzf_functions
+    PATH=~/.bin:$PATH
+    if which fzf > /dev/null; then
+        echo "FZF already installed!"
+    else
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        ~/.fzf/install
+    fi
+}
+
 bash () {
     cp ../conf/bashrc ~/.bashrc
     cp -r ../conf/bin ~/.bin
-    cp ../conf/fzf_functions ~/.fzf_functions
-    PATH=~/.bin:$PATH
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install
 }
 
 functions () {
@@ -97,53 +154,81 @@ aliases () {
 }
 
 function eslint () {
-  if which node > /dev/null
+    if which node > /dev/null
     then
-        npm install -g eslint
+        if npm show eslint > /dev/null;then
+            echo "ESLint already installed";
+        else
+            npm install -g eslint
+        fi
     else
         echo -e "${RED}Please Install NPM and run again for NPM Linter..${NC}"
     fi
 }
 
+
 function ctags () {
     platform='unknown'
     unamestr=`uname`
     if [[ "$unamestr" == 'Linux' ]]; then
-    platform='linux'
+        platform='linux'
     elif [[ "$unamestr" == 'Darwin' ]]; then
-    platform='mac'
+        platform='mac'
     fi
 
     if [[ $platform == 'mac' ]]; then
-        brew install ctags fd
+        if which ctags > /dev/null;then
+            echo "Ctags already installed"
+        else
+            brew install ctags fd
+        fi
     else
-        sudo apt-get install ctags highlight
-        wget https://github.com/sharkdp/fd/releases/download/v7.2.0/fd-musl_7.2.0_amd64.deb
-        sudo dpkg -i fd-musl_7.2.0_amd64.deb
-        rm fd-*
+        if which ctags > /dev/null; then
+            echo "Ctags already installed"
+        else
+            sudo apt-get install ctags highlight
+            wget https://github.com/sharkdp/fd/releases/download/v7.2.0/fd-musl_7.2.0_amd64.deb
+            sudo dpkg -i fd-musl_7.2.0_amd64.deb
+            rm fd-*
+        fi
     fi
 }
 
 function powerline () {
     if which pip3 > /dev/null; then
-        pip3 install --user powerline-status
-        pip3 install --user powerline-gitstatus
-        cp ../conf/bash_profile ~/.bash_profile
-        git clone https://github.com/powerline/fonts.git --depth=1
-        cd fonts
-        ./install.sh
-        cd ..
-        pip3 show powerline-status|grep Location: | awk '{print $2}' | xargs  printf 'source %s' >> ~/.bash_profile
-        printf '%s' "/powerline/bindings/bash/powerline.sh" >> ~/.bash_profile
-        rm -rf fonts
+        if pip3 show powerline-status > /dev/null;then
+            echo "Powerline already installed."
+        else
+            pip3 install --user powerline-status
+            pip3 install --user powerline-gitstatus
+            cp ../conf/bash_profile ~/.bash_profile
+            git clone https://github.com/powerline/fonts.git --depth=1
+            cd fonts
+            ./install.sh
+            cd ..
+            pip3 show powerline-status|grep Location: | awk '{print $2}' | xargs  printf 'source %s' >> ~/.bash_profile
+            printf '%s' "/powerline/bindings/bash/powerline.sh" >> ~/.bash_profile
+            rm -rf fonts
+        fi
     fi
 }
 
 
 function python_lint () {
-  if which pip3 > /dev/null
+    if which pip3 > /dev/null
     then
-        sudo -H pip3 install flake8 autopep8
+        if pip3 show flake8 > /dev/null
+        then
+            echo "Flake8 already installed."
+        else
+            sudo -H pip3 install flake8
+        fi
+        if pip3 show autopep8 > /dev/null
+        then
+            echo "Autopep8 already installed."
+        else
+            sudo -H pip3 install autopep8
+        fi
     elif which pip > /dev/null
     then
         sudo -H pip install flake8 autopep8
@@ -153,15 +238,24 @@ function python_lint () {
 }
 
 install_linter () {
-    setup_linter_config
-    git clone https://github.com/w0rp/ale.git ~/.vim/bundle/ale
-    eslint
-    python_lint
+    if ls ~/.vim/bundle/ale > /dev/null;then
+        echo "Ale Plugin installed."
+    else
+        setup_linter_config
+        git clone https://github.com/w0rp/ale.git ~/.vim/bundle/ale
+        eslint
+        python_lint
+    fi
 }
 
 
-bash && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags && powerline && fix_mac_bash
 
+if [[ $1 = "-l" ]]; then
+    echo -e "${RED}Running lightweight install!${NC}"
+    bash  && functions && aliases && tmux && setup_vim
+else
+    bash && fzf_install && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags && powerline && fix_mac_bash
+fi
 
 if [[ $1 = "-a" ]]; then
     echo -e "${RED}Adding Linter and Powerline to install.${NC}"

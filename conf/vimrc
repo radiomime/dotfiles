@@ -19,60 +19,22 @@ nnoremap - :exe "resize " . (winheight(0) * 2/3)<CR>
 
 inoremap ;; <Esc>/<..><Enter>"_c4l
 
-execute pathogen#infect()
 syntax on
 set t_Co=256
-filetype plugin indent on
+
 set background=dark
 
-"TagBar Remap
-map <C-t> :TagbarToggle<CR>
-command T TagbarOpen<Space>j
-let g:tagbar_compact = 1
-
-function! View()
-    :TagbarToggle
-    :wincmd p
-endfunction
 
 
-command V :call View()
-
-" FZF Remap
-command F Files
 set hidden
 
 
 
 
-" Lightline fix
-set laststatus=2
-
-
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-        \ 'component': {
-        \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
-        \ },
-      \ }
-
-" In ~/.vim/vimrc, or somewhere similar.
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'python': ['add_blank_lines_for_python_control_statements', 'autopep8'],
-\}
-
-let g:ale_linters = {
-\    'cpp': [],
-\    'c': [],
-\}
-
 
 "colorscheme gruvbox
-colorscheme minimalist
 "colorscheme hybrid
-"colorscheme onedark
+colorscheme onedark
 
 
 "Chose colorscheme, copy to folder: ~/.vim/colors
@@ -456,3 +418,4 @@ fun! ALIGN()
 endfun
 
 command AL :call ALIGN()
+
