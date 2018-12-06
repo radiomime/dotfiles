@@ -44,3 +44,5 @@ let g:ale_linters = {
 
 
 colorscheme minimalist
+
+noremap Q !!sh<CR>
