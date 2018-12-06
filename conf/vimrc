@@ -435,6 +435,12 @@ fun! MACLOOKUP()
     :exe 'norm i' . system("wget -qO- \"https://api.macaddress.io/v1?apiKey=at_2d31hlNQAO1PXZVTecL6yoVAxI8IW&output=vendor&search=" . @0 . "\"")
 endfun
 
+fun! FIXNMAP()
+    let @n ='$F F wyf $di(W'
+    :g/Unknown/norm! @n
+endfun
+command NM :call FIXNMAP()
+
 noremap W :call MACLOOKUP()<CR>
 
 command AL :call ALIGN()
