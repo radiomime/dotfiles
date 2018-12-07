@@ -8,6 +8,14 @@ alias ccat='highlight --out-format=ansi' # Color cat - print file with syntax hi
 alias mkd='mkdir -pv'
 alias fz='fzf-tmux'
 
+tn() {
+    tmux new -s $1
+}
+
+ta() {
+    tmux a -t $1
+}
+
 #Useful
 alias bot='cd $(dirname $(find . | tail -n 1))'
 alias lsl="ls -ltrh"
