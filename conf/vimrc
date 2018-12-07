@@ -311,16 +311,20 @@ syntax on
 
 
 
-
 " Add custom filling in of printing, classes, functions, etc. based on the language
+"
+" General
+inoremap ;k "<..>" : <..>,<esc>0f>ca<
+
+" Node & Javascript
 autocmd BufNewFile,BufRead * if match(getline(1),"node") >= 0 | set filetype=javascript | endif
 autocmd FileType javascript inoremap ;f function <..>(<..>) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;l for ( var i = 0; i < <..>; i++ ) {<Enter><..><Enter>}<esc>kkt>ca<
 autocmd FileType javascript inoremap ;p console.log(`<..>`);<esc>0/<..><Enter>ca<
 autocmd FileType javascript inoremap ;t <esc>A.then( (<..>) => {<Enter><..><Enter>});<esc>kkt>ca<
+autocmd FileType javascript inoremap ;c <esc>$xA.catch( (err) => {<Enter><..><Enter>});<esc>kt>ca<
 
 " PYTHON
-"Function builder
 autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..> = <..><esc>ggi
 autocmd FileType python inoremap ;f def <..>(<..>):<Enter><..><esc>0kt>ca<
 autocmd FileType python inoremap ;l for i in range(0, <..>):<Enter><..><esc>kt>ca<
@@ -328,16 +332,15 @@ autocmd FileType python inoremap ;p print(f'<..>')<esc>0t>ca<
 autocmd FileType python inoremap ;m def main(argv):<Enter><..><Enter>pass<Enter><esc>I<Enter><Enter>if __name__ == "__main__":<Enter>main(sys.argv)<esc>5k0f>ca<
 
 
-" General
-inoremap ;k "<..>" : <..>,<esc>0f>ca<
-
+" C and Cpp
 autocmd BufNewFile,BufRead * if match(getline(1),"*.hpp") >= 0 | set filetype=cpp | endif
 autocmd BufNewFile,BufRead * if match(getline(1),"*.h") >= 0 | set filetype=c | endif
 autocmd FileType c,cpp inoremap ;c #ifndef _<..>_H_<Enter>#define _<..>_H_<Enter><Enter>using namespace std;<Enter><Enter>class <..>:<Enter>{<Enter>public:<Enter><..>()<Enter>private:<Enter>};<Enter>#endif<esc>ggi
 autocmd FileType c,cpp inoremap ;f  <..> <..>(<..>)<Enter>{<Enter><..><Enter>}<esc>kkkcw
 autocmd FileType c,cpp inoremap ;m  int main(int argc, char *argv[])<Enter>{<Enter><..><Enter>}<esc>kwcw
 autocmd FileType c,cpp inoremap ;l  for ( int i = 0; i < <..>; i++ )<Enter>{<Enter><..><Enter>}<esc>kkkt>ca<
-autocmd FileType c,cpp inoremap ;p  printf("<..>\n");<esc>0t>ca<
+autocmd FileType cpp inoremap ;p  cout << "<..>" << endl;<esc>0t>ca<
+autocmd FileType c inoremap ;p  printf("<..>\n");<esc>0t>ca<
 
 
 
