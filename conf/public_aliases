@@ -16,6 +16,10 @@ ta() {
     tmux a -t $1
 }
 
+ts() {
+    tmux ls
+}
+
 #Useful
 alias bot='cd $(dirname $(find . | tail -n 1))'
 alias lsl="ls -ltrh"
