@@ -328,7 +328,8 @@ autocmd FileType python inoremap ;p print(f'<..>')<esc>0t>ca<
 autocmd FileType python inoremap ;m def main(argv):<Enter><..><Enter>pass<Enter><esc>I<Enter><Enter>if __name__ == "__main__":<Enter>main(sys.argv)<esc>5k0f>ca<
 
 
-
+" General
+inoremap ;k "<..>" : <..>,<esc>0f>ca<
 
 autocmd BufNewFile,BufRead * if match(getline(1),"*.hpp") >= 0 | set filetype=cpp | endif
 autocmd BufNewFile,BufRead * if match(getline(1),"*.h") >= 0 | set filetype=c | endif
