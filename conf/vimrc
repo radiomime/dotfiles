@@ -2,6 +2,11 @@ set nocompatible
 
 set number relativenumber
 
+
+" Keep cursor center
+nnoremap G Gzz
+set so=999
+
 " Vim like pane navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>

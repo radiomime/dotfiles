@@ -108,6 +108,13 @@ setup_vim_plugins () {
         git clone https://github.com/junegunn/vim-peekaboo.git ~/.vim/bundle/vim-peekaboo
     fi
 
+
+    if ls ~/.vim/bundle/vim-easymotion > /dev/null;then
+        echo "Vim Easymotion Plugin installed."
+    else
+        git clone https://github.com/easymotion/vim-easymotion.git ~/.vim/bundle/vim-easymotion
+    fi
+
     # Vim autocompletion
     setup_completion
 
