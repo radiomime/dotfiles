@@ -115,6 +115,20 @@ setup_vim_plugins () {
         git clone https://github.com/easymotion/vim-easymotion.git ~/.vim/bundle/vim-easymotion
     fi
 
+
+    if ls ~/.vim/bundle/matchit > /dev/null;then
+        echo "Vim Matchit Plugin installed."
+    else
+        git clone https://github.com/tmhedberg/matchit.git ~/.vim/bundle/matchit
+    fi
+
+
+    if ls ~/.vim/bundle/zoomwin > /dev/null;then
+        echo "Vim ZoomWin Plugin installed."
+    else
+        git clone https://github.com/vim-scripts/ZoomWin.git ~/.vim/bundle/zoomwin
+    fi
+
     # Vim autocompletion
     setup_completion
 
