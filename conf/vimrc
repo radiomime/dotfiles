@@ -2,10 +2,15 @@ set nocompatible
 
 set number relativenumber
 
+command! MakeTags !ctags -R .
+
 
 " Keep cursor center
 nnoremap G Gzz
 set so=999
+
+" King of all remaps
+ino jk <esc>
 
 " Vim like pane navigation
 nnoremap <C-J> <C-W><C-J>
@@ -75,8 +80,6 @@ nnoremap ; :
 " remap j k and to treat 'false' new lines as new line
 nnoremap j gj
 nnoremap k gk
-" Remap escape to ;;
-ino jk <esc>:w<CR>
 
 " :W sudo saves the file (no permission denied)
 command W w !sudo tee % > /dev/null
@@ -328,6 +331,7 @@ autocmd FileType javascript inoremap ;l for ( var i = 0; i < <..>; i++ ) {<Enter
 autocmd FileType javascript inoremap ;p console.log(`<..>`);<esc>0/<..><Enter>ca<
 autocmd FileType javascript inoremap ;t <esc>A.then( (<..>) => {<Enter><..><Enter>});<esc>kkt>ca<
 autocmd FileType javascript inoremap ;c <esc>$xA.catch( (err) => {<Enter><..><Enter>});<esc>kt>ca<
+autocmd FileType javascript inoremap ;r <..> = require("<..>")<..><esc>0f>ca<
 
 " PYTHON
 autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..> = <..><esc>ggi
@@ -344,8 +348,20 @@ autocmd FileType c,cpp inoremap ;c #ifndef _<..>_H_<Enter>#define _<..>_H_<Enter
 autocmd FileType c,cpp inoremap ;f  <..> <..>(<..>)<Enter>{<Enter><..><Enter>}<esc>kkkcw
 autocmd FileType c,cpp inoremap ;m  int main(int argc, char *argv[])<Enter>{<Enter><..><Enter>}<esc>kwcw
 autocmd FileType c,cpp inoremap ;l  for ( int i = 0; i < <..>; i++ )<Enter>{<Enter><..><Enter>}<esc>kkkt>ca<
+autocmd FileType c,cpp inoremap ;i  #include ""<esc>i
+autocmd FileType c,cpp inoremap ;I  #include <><esc>i
 autocmd FileType cpp inoremap ;p  cout << "<..>" << endl;<esc>0t>ca<
 autocmd FileType c inoremap ;p  printf("<..>\n");<esc>0t>ca<
+
+
+" Skeleton Builders
+autocmd FileType c inoremap ;t  <esc>:-1read $HOME/.vim/.skeleton.c<CR>gg/<..><Enter>ca<
+autocmd FileType cpp inoremap ;t  <esc>:-1read $HOME/.vim/.skeleton.cpp<CR>gg/<..><Enter>ca<
+autocmd FileType cpp inoremap ;ht  <esc>:-1read $HOME/.vim/.skeleton.hpp<CR>gg/<..><Enter>ca<
+autocmd FileType html inoremap ;t  <esc>:-1read $HOME/.vim/.skeleton.html<CR>gg/<..><Enter>ca<
+
+
+
 
 
 

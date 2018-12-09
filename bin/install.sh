@@ -138,6 +138,7 @@ setup_vim () {
     mkdir -p ~/.vim 2>/dev/null
     mkdir -p ~/.vim/colors
     cp ../conf/vim_colors/*.vim ~/.vim/colors
+    cp ../conf/skeletons ~/.vim
     cp ../conf/vimrc ~/.vimrc
 }
 
