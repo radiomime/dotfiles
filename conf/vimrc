@@ -331,7 +331,8 @@ autocmd FileType javascript inoremap ;l for ( var i = 0; i < <..>; i++ ) {<Enter
 autocmd FileType javascript inoremap ;p console.log(`<..>`);<esc>0/<..><Enter>ca<
 autocmd FileType javascript inoremap ;t <esc>A.then( (<..>) => {<Enter><..><Enter>});<esc>kkt>ca<
 autocmd FileType javascript inoremap ;c <esc>$xA.catch( (err) => {<Enter><..><Enter>});<esc>kt>ca<
-autocmd FileType javascript inoremap ;r <..> = require("<..>")<..><esc>0f>ca<
+autocmd FileType javascript inoremap ;r <..> = require("<..>");<esc>0f>ca<
+autocmd FileType javascript inoremap ;R <..> = require("<..>"),<esc>0f>ca<
 
 " PYTHON
 autocmd FileType python inoremap ;c class <..>:<Enter>def __init__(self, <..>):<Enter>self.<..> = <..><esc>ggi
