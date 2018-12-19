@@ -30,7 +30,7 @@ set laststatus=2
 
 
 let g:lightline = {
-      \ 'colorscheme': 'vim-monokai-tasty',
+      \ 'colorscheme': 'monokai_tasty',
         \ 'component': {
         \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
         \ },
