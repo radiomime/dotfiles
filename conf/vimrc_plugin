@@ -30,7 +30,7 @@ set laststatus=2
 
 
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'vim-monokai-tasty',
         \ 'component': {
         \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
         \ },
@@ -49,5 +49,5 @@ let g:ale_linters = {
 \}
 
 
-colorscheme minimalist
+colorscheme vim-monokai-tasty
 

@@ -45,11 +45,19 @@ setup_vim_plugins () {
     else
         git clone https://github.com/sheerun/vim-polyglot ~/.vim/bundle/vim-polyglot
     fi
-    # Color theme
+
+    # Color Scheme Plugins
     if ls ~/.vim/bundle/minimalist > /dev/null;then
         echo "Minimalist Plugin installed."
     else
         git clone https://github.com/dikiaap/minimalist ~/.vim/bundle/minimalist
+    fi
+
+
+    if ls ~/.vim/bundle/vim-monokai-tasty > /dev/null;then
+        echo "Monokai Tasty Plugin installed."
+    else
+        git clone https://github.com/patstockwell/vim-monokai-tasty.git ~/.vim/bundle/vim-monokai-tasty
     fi
 
     # File Finder Plugin ( :F to search files )
