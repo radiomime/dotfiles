@@ -5,9 +5,17 @@ set number relativenumber
 command! MakeTags !ctags -R .
 
 
-" Keep cursor center
+" remap j k and to treat 'false' new lines as new line, also keep center
+nnoremap j gjzz
+nnoremap k gkzz
+" Also do it for all the other stuff
 nnoremap G Gzz
-set so=999
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " King of all remaps
 ino jk <esc>
@@ -77,9 +85,6 @@ set hlsearch
 " Remap : to ; for ease of use
 nnoremap ; :
 
-" remap j k and to treat 'false' new lines as new line
-nnoremap j gj
-nnoremap k gk
 
 " :W sudo saves the file (no permission denied)
 command W w !sudo tee % > /dev/null
