@@ -25,7 +25,7 @@ setup_completion () {
         if [[ "$unamestr" == 'Linux' ]]; then
             sudo apt-get install build-essential cmake python-dev
         elif [[ "$unamestr" == 'Darwin' ]]; then
-            brew install clang
+            brew install cmake
         fi
         ( cd ~/.vim/bundle/YouCompleteMe ; ./install.py --clang-completer )
         ( cd ~/.vim/bundle/YouCompleteMe ; sudo bash ./install.sh )
@@ -195,7 +195,6 @@ function eslint () {
         echo -e "${RED}Please Install NPM and run again for NPM Linter..${NC}"
     fi
 }
-
 
 function ctags () {
     platform='unknown'
