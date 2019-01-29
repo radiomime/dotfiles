@@ -22,6 +22,7 @@ endfunction
 command V :call View()
 
 " FZF Remap
+nmap <C-P> :Files<CR>z.
 command F Files
 
 
