@@ -3,6 +3,15 @@
 RED='\033[0;31m'
 NC='\033[0m'
 
+add_timezone() {
+    if grep "TZ=" ~/.profile > /dev/null;then
+        echo "Not Adding Timezone..."
+    else
+        echo "Adding Timezone..."
+        echo "TZ='America/Denver'; export TZ" >> ~/.profile
+    fi
+}
+
 fix_mac_bash() {
     echo "Updating MacOS Bash shell..."
     unamestr=`uname`
@@ -277,13 +286,13 @@ install_linter () {
     fi
 }
 
-
+# Run the install scripts
 
 if [[ $1 = "-l" ]]; then
     echo -e "${RED}Running lightweight install!${NC}"
-    bash  && functions && aliases && tmux && setup_vim
+    bash  && functions && aliases && tmux && setup_vim && add_timezone
 else
-    bash && fzf_install && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags && powerline && fix_mac_bash
+    bash && fzf_install && functions && aliases && tmux && setup_vim && setup_vim_plugins && ctags && powerline && fix_mac_bash && add_timezone
 fi
 
 if [[ $1 = "-a" ]]; then
