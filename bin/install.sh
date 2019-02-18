@@ -192,7 +192,7 @@ aliases () {
     cp ../conf/public_aliases ~/.public_aliases
 }
 
-function eslint () {
+eslint () {
     if which node > /dev/null
     then
         if npm show eslint > /dev/null;then
@@ -205,7 +205,7 @@ function eslint () {
     fi
 }
 
-function ctags () {
+ctags () {
     platform='unknown'
     unamestr=`uname`
     if [[ "$unamestr" == 'Linux' ]]; then
@@ -232,7 +232,7 @@ function ctags () {
     fi
 }
 
-function powerline () {
+powerline () {
     if which pip3 > /dev/null; then
         if pip3 show powerline-status > /dev/null;then
             echo "Powerline already installed."
@@ -252,7 +252,7 @@ function powerline () {
 }
 
 
-function python_lint () {
+python_lint () {
     if which pip3 > /dev/null
     then
         if pip3 show flake8 > /dev/null
