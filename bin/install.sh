@@ -146,6 +146,12 @@ setup_vim_plugins () {
         git clone https://github.com/vim-scripts/ZoomWin.git ~/.vim/bundle/zoomwin
     fi
 
+    if ls ~/.vim/bundle/goyo > /dev/null;then
+        echo "Vim Goyo Plugin installed."
+    else
+        git clone https://github.com/junegunn/goyo.vim.git ~/.vim/bundle/goyo
+    fi
+
     # Vim autocompletion
     setup_completion
 

@@ -21,6 +21,15 @@ endfunction
 
 command V :call View()
 
+function! Numgoyo()
+    :Goyo
+    :set number
+    :set relativenumber
+endfunction
+
+"" Goyo Remap
+command G :call Numgoyo()
+
 " FZF Remap
 nmap <C-P> :Files<CR>z.
 command F Files
