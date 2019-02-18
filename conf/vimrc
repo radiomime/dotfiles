@@ -464,7 +464,7 @@ endfun
 
 nmap <C-P> :Files<CR>z.
 
-nnoremap <F3> :grep! "\<<cword>\>" . -r<CR>:botright copen<CR>
+nnoremap C :grep! "\<<cword>\>" . -r<CR>:botright copen<CR>
 
 fun! PANEHOR() 
     wincmd t
