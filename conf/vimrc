@@ -4,6 +4,8 @@ set number relativenumber
 
 command! MakeTags !ctags -R .
 
+" // to search for currently selected text
+vnoremap // y/<C-R>"<CR>"
 
 " remap j k and to treat 'false' new lines as new line, also keep center
 nnoremap j gjzz
