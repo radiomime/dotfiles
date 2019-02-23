@@ -1,6 +1,13 @@
 #!/bin/bash
 
 #Quick aliases
+m() {
+    touch $1
+    open -a MacVim.app $1
+}
+
+alias n='cd ~/.notes'
+
 alias v="vim"
 # alias ls="ls -hN --color=auto" # --group-directories-first
 alias grep='grep --color=auto' # Color grep - highlight desired sequence

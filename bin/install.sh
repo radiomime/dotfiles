@@ -154,7 +154,20 @@ setup_vim_plugins () {
 
     # Vim autocompletion
     setup_completion
+}
 
+setup_notes () {
+    mkdir -p ~/.notes
+    platform='unknown'
+    unamestr=`uname`
+    if [[ "$unamestr" == 'Darwin' ]]; then
+        if ls ~/.vim/bundle/markdown > /dev/null;then
+            echo "Markdown installed."
+        else
+            npm -g install instant-markdown-d
+            git clone https://github.com/suan/vim-instant-markdown.git ~/.vim/bundle/markdown
+        fi
+    fi
 }
 
 setup_vim () {
@@ -305,6 +318,7 @@ if [[ $1 = "-a" ]]; then
     echo -e "${RED}Adding Linter and Powerline to install.${NC}"
     install_linter
     powerline
+    setup_notes
 else
     echo -e "${RED}No linter or powerline installed."
 fi

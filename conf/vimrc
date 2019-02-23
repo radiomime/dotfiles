@@ -516,4 +516,15 @@ command AL :call ALIGN()
 " Run current line in shell, load output to buffer
 noremap Q !!sh<CR>
 
+fun! INSTIME()
+    :execute ":pu=strftime('%c')"
+endfun
+
+fun! ADDTIME()
+    :execute "normal! mtgg"
+    :call INSTIME()
+    :execute "normal! ddggP'tzz" 
+endfun
+
+noremap T :call ADDTIME()<CR>
 
