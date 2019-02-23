@@ -526,5 +526,5 @@ fun! ADDTIME()
     :execute "normal! ddggP'tzz" 
 endfun
 
-noremap T :call ADDTIME()<CR>
+noremap tt :call ADDTIME()<CR>
 
