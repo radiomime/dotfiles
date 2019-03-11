@@ -22,42 +22,6 @@ nnoremap g# g#zz
 " King of all remaps
 ino jk <esc>
 
-" Treat numpad like normal
-imap <Esc>Oq 1
-imap <Esc>Or 2
-imap <Esc>Os 3
-imap <Esc>Ot 4
-imap <Esc>Ou 5
-imap <Esc>Ov 6
-imap <Esc>Ow 7
-imap <Esc>Ox 8
-imap <Esc>Oy 9
-imap <Esc>Op 0
-imap <Esc>On .
-imap <Esc>OR *
-imap <Esc>OQ /
-imap <Esc>Ol +
-imap <Esc>OS -
-
-noremap <Esc>Oq 1
-noremap <Esc>Or 2
-noremap <Esc>Os 3
-noremap <Esc>Ot 4
-noremap <Esc>Ou 5
-noremap <Esc>Ov 6
-noremap <Esc>Ow 7
-noremap <Esc>Ox 8
-noremap <Esc>Oy 9
-noremap <Esc>Op 0
-noremap <Esc>On .
-noremap <Esc>OR *
-noremap <Esc>OQ /
-noremap <Esc>Ol +
-noremap <Esc>OS -
-
-
-
-
 " Vim like pane navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -366,6 +330,8 @@ syntax on
 "
 " General
 inoremap ;k "<..>" : <..>,<esc>0f>ca<
+inoremap ;M :vnew \| 0read ! 
+
 
 " Node & Javascript
 autocmd BufNewFile,BufRead * if match(getline(1),"node") >= 0 | set filetype=javascript | endif
