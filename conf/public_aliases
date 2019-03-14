@@ -6,7 +6,9 @@ m() {
     open -a MacVim.app $1
 }
 
+# Navigation to base directories
 alias n='cd ~/.notes'
+alias s='cd ~/.sandbox'
 
 alias v="vim"
 # alias ls="ls -hN --color=auto" # --group-directories-first
