@@ -21,6 +21,7 @@ alias x='chmod +x'
 alias cl="clear; ls -alh"
 alias c="clear"
 alias wanip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
+alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'
 
 tn() {
     tmux new -s $1
