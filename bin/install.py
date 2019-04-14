@@ -280,6 +280,8 @@ def main(argv):
         append("~/.profile", "TZ='America/Denver'; export TZ")
 
     # Setup Config Files
+    os.system("mkdir -p ~/.vim/autoload")
+    os.system("mkdir -p ~/.vim/colors")
     for src, dst in cp_files.items():
         cp(src, dst)
 
