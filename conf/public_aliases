@@ -6,7 +6,9 @@ m() {
     open -a MacVim.app $1
 }
 
+# Navigation to base directories
 alias n='cd ~/.notes'
+alias s='cd ~/.sandbox'
 
 alias v="vim"
 # alias ls="ls -hN --color=auto" # --group-directories-first
@@ -18,6 +20,8 @@ alias nm='sudo nmap -sP 192.168.1.1/24'
 alias x='chmod +x'
 alias cl="clear; ls -alh"
 alias c="clear"
+alias wanip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
+alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'
 
 tn() {
     tmux new -s $1

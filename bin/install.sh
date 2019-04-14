@@ -156,6 +156,10 @@ setup_vim_plugins () {
     setup_completion
 }
 
+setup_sandbox() {
+    mkdir -p ~/.sandbox
+}
+
 setup_notes () {
     mkdir -p ~/.notes
     platform='unknown'
@@ -319,6 +323,7 @@ if [[ $1 = "-a" ]]; then
     install_linter
     powerline
     setup_notes
+    setup_sandbox
 else
     echo -e "${RED}No linter or powerline installed."
 fi
