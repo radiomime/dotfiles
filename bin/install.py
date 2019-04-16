@@ -129,9 +129,10 @@ def setup_autocompletion():
         clone_repo("https://github.com/Shougo/deoplete.nvim.git")
         clone_repo("https://github.com/roxma/vim-hug-neovim-rpc.git")
         clone_repo("https://github.com/roxma/nvim-yarp.git")
-        os.system("apt-get install python3 -y")
-        os.system("apt-get install python3-pip")
-        os.system("pip3 install neovim")
+        if ( is_linux() ):
+            os.system("apt-get install python3 -y")
+            os.system("apt-get install python3-pip")
+        os.system("python3 -m pip install neovim")
 
 
 def is_installed(package):
