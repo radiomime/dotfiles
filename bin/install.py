@@ -261,7 +261,13 @@ config = {
          "git": ["https://github.com/junegunn/goyo.vim.git"],
          "use": [":G | toggle Goyo on or off.",
                  "let g:goyo_width=100"]
-     }],
+     },
+    {
+        "name": "WindowSwap",
+        "description": "Swap your windows without ruining your layout.",
+        "git": ["https://github.com/wesQ3/vim-windowswap.git"],
+        "use": ["Go to pane to move, press <leader>ww, go to destination, press <leader>ww"]
+    }],
     "extra_plugins": [{
         "name": "Ale Linter",
         "description": "Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration.",
