@@ -27,8 +27,6 @@ cp_files = {
     "../conf/fzf_functions": "~/.fzf_functions"
 }
 
-init()
-
 
 def cp(src, dst):
     os.system(add_user("cp -r " + src + " " + dst))
@@ -185,6 +183,10 @@ def install_linters():
 
 
 def main(argv):
+    # Init for colorama
+
+    init()
+
     # Add Timezone
 
     if (not has_word("TZ=", "~/.profile")):
@@ -197,6 +199,8 @@ def main(argv):
 
     for src, dst in cp_files.items():
         cp(src, dst)
+
+    # TODO: Add flags for different levels of install
 
     setup_autocompletion()
     setup_plugins(config['plugins'])
