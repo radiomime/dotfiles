@@ -4,7 +4,7 @@
 
 fe() {
   local files
-  IFS=$'\n' files=($(fzf-tmux --preview '[[ $(file --mime {}) =~ binary ]] &&
+  IFS=$'\n' files=($(fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                  echo {} is a binary file ||
                  (highlight -O ansi -l {} ||
                   coderay {} ||
@@ -18,7 +18,7 @@ fe() {
 #   - CTRL-E or Enter key to open with the $EDITOR
 fo() {
   local out file key
-  IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
+  IFS=$'\n' out=($(fzf --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
   key=$(head -1 <<< "$out")
   file=$(head -2 <<< "$out" | tail -1)
   if [ -n "$file" ]; then
@@ -30,7 +30,7 @@ fo() {
 fd() {
   local dir
   dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf-tmux +m) &&
+                  -o -type d -print 2> /dev/null | fzf +m) &&
   cd "$dir"
 }
 
@@ -44,7 +44,7 @@ fda() {
 cdf() {
    local file
    local dir
-   file=$(fzf-tmux --preview '[[ $(file --mime {}) =~ binary ]] &&
+   file=$(fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                  echo {} is a binary file ||
                  (highlight -O ansi -l {} ||
                   coderay {} ||
