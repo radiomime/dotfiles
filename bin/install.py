@@ -8,6 +8,7 @@ import sys
 from sys import platform
 from os.path import expanduser
 import os
+import argparse
 
 with open('./plugins.json') as json_file:
     config = json.load(json_file)
@@ -182,10 +183,28 @@ def install_linters():
             os.system("sudo -H pip3 install " + linter)
 
 
+def filter_impact(plugins, impact):
+    if impact == "heavy":
+        return plugins
+    filtered = []
+    if impact == "medium":
+        for plugin in plugins:
+            if plugin["impact"] == "medium" or plugin["impact"] == "light":
+                filtered.push(plugin)
+    if impact == "light":
+        for plugin in plugins:
+            if plugin["impact"] == "light":
+                filtered.append(plugin)
+    return filtered
+
+
 def main(argv):
     # Init for colorama
 
     init()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--impact", type=str, help="levels are: light, medium, heavy. Plugin weight")
+    args = parser.parse_args()
 
     # Add Timezone
 
@@ -203,9 +222,16 @@ def main(argv):
     # TODO: Add flags for different levels of install
 
     setup_autocompletion()
-    setup_plugins(config['plugins'])
-    setup_plugins(config['extra_plugins'])
-    install_fzf()
+    if args.impact:
+        plugin_list = filter_impact(config['plugins'], args.impact)
+    else:
+        plugin_list = config['plugins']
+    for plugin in plugin_list:
+        print(f'INSTALLING: {plugin["name"]}')
+
+#    setup_plugins(plugin_list)
+#    setup_plugins(config['extra_plugins'])
+#    install_fzf()
     pass
 
 
