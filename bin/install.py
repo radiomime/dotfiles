@@ -1,8 +1,5 @@
-from git import Repo
 import json
 import distutils
-from colorama import init
-from termcolor import colored
 import re
 import sys
 from sys import platform
@@ -105,14 +102,16 @@ def setup_plugins(plugin_list):
             name = git_extract_name(repo)
 
             if(is_plugin(name)):
-                print(f'Repo {name} exists!')
+                print(f'==============================================')
+                print(f'Repo {name} exists!                          |')
+                print(f'==============================================')
             else:
-                print(colored("Installed: " + name + " | Use of Plugin is: ",
-                              'green',
-                              'on_red'))
-
+                print(f'==============================================')
+                print(f'Installed: {name} | Use of Plugin is: ')
+                print(f'----------------------------------------------')
                 for use in plugin['use']:
-                    print(colored(use, 'green'))
+                    print(f'             | {use}')
+                print(f'----------------------------------------------')
                 clone_repo(repo)
 
 
@@ -125,8 +124,7 @@ def git_extract_name(git_path):
 
 
 def clone_repo(repo_url):
-    Repo.clone_from(repo_url,
-                    PLUGIN_PATH + git_extract_name(repo_url))
+    os.system(f'git clone {repo_url} {PLUGIN_PATH + git_extract_name(repo_url)}')
 
 
 def setup_autocompletion():
@@ -139,8 +137,8 @@ def setup_autocompletion():
         clone_repo("https://github.com/roxma/nvim-yarp.git")
 
         if (is_linux()):
-            os.system("apt-get install python3 -y")
-            os.system("apt-get install python3-pip")
+            os.system("sudo apt-get install python3 -y")
+            os.system("sudo apt-get install python3-pip")
         os.system("python3 -m pip install neovim")
 
 
@@ -199,9 +197,6 @@ def filter_impact(plugins, impact):
 
 
 def main(argv):
-    # Init for colorama
-
-    init()
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--impact", type=str, help="levels are: light, medium, heavy. Plugin weight")
     args = parser.parse_args()
@@ -226,12 +221,10 @@ def main(argv):
         plugin_list = filter_impact(config['plugins'], args.impact)
     else:
         plugin_list = config['plugins']
-    for plugin in plugin_list:
-        print(f'INSTALLING: {plugin["name"]}')
 
-#    setup_plugins(plugin_list)
-#    setup_plugins(config['extra_plugins'])
-#    install_fzf()
+    setup_plugins(plugin_list)
+    setup_plugins(config['extra_plugins'])
+    install_fzf()
     pass
 
 
