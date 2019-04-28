@@ -6,16 +6,21 @@ includes
 * vim
 * tmux
 
+## Setup:
+Requires Python 3.6 and vim 8.
+
+On Ubuntu:
+```
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo add-apt-repository ppa:jonathonf/vim
+sudo apt-get update
+sudo apt-get install -y python3.6 vim
+```
+
 ## To install:
 ```
 cd ~/dotfiles/bin
-./install.sh
-```
-
-### If you want the linter plugin setup:
-```
-cd ~/dotfiles/bin
-./install.sh -l
+python3.6 install.py -i <weight>
 ```
 
 If an existing version of the file exists it will be overwritten
