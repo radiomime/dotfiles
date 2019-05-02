@@ -498,14 +498,16 @@ noremap tt :call ADDTIME()<CR>
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-n>"
-    endif
-endfunction
-inoremap <expr> <tab> "\<c-n>"
-inoremap <s-tab> <c-n>
+fu! InsertTabWrapper(direction)
+  let char_before = col('.') - 1
+  if !char_before || getline('.')[char_before - 1] !~ '\k'
+    return "\<tab>"
+  elseif "backward" == a:direction
+    return "\<c-p>"
+  else
+    return "\<c-n>"
+  endif
+endfu
+inoremap <tab> <c-r>=InsertTabWrapper("forward")<cr>
+inoremap <s-tab> <c-r>=InsertTabWrapper("backward")<cr>
 
