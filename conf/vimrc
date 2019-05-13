@@ -482,18 +482,6 @@ command AL :call ALIGN()
 " Run current line in shell, load output to buffer
 noremap Q !!sh<CR>
 
-fun! INSTIME()
-    :execute ":pu=strftime('%c')"
-endfun
-
-fun! ADDTIME()
-    :execute "normal! mtgg"
-    :call INSTIME()
-    :execute "normal! ddggP'tzz" 
-endfun
-
-noremap tt :call ADDTIME()<CR>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
