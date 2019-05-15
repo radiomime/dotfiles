@@ -212,7 +212,7 @@ def filter_impact(plugins, impact):
 
 def main(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--impact", type=str, help="levels are: light, medium, heavy. Plugin weight")
+    parser.add_argument("-i", "--impact", type=str, help="levels are: light, medium, heavy : -i heavy")
     args = parser.parse_args()
 
     # Add Timezone
@@ -238,10 +238,11 @@ def main(argv):
         plugin_list = config['plugins']
 
     setup_plugins(plugin_list)
-    setup_plugins(config['extra_plugins'])
-    install_fzf()
-    install_bat()
-    install_ctags()
+    if not args.impact or args.impact == "heavy":
+        setup_plugins(config['extra_plugins'])
+        install_fzf()
+        install_bat()
+        install_ctags()
     pass
 
 
