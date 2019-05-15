@@ -22,6 +22,7 @@ alias cl="clear; ls -alh"
 alias c="clear"
 alias wanip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
 alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'
+vm () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ;  } # open man page in vim
 
 tn() {
     tmux new -s $1
