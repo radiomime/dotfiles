@@ -50,15 +50,7 @@ set background=dark
 
 
 set hidden
-
-
-
-
-
-"colorscheme gruvbox
-"colorscheme hybrid
 colorscheme onedark
-
 
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors

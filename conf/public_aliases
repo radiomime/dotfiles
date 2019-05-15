@@ -1,10 +1,7 @@
 #!/bin/bash
 
 #Quick aliases
-m() {
-    touch $1
-    open -a MacVim.app $1
-}
+m() { touch $1; open -a MacVim.app $1 ; }
 
 # Navigation to base directories
 alias n='cd ~/.notes'
@@ -24,16 +21,24 @@ alias wanip='dig @resolver1.opendns.com ANY myip.opendns.com +short'    # get cu
 alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'               # TODO: get comment from wystan
 vm () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ;  } # open man page in vim
 
-tn() {
-    tmux new -s $1
-}
+tn() { tmux new -s $1 ; } 
+ta() { tmux a -t $1 ; }   
+ts() { tmux ls ; }        
 
-ta() {
-    tmux a -t $1
-}
+inst() { 
+    platform='unknown'
+    unamestr=`uname`
+    if [[ "$unamestr" == 'Linux' ]]; then
+        platform='linux'
+    elif [[ "$unamestr" == 'Darwin' ]]; then
+        platform='mac'
+    fi
 
-ts() {
-    tmux ls
+    if [[ $platform == 'mac' ]]; then
+        brew install -y $1
+    else
+        sudo apt-get install -y $1
+    fi
 }
 
 #Useful

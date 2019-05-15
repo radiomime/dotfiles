@@ -1,5 +1,4 @@
 import json
-import distutils
 import re
 import sys
 from sys import platform
@@ -148,7 +147,7 @@ def is_directory(path):
 
 
 def is_installed(package):
-    return os.popen('which ' +  package) != ""
+    return os.popen('which ' + package) != ""
 
 
 def install_ctags():
@@ -158,6 +157,7 @@ def install_ctags():
 
         if is_linux():
             os.system("sudo apt-get install ctags highlight -y")
+
 
 def install_fzf():
     if not is_directory("~/.fzf"):
@@ -172,24 +172,33 @@ def install_fzf():
     else:
         print(f'FZF already installed. {is_directory("~/.fzf")}')
 
+
 def install_bat():
     if not is_installed('bat'):
         print(f'Installing BAT | usage : bat file')
-        if ( is_linux() ):
+
+        if (is_linux()):
             os.system("wget https://github.com/sharkdp/bat/releases/download/v0.10.0/bat-musl_0.10.0_amd64.deb")
             os.system("sudo dpkg -i bat-musl_0.10.0_amd64.deb")
             os.system("rm bat-musl_0.10.0_amd64.deb")
-        if ( is_mac() ):
+
+        if (is_mac()):
             os.system("brew install bat")
     else:
         print(f'BAT already installed!')
 
+
 def install_linters():
     pip_linters = ["flake8", "autopep8"]
+    npm_linters = ["eslint"]
+
+    for linter in npm_linters:
+        if not is_installed(linter) and is_installed("npm"):
+            os.system("npm install -g " + linter)
 
     for linter in pip_linters:
         if not is_installed(linter):
-            os.system("sudo -H pip3 install " + linter)
+            os.system("sudo -H python3 -m pip install " + linter)
 
 
 def filter_impact(plugins, impact):
@@ -238,6 +247,7 @@ def main(argv):
         plugin_list = config['plugins']
 
     setup_plugins(plugin_list)
+
     if not args.impact or args.impact == "heavy":
         setup_plugins(config['extra_plugins'])
         install_fzf()
