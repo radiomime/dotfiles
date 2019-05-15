@@ -109,6 +109,7 @@ def setup_plugins(plugin_list):
                 print(f'==============================================')
                 print(f'Installed: {name} | Use of Plugin is: ')
                 print(f'----------------------------------------------')
+
                 for use in plugin['use']:
                     print(f'             | {use}')
                 print(f'----------------------------------------------')
@@ -147,7 +148,7 @@ def is_directory(path):
 
 
 def is_installed(package):
-    return distutils.spawn.find_executable(package)
+    return os.popen('which ' +  package) != ""
 
 
 def install_ctags():
@@ -157,7 +158,6 @@ def install_ctags():
 
         if is_linux():
             os.system("sudo apt-get install ctags highlight -y")
-
 
 def install_fzf():
     if not is_directory("~/.fzf"):
@@ -172,6 +172,17 @@ def install_fzf():
     else:
         print(f'FZF already installed. {is_directory("~/.fzf")}')
 
+def install_bat():
+    if not is_installed('bat'):
+        print(f'Installing BAT | usage : bat file')
+        if ( is_linux() ):
+            os.system("wget https://github.com/sharkdp/bat/releases/download/v0.10.0/bat-musl_0.10.0_amd64.deb")
+            os.system("sudo dpkg -i bat-musl_0.10.0_amd64.deb")
+            os.system("rm bat-musl_0.10.0_amd64.deb")
+        if ( is_mac() ):
+            os.system("brew install bat")
+    else:
+        print(f'BAT already installed!')
 
 def install_linters():
     pip_linters = ["flake8", "autopep8"]
@@ -185,14 +196,17 @@ def filter_impact(plugins, impact):
     if impact == "heavy":
         return plugins
     filtered = []
+
     if impact == "medium":
         for plugin in plugins:
             if plugin["impact"] == "medium" or plugin["impact"] == "light":
                 filtered.push(plugin)
+
     if impact == "light":
         for plugin in plugins:
             if plugin["impact"] == "light":
                 filtered.append(plugin)
+
     return filtered
 
 
@@ -217,6 +231,7 @@ def main(argv):
     # TODO: Add flags for different levels of install
 
     setup_autocompletion()
+
     if args.impact:
         plugin_list = filter_impact(config['plugins'], args.impact)
     else:
@@ -225,6 +240,8 @@ def main(argv):
     setup_plugins(plugin_list)
     setup_plugins(config['extra_plugins'])
     install_fzf()
+    install_bat()
+    install_ctags()
     pass
 
 

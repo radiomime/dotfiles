@@ -13,14 +13,6 @@ map <C-t> :TagbarToggle<CR>
 command T TagbarOpen<Space>j
 let g:tagbar_compact = 1
 
-function! View()
-    :TagbarToggle
-    :wincmd p
-endfunction
-
-
-command V :call View()
-
 function! Numgoyo()
     :Goyo
     :set number

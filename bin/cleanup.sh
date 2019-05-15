@@ -1,4 +1,5 @@
 rm -rf ~/.vim
+rm -rf ~/.fzf
 rm ~/.bashrc
 rm ~/.tmux.conf
 rm ~/.vimrc

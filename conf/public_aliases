@@ -12,16 +12,16 @@ alias s='cd ~/.sandbox'
 
 alias v="vim"
 # alias ls="ls -hN --color=auto" # --group-directories-first
-alias grep='grep --color=auto' # Color grep - highlight desired sequence
-alias ccat='highlight --out-format=ansi' # Color cat - print file with syntax highlight
-alias mkd='mkdir -pv'
-alias fz='fzf-tmux'
-alias nm='sudo nmap -sP 192.168.1.1/24'
+alias grep='grep --color=auto'                                          # Color grep - highlight desired sequence
+alias ccat='highlight --out-format=ansi'                                # Color cat - print file with syntax highlight
+alias mkd='mkdir -pv'                                                   # make a complete path if doesn't exist, print if made
+alias fz='fzf-tmux'                                                     # open fuzzy finder in a new tmux pane
+alias nm='sudo nmap -sn 192.168.1.1/24'                                 # use nmap to scan the common /24 subnet without doing a port scan
 alias x='chmod +x'
 alias cl="clear; ls -alh"
 alias c="clear"
-alias wanip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
-alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'
+alias wanip='dig @resolver1.opendns.com ANY myip.opendns.com +short'    # get current WAN ip of machine 
+alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'               # TODO: get comment from wystan
 vm () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ;  } # open man page in vim
 
 tn() {
