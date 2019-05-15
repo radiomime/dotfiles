@@ -1,6 +1,6 @@
 set nocompatible
 " Termanl Remap
-set termkey=<C-J> " enable ctrl-j to send interact commands, shift-n for norm mode, direction to leave, etc.
+set twk=<C-J>
 command V :vert term
 
 set number relativenumber
