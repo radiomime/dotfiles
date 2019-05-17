@@ -2,6 +2,7 @@ set nocompatible
 " Termanl Remap
 set termkey=<C-J> " enable ctrl-j to send interact commands, shift-n for norm mode, direction to leave, etc.
 command V :vert term
+set splitbelow " split all windows below, including the terminal which is where I always want it
 
 set number relativenumber
 
@@ -14,6 +15,8 @@ vnoremap // y/<C-R>"<CR>"
 nnoremap j gjzz
 nnoremap k gkzz
 " Also do it for all the other stuff
+nnoremap } }zz
+nnoremap { {zz
 nnoremap G Gzz
 nnoremap n nzz
 nnoremap N Nzz
