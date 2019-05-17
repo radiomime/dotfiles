@@ -35,7 +35,7 @@ inst() {
     fi
 
     if [[ $platform == 'mac' ]]; then
-        brew install -y $1
+        brew install $1
     else
         sudo apt-get install -y $1
     fi

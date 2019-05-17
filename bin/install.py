@@ -153,7 +153,7 @@ def is_installed(package):
 def install_ctags():
     if not is_installed("ctags"):
         if is_mac():
-            os.system("brew install ctags -y")
+            os.system("brew install ctags")
 
         if is_linux():
             os.system("sudo apt-get install ctags highlight -y")
@@ -163,7 +163,7 @@ def install_fzf():
     if not is_directory("~/.fzf"):
         if is_mac():
             print(f'Installing FZF using brew...')
-            os.system("brew install fzf -y")
+            os.system("brew install fzf")
         else:
             print(f'Installing FZF from git...')
             os.system(
