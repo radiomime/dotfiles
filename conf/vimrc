@@ -1,6 +1,11 @@
 set nocompatible
 " Termanl Remap
+"" I can't figure out why but on some distros twk needs to be
+"set and on some termkey needs to be set
 set twk=<C-J>
+"set termkey=<C-J> 
+
+
 command V :vert term
 set splitbelow " split all windows below, including the terminal which is where I always want it
 
@@ -53,6 +58,7 @@ set background=dark
 
 
 set hidden
+" colorscheme if plugins aren't used
 colorscheme onedark
 
 "Chose colorscheme, copy to folder: ~/.vim/colors

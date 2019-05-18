@@ -50,8 +50,21 @@ let g:ale_linters = {
 \    'c': [],
 \}
 
-
-colorscheme vim-monokai-tasty
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 let g:goyo_width=100
+
+" Color scheme things
+let g:solarized_termcolors=256
+let g:palenight_terminal_italic=1
+let g:palenight_termcolors=256
+
+syntax enable
+set background=dark
+
+" SET COLORSCHEME
+" it's worth seeint if lightline (bar at bottom) supports the theme
+let g:lightline.colorscheme = 'solarized'
+"colorscheme vim-monokai-tasty
+"colorscheme palenight
+colorscheme solarized
