@@ -206,7 +206,7 @@ def install_extra_dirs():
     os.system("mkdir -pv ~/.notes")
     if not is_plugin('markdown'):
         if is_installed("npm"):
-            os.system(npm -g install instant-markdown-d)
+            os.system("npm -g install instant-markdown-d")
             os.system("git clone https://github.com/suan/vim-instant-markdown.git ~/.vim/bundle/markdown")
         else:
             print(f'Please install NPM to get Markdown VIM plugin.')
