@@ -201,6 +201,17 @@ def install_linters():
             os.system("sudo -H python3 -m pip install " + linter)
 
 
+def install_extra_dirs():
+    os.system("mkdir -pv ~/.sandbox")
+    os.system("mkdir -pv ~/.notes")
+    if not is_plugin('markdown'):
+        if is_installed("npm"):
+            os.system(npm -g install instant-markdown-d)
+            os.system("git clone https://github.com/suan/vim-instant-markdown.git ~/.vim/bundle/markdown")
+        else:
+            print(f'Please install NPM to get Markdown VIM plugin.')
+
+
 def filter_impact(plugins, impact):
     if impact == "heavy":
         return plugins
@@ -253,6 +264,7 @@ def main(argv):
         install_fzf()
         install_bat()
         install_ctags()
+        install_extra_dirs()
     pass
 
 
