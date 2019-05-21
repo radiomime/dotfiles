@@ -163,7 +163,7 @@ def install_fzf():
     if not is_directory("~/.fzf"):
         if is_mac():
             print(f'Installing FZF using brew...')
-            os.system("brew install fzf")
+            os.system("$(brew --prefix)/opt/fzf/install --all")
         else:
             print(f'Installing FZF from git...')
             os.system(
