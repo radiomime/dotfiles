@@ -4,7 +4,7 @@ set nocompatible
 " ( doesn't save files ) | from outside of vim : s sessionname to open session
 function MakeSession(session)
     execute "mks! ". fnameescape("~/.vim/sessions/" . a:session . ".vim")
-    execute "qa!"
+    execute "xa!"
 endfunction
 command! -nargs=1 S call MakeSession(<f-args>)
 

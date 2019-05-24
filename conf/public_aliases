@@ -5,7 +5,7 @@ m() { touch $1; open -a MacVim.app $1 ; }
 
 # Navigation to base directories
 alias n='cd ~/.notes'
-alias s='cd ~/.sandbox'
+alias snd='cd ~/.sandbox'
 
 alias v="vim"
 s() { vim -S ~/.vim/sessions/$1.vim; }
