@@ -8,6 +8,8 @@ alias n='cd ~/.notes'
 alias s='cd ~/.sandbox'
 
 alias v="vim"
+s() { vim -S ~/.vim/sessions/$1.vim; }
+vs() { ls ~/.vim/sessions; }
 # alias ls="ls -hN --color=auto" # --group-directories-first
 alias grep='grep --color=auto'                                          # Color grep - highlight desired sequence
 alias ccat='highlight --out-format=ansi'                                # Color cat - print file with syntax highlight
