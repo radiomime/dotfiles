@@ -242,8 +242,11 @@ def main(argv):
         append("~/.profile", "TZ='America/Denver'; export TZ")
 
     # Setup Config Files
-    os.system("mkdir -p ~/.vim/autoload")
-    os.system("mkdir -p ~/.vim/colors")
+    os.system("mkdir -pv ~/.vim/autoload")
+    os.system("mkdir -pv ~/.vim/colors")
+
+    # Setup sessions directory
+    os.system("mkdir -pv ~/.vim/sessions")
 
     for src, dst in cp_files.items():
         cp(src, dst)
