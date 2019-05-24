@@ -5,7 +5,6 @@ from sys import platform
 from os.path import expanduser
 import os
 import argparse
-test
 
 with open('./plugins.json') as json_file:
     config = json.load(json_file)
