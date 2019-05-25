@@ -147,7 +147,7 @@ def is_directory(path):
 
 
 def is_installed(package):
-    return os.popen('which ' + package) != ""
+    return os.popen('which ' + package).read() != ""
 
 
 def install_ctags():
