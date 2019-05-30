@@ -11,8 +11,8 @@ command! -nargs=1 S call MakeSession(<f-args>)
 " Termanl Remap
 "" I can't figure out why but on some distros twk needs to be
 "set and on some termkey needs to be set
-set twk=<C-J>
-"set termkey=<C-J> 
+"set twk=<C-J>
+set termkey=<C-H> 
 
 
 command V :vert term
