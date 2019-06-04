@@ -295,6 +295,8 @@ def main(argv):
         install_ctags(password)
         install_linters(password)
         install_extra_dirs()
+        if is_mac():
+            fix_mac_bash()
     pass
 
 
