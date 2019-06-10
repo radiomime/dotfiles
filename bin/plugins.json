@@ -139,7 +139,7 @@
     }, {
     "name": "Vim Function Object",
     "description": "Enable functions as object you can interact with, daf, cif, etc.",
-    "git": ["https://github.com/kana/vim-textobj-user.git", "https://github.com/kana/vim-textobj-function.git"],
+    "git": ["https://github.com/kana/vim-textobj-user.git", "https://github.com/kana/vim-textobj-function.git", "https://github.com/bps/vim-textobj-python.git"],
     "use": ["daf | delete all function", "cif | change in function"],
     "impact": "light"
     }],
