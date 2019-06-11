@@ -296,7 +296,7 @@ def main(argv):
         install_linters(password)
         install_extra_dirs()
         if is_mac():
-            fix_mac_bash()
+            fix_mac_bash(password)
     pass
 
 

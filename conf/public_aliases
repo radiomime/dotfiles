@@ -24,9 +24,18 @@ alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'               # TODO: 
 vm () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ;  } # open man page in vim
 
 # Git Shortcuts
-alias ga='git add --all'    # Add all files
+# If no arg is passed add all, otherwise add argument
+ga() {
+    if [[ -z "$1" ]];then
+        git add --all
+    else
+        git add $1
+    fi
+}
+
 gc() { git commit -m $1 ; } # Example: gc "Updated the comments"
 alias gp='git push'         # This one is pretty straight forward.
+alias gs='git status'
 
 tn() { tmux new -s $1 ; } 
 ta() { tmux a -t $1 ; }   
