@@ -378,10 +378,10 @@ autocmd FileType c inoremap ;p  printf("<..>\n");<esc>0t>ca<
 
 
 " Skeleton Builders
-autocmd FileType c inoremap ;t  <esc>:-1read $HOME/.vim/.skeleton.c<CR>gg/<..><Enter>ca<
-autocmd FileType cpp inoremap ;t  <esc>:-1read $HOME/.vim/.skeleton.cpp<CR>gg/<..><Enter>ca<
-autocmd FileType cpp inoremap ;ht  <esc>:-1read $HOME/.vim/.skeleton.hpp<CR>gg/<..><Enter>ca<
-autocmd FileType html inoremap ;t  <esc>:-1read $HOME/.vim/.skeleton.html<CR>gg/<..><Enter>ca<
+autocmd FileType c inoremap ;t  <esc>:-1read $HOME/.vim/skeletons/.skeleton.c<CR>gg/<..><Enter>ca<
+autocmd FileType cpp inoremap ;t  <esc>:-1read $HOME/.vim/skeletons/.skeleton.cpp<CR>gg/<..><Enter>ca<
+autocmd FileType cpp inoremap ;ht  <esc>:-1read $HOME/.vim/skeletons/.skeleton.hpp<CR>gg/<..><Enter>ca<
+autocmd FileType html inoremap ;t  <esc>:-1read $HOME/.vim/skeletons/.skeleton.html<CR>gg/<..><Enter>ca<
 
 
 

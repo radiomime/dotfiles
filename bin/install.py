@@ -18,7 +18,7 @@ cp_files = {
     "../conf/tmux.conf": "~/.tmux.conf",
     "../conf/vim_colors/*.vim": "~/.vim/colors",
     "../conf/autoload/*": "~/.vim/autoload/",
-    "../conf/skeletons": "~/.vim",
+    "../conf/skeletons/": "~/.vim/",
     "../conf/vimrc": "~/.vimrc",
     "../conf/linters/*": "~",
     "../conf/fzf_functions": "~/.fzf_functions"
