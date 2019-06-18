@@ -27,6 +27,9 @@ nmap <C-P> :Files<CR>z.
 command F Files
 
 
+" Commentary Changes
+autocmd FileType c setlocal commentstring=//\ %s
+
 " Lightline fix
 set laststatus=2
 
