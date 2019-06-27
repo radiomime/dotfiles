@@ -53,6 +53,14 @@ let g:ale_linters = {
 \    'c': [],
 \}
 
+
+" Expand or shrink current highlight block
+map H <Plug>(expand_region_expand)
+map L <Plug>(expand_region_shrink)
+
+" Only jump to things below for target
+let g:targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr lb ar ab lB Ar aB Ab AB rb rB bb bB BB'
+
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 let g:goyo_width=120
