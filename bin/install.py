@@ -18,7 +18,7 @@ cp_files = {
     "../conf/tmux.conf": "~/.tmux.conf",
     "../conf/vim_colors/*.vim": "~/.vim/colors",
     "../conf/autoload/*": "~/.vim/autoload/",
-    "../conf/skeletons": "~/.vim",
+    "../conf/skeletons/": "~/.vim/",
     "../conf/vimrc": "~/.vimrc",
     "../conf/linters/*": "~",
     "../conf/fzf_functions": "~/.fzf_functions"
@@ -32,8 +32,10 @@ def cp(src, dst):
 def add_user(file):
     return file.replace("~", expanduser("~"))
 
+
 def run_sudo(command, password):
-    return os.popen("sudo -S %s"%(command), 'w').write(password)
+    return os.popen("sudo -S %s" % (command), 'w').write(password)
+
 
 PLUGIN_PATH = add_user("~/.vim/bundle/")
 
@@ -81,6 +83,7 @@ def fix_mac_bash(password):
         os.system("brew install bash")
         os.system("chsh -s /usr/local/bin/bash")
         command = "bash -c 'echo /usr/local/bin/bash >> /etc/shells'"
+
         if password is not None:
             run_sudo(command, password)
         else:
@@ -130,7 +133,8 @@ def git_extract_name(git_path):
 
 
 def clone_repo(repo_url):
-    os.system(f'git clone {repo_url} {PLUGIN_PATH + git_extract_name(repo_url)}')
+    os.system(
+        f'git clone {repo_url} {PLUGIN_PATH + git_extract_name(repo_url)}')
 
 
 def setup_autocompletion(password):
@@ -144,6 +148,7 @@ def setup_autocompletion(password):
 
         if (is_linux()):
             command = "apt-get install -y python3 python3-pip"
+
             if password is not None:
                 run_sudo(command, password)
             else:
@@ -166,10 +171,12 @@ def install_ctags(password):
 
         if is_linux():
             command = "apt-get install ctags highlight -y"
+
             if password is not None:
                 run_sudo(command, password)
             else:
                 os.system(command)
+
 
 def install_fzf():
     if not is_directory("~/.fzf"):
@@ -190,8 +197,10 @@ def install_bat(password):
         print(f'Installing BAT | usage : bat file')
 
         if (is_linux()):
-            os.system("wget https://github.com/sharkdp/bat/releases/download/v0.10.0/bat-musl_0.10.0_amd64.deb")
+            os.system(
+                "wget https://github.com/sharkdp/bat/releases/download/v0.10.0/bat-musl_0.10.0_amd64.deb")
             command = "dpkg -i bat-musl_0.10.0_amd64.deb"
+
             if password is not None:
                 run_sudo(command, password)
             else:
@@ -215,6 +224,7 @@ def install_linters(password):
     for linter in pip_linters:
         if not is_installed(linter):
             command = "python3 -m pip install " + linter
+
             if password is not None:
                 run_sudo(command, password)
             else:
@@ -224,10 +234,12 @@ def install_linters(password):
 def install_extra_dirs():
     os.system("mkdir -pv ~/.sandbox")
     os.system("mkdir -pv ~/.notes")
+
     if not is_plugin('markdown'):
         if is_installed("npm"):
             os.system("sudo npm -g install instant-markdown-d")
-            os.system("git clone https://github.com/suan/vim-instant-markdown.git ~/.vim/bundle/markdown")
+            os.system(
+                "git clone https://github.com/suan/vim-instant-markdown.git ~/.vim/bundle/markdown")
         else:
             print(f'Please install NPM to get Markdown VIM plugin.')
 
@@ -252,12 +264,15 @@ def filter_impact(plugins, impact):
 
 def main(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--impact", type=str, help="levels are: light, medium, heavy : -i heavy")
-    parser.add_argument('--noroot', help='if noroot is set, will not ask for sudo pass or run things with sudo.')
+    parser.add_argument("-i", "--impact", type=str,
+                        help="levels are: light, medium, heavy : -i heavy")
+    parser.add_argument(
+        '--noroot', help='if noroot is set, will not ask for sudo pass or run things with sudo.')
     args = parser.parse_args()
 
     # Get sudo pass if flag isn't passed
     password = None
+
     if not args.noroot:
         password = getpass.getpass("Enter your admin password:")
 
@@ -295,6 +310,7 @@ def main(argv):
         install_ctags(password)
         install_linters(password)
         install_extra_dirs()
+
         if is_mac():
             fix_mac_bash(password)
     pass

@@ -142,6 +142,24 @@
     "git": ["https://github.com/kana/vim-textobj-user.git", "https://github.com/kana/vim-textobj-function.git", "https://github.com/bps/vim-textobj-python.git"],
     "use": ["daf | delete all function", "cif | change in function"],
     "impact": "light"
+    }, {
+    "name": "Vim Abolish",
+    "description": "Enhanced :%Subuvert (change every case of child Children to adult Adults)",
+    "git": ["https://github.com/tpope/vim-abolish.git"],
+    "use": [":%Subvert/child{,ren}/adult{,s}/g | change every case type of child / children to adult / adults"],
+    "impact": "light"
+    }, {
+    "name": "Vim Expand Region",
+    "description": "Highlight bigger and bigger objects",
+    "git": ["https://github.com/terryma/vim-expand-region.git"],
+    "use": ["H | highlight word, highlight in delim, highlight whole line, highlight block", "L | highlight less, opposite of H"],
+    "impact": "light"
+    }, {
+    "name": "Vim Targets",
+    "description": "Allows things like ci( to target next upcoming ( so you don't need to already be in it.",
+    "git": ["https://github.com/wellle/targets.vim.git"],
+    "use": ["ci( jump to next () group and change what is inside", "ca, | delete current csv value and end in insert mode"],
+    "impact": "light"
     }],
     "extra_plugins": [{
         "name": "Ale Linter",

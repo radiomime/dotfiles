@@ -27,6 +27,9 @@ nmap <C-P> :Files<CR>z.
 command F Files
 
 
+" Commentary Changes
+autocmd FileType c setlocal commentstring=//\ %s
+
 " Lightline fix
 set laststatus=2
 
@@ -49,6 +52,14 @@ let g:ale_linters = {
 \    'cpp': [],
 \    'c': [],
 \}
+
+
+" Expand or shrink current highlight block
+map H <Plug>(expand_region_expand)
+map L <Plug>(expand_region_shrink)
+
+" Only jump to things below for target
+let g:targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr lb ar ab lB Ar aB Ab AB rb rB bb bB BB'
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
