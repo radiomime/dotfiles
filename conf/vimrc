@@ -40,6 +40,7 @@ nnoremap g* g*zz
 nnoremap g# g#zz
 nnoremap <C-O> <C-O>zz
 nnoremap <C-I> <C-I>zz
+nnoremap <C-]> <C-]>zz
 
 " King of all remaps
 ino jk <esc>
