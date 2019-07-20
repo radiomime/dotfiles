@@ -160,6 +160,12 @@
     "git": ["https://github.com/wellle/targets.vim.git"],
     "use": ["ci( jump to next () group and change what is inside", "ca, | delete current csv value and end in insert mode"],
     "impact": "light"
+    },{
+    "name": "Completor",
+    "description": "Completor is an asynchronous code completion framework for vim8.",
+    "git": ["https://github.com/maralla/completor.vim.git"],
+    "use": ["FZF style search for completion: type hapcommit for HAPLightBulbCommitConnfigurationChange, etc."],
+    "impact": "medium"
     }],
     "extra_plugins": [{
         "name": "Ale Linter",
