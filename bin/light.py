@@ -63,7 +63,7 @@ def git_extract_name(git_path):
 
 
 def clone_repo(repo_url):
-    line = "git clone" + repo_url + PLUGIN_PATH + git_extract_name(repo_url)
+    line = "git clone " + repo_url + PLUGIN_PATH + git_extract_name(repo_url)
     os.system(line)
 
 
