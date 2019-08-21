@@ -166,12 +166,6 @@
     "git": ["https://github.com/maralla/completor.vim.git"],
     "use": ["FZF style search for completion: type hapcommit for HAPLightBulbCommitConnfigurationChange, etc."],
     "impact": "medium"
-    }, {
-    "name": "Golden Ratio",
-    "description": "Automatically resize the focus of the current window to have the dominant size.",
-    "git": ["https://github.com/roman/golden-ratio"],
-    "use": ["It just works."],
-    "impact": "light"
     }],
     "extra_plugins": [{
         "name": "Ale Linter",
