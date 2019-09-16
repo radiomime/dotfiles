@@ -303,12 +303,7 @@ noremap Y y$
 " mode keystrokes beginning \t but some function keys (which won't work in all
 " terminals) are also mapped.
 
-" have \tp ("toggle paste") toggle paste on/off and report the change, and
-" where possible also have <F4> do this both in normal and insert mode:
-nnoremap \tp :set invpaste paste?<CR>
-nmap <F4> \tp
-imap <F4> <C-O>\tp
-set pastetoggle=<F4>
+nmap <F4> :windo set scb!<CR>
 
 "" have \tf ("toggle format") toggle the automatic insertion of line breaks
 "" during typing and report the change:
