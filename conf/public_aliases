@@ -22,6 +22,7 @@ alias c="clear"
 alias wanip='dig @resolver1.opendns.com ANY myip.opendns.com +short'    # get current WAN ip of machine 
 alias rmswp='find . -type f -name "*.sw[klmnop]" -delete'               # TODO: get comment from wystan
 vm () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ;  } # open man page in vim
+pop() { sed -i '' -e '$ d' $1 }  # Remove the last line of a file ( pop ~/.ssn/known_hosts )
 
 # Git Shortcuts
 # If no arg is passed add all, otherwise add argument
