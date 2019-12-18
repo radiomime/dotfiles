@@ -15,7 +15,7 @@ bind '"jk":"\e"' # set jk to escape
 shopt -s autocd # just type a directory to cd into it
 
 
-export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]:\e[0;31m\$(git branch 2>/dev/null | grep '^*' | colrm 1 2)\n\$ \e[m"
+export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]:\e[0;31m\$(git branch 2>/dev/null | grep '^*' | colrm 1 2)\$ \e[m"
 export CLICOLOR=1
 export LSCOLORS=gxfxcxdxbxeggdabagacad
 
