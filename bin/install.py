@@ -295,16 +295,7 @@ def main(argv):
     # TODO: Add flags for different levels of install
 
     setup_autocompletion(password)
-
-    if args.impact:
-        plugin_list = filter_impact(config['plugins'], args.impact)
-    else:
-        plugin_list = config['plugins']
-
-    setup_plugins(plugin_list)
-
     if not args.impact or args.impact == "heavy":
-        setup_plugins(config['extra_plugins'])
         install_fzf()
         install_bat(password)
         install_ctags(password)
