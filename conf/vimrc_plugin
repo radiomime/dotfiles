@@ -1,18 +1,44 @@
 " PLUGIN VIMRC CONTENT
-" execute pathogen#infect()
+call plug#begin()
+
 filetype plugin indent on
 
+Plug 'sheerun/vim-polyglot' " Better Syntax Highlighting
+Plug 'dikiaap/minimalist' " Colorscheme
+Plug 'patstockwell/vim-monokai-tasty' " Colorscheme
+Plug 'junegunn/fzf' " Fuzzyfinder plugin for VIM
+" FZF Remap
+nmap <C-P> :Files<CR>z.
+command F Files
+Plug 'itchyny/lightline.vim' " Status bar 
+" Lightline fix
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'monokai_tasty',
+        \ 'component': {
+        \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
+        \ },
+      \ }
 
-" Easymotion keymaps
-map <Leader> <Plug>(easymotion-prefix)
-nmap J <Plug>(easymotion-bd-w)
-nmap K <Plug>(easymotion-overwin-w)
+Plug 'majutsushi/tagbar' " open tags in window w/ ctrl-t
+
 
 "TagBar Remap
 map <C-t> :TagbarToggle<CR>
 command T TagbarOpen<Space>j
 let g:tagbar_compact = 1
 
+Plug 'jiangmiao/auto-pairs' " Insert or delete brackets, parens, quotes
+Plug 'junegunn/vim-peekaboo' " Open peak at registers
+Plug 'easymotion/vim-easymotion' " J or K to open key words to jump to
+" Easymotion keymaps
+map <Leader> <Plug>(easymotion-prefix)
+nmap J <Plug>(easymotion-bd-w)
+nmap K <Plug>(easymotion-overwin-w)
+
+Plug 'vim-scripts/ZoomWin' " ctrl-o to zoom in on current pane
+Plug 'junegunn/goyo.vim' " :G to remove distractions and focus pane
+let g:goyo_width=120
 function! Numgoyo()
     :Goyo
     :set number
@@ -22,26 +48,10 @@ endfunction
 "" Goyo Remap
 command G :call Numgoyo()
 
-" FZF Remap
-nmap <C-P> :Files<CR>z.
-command F Files
-
-
-" Commentary Changes
-autocmd FileType c setlocal commentstring=//\ %s
-
-" Lightline fix
-set laststatus=2
-
-
-let g:lightline = {
-      \ 'colorscheme': 'monokai_tasty',
-        \ 'component': {
-        \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
-        \ },
-      \ }
-
-" In ~/.vim/vimrc, or somewhere similar.
+Plug 'wesQ3/vim-windowswap' " leader-w on pane, leader-w on another, swap panes
+Plug 'kana/vim-textobj-user' " make functions object to work with
+Plug 'maralla/completor.vim' " asynchronous completion for vim8
+Plug 'dense-analysis/ale' " Linter for vim
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
@@ -53,17 +63,46 @@ let g:ale_linters = {
 \    'c': [],
 \}
 
+Plug 'mhinz/vim-signify' "show git differences
+Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
+Plug 'keith/swift.vim' " File type and syntax for swift
+Plug 'vim-syntastic/syntastic'
+Plug 'ludovicchabant/vim-gutentags' " Handle ctags smarter
 
-" Expand or shrink current highlight block
-map H <Plug>(expand_region_expand)
-map L <Plug>(expand_region_shrink)
+Plug 'scrooloose/nerdtree' " File tree in nerdtree
+command Tog :NERDTreeToggle
 
-" Only jump to things below for target
-let g:targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr lb ar ab lB Ar aB Ab AB rb rB bb bB BB'
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " intellisense engine for vim8
+" coc config
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-eslint', 
+  \ 'coc-prettier', 
+  \ 'coc-json', 
+  \ ]
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:goyo_width=120
+
+let g:prettier#quickfix_enabled = 0
+let g:prettier#quickfix_auto_focus = 0
+ " prettier command for coc
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+
+" Tpope Plugins
+Plug 'tpope/vim-surround' " vim verb on surrouding operators
+Plug 'tpope/vim-repeat' " Add plugin support for . operator
+Plug 'tpope/vim-commentary' " gc is now verb, gc3j comment out 3 lines down
+" Commentary Changes
+autocmd FileType c setlocal commentstring=//\ %s
+
+
+Plug 'tpope/vim-abolish' " add :%Subvert to change case, i.e. CHILD/ADULT -> cHiLd -> aDuLt
+Plug 'tpope/vim-unimpaired' " Add extra operators to [
+Plug 'tpope/vim-tbone' " tmux bidnings for vim
+
+call plug#end()
 
 " Color scheme things
 let g:solarized_termcolors=256

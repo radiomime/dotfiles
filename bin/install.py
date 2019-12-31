@@ -292,10 +292,9 @@ def main(argv):
     for src, dst in cp_files.items():
         cp(src, dst)
 
-    # TODO: Add flags for different levels of install
-
     setup_autocompletion(password)
     if not args.impact or args.impact == "heavy":
+        append_plugin_vimrc()
         install_fzf()
         install_bat(password)
         install_ctags(password)
