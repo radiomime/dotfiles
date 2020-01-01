@@ -3,14 +3,19 @@ call plug#begin()
 
 filetype plugin indent on
 
-Plug 'sheerun/vim-polyglot' " Better Syntax Highlighting
-Plug 'dikiaap/minimalist' " Colorscheme
-Plug 'patstockwell/vim-monokai-tasty' " Colorscheme
-Plug 'junegunn/fzf' " Fuzzyfinder plugin for VIM
+" Better Syntax Highlighting
+Plug 'sheerun/vim-polyglot' 
+" Colorscheme
+Plug 'dikiaap/minimalist' 
+" Colorscheme
+Plug 'patstockwell/vim-monokai-tasty' 
+" Fuzzyfinder plugin for VIM
+Plug 'junegunn/fzf' 
 " FZF Remap
 nmap <C-P> :Files<CR>z.
 command F Files
-Plug 'itchyny/lightline.vim' " Status bar 
+" Status bar 
+Plug 'itchyny/lightline.vim' 
 " Lightline fix
 set laststatus=2
 let g:lightline = {
@@ -20,7 +25,8 @@ let g:lightline = {
         \ },
       \ }
 
-Plug 'majutsushi/tagbar' " open tags in window w/ ctrl-t
+" open tags in window w/ ctrl-t
+Plug 'majutsushi/tagbar' 
 
 
 "TagBar Remap
@@ -28,16 +34,27 @@ map <C-t> :TagbarToggle<CR>
 command T TagbarOpen<Space>j
 let g:tagbar_compact = 1
 
-Plug 'jiangmiao/auto-pairs' " Insert or delete brackets, parens, quotes
-Plug 'junegunn/vim-peekaboo' " Open peak at registers
-Plug 'easymotion/vim-easymotion' " J or K to open key words to jump to
+" Insert or delete brackets, parens, quotes
+Plug 'jiangmiao/auto-pairs' 
+" Open peak at registers
+Plug 'junegunn/vim-peekaboo' 
+" J or K to open key words to jump to
+Plug 'easymotion/vim-easymotion' 
 " Easymotion keymaps
 map <Leader> <Plug>(easymotion-prefix)
 nmap J <Plug>(easymotion-bd-w)
 nmap K <Plug>(easymotion-overwin-w)
 
-Plug 'vim-scripts/ZoomWin' " ctrl-o to zoom in on current pane
-Plug 'junegunn/goyo.vim' " :G to remove distractions and focus pane
+" ctrl-o to zoom in on current pane
+Plug 'vim-scripts/ZoomWin' 
+
+" google for things in vim buffer
+Plug 'szw/vim-g' 
+let g:vim_g_command = "G"
+let g:vim_g_f_command = "Gf"
+
+" :Go to remove distractions and focus pane
+Plug 'junegunn/goyo.vim' 
 let g:goyo_width=120
 function! Numgoyo()
     :Goyo
@@ -46,12 +63,17 @@ function! Numgoyo()
 endfunction
 
 "" Goyo Remap
-command G :call Numgoyo()
+command Go :call Numgoyo()
 
-Plug 'wesQ3/vim-windowswap' " leader-w on pane, leader-w on another, swap panes
-Plug 'kana/vim-textobj-user' " make functions object to work with
-Plug 'maralla/completor.vim' " asynchronous completion for vim8
-Plug 'dense-analysis/ale' " Linter for vim
+
+" leader-w on pane, leader-w on another, swap panes
+Plug 'wesQ3/vim-windowswap' 
+" make functions object to work with
+Plug 'kana/vim-textobj-user' 
+" asynchronous completion for vim8
+Plug 'maralla/completor.vim' 
+" Linter for vim
+Plug 'dense-analysis/ale' 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
@@ -63,16 +85,22 @@ let g:ale_linters = {
 \    'c': [],
 \}
 
-Plug 'mhinz/vim-signify' "show git differences
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
-Plug 'keith/swift.vim' " File type and syntax for swift
+"show git differences
+Plug 'mhinz/vim-signify' 
+" fuzzy find files
+Plug 'ctrlpvim/ctrlp.vim' 
+" File type and syntax for swift
+Plug 'keith/swift.vim' 
 Plug 'vim-syntastic/syntastic'
-Plug 'ludovicchabant/vim-gutentags' " Handle ctags smarter
+" Handle ctags smarter
+Plug 'ludovicchabant/vim-gutentags' 
 
-Plug 'scrooloose/nerdtree' " File tree in nerdtree
+" File tree in nerdtree
+Plug 'scrooloose/nerdtree' 
 command Tog :NERDTreeToggle
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'} " intellisense engine for vim8
+" intellisense engine for vim8
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 " coc config
 let g:coc_global_extensions = [
   \ 'coc-snippets',
@@ -91,16 +119,22 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 
 " Tpope Plugins
-Plug 'tpope/vim-surround' " vim verb on surrouding operators
-Plug 'tpope/vim-repeat' " Add plugin support for . operator
-Plug 'tpope/vim-commentary' " gc is now verb, gc3j comment out 3 lines down
+" vim verb on surrouding operators
+Plug 'tpope/vim-surround' 
+" Add plugin support for . operator
+Plug 'tpope/vim-repeat' 
+" gc is now verb, gc3j comment out 3 lines down
+Plug 'tpope/vim-commentary' 
 " Commentary Changes
 autocmd FileType c setlocal commentstring=//\ %s
 
 
-Plug 'tpope/vim-abolish' " add :%Subvert to change case, i.e. CHILD/ADULT -> cHiLd -> aDuLt
-Plug 'tpope/vim-unimpaired' " Add extra operators to [
-Plug 'tpope/vim-tbone' " tmux bidnings for vim
+" add :%Subvert to change case, i.e. CHILD/ADULT -> cHiLd -> aDuLt
+Plug 'tpope/vim-abolish' 
+" Add extra operators to [
+Plug 'tpope/vim-unimpaired' 
+" tmux bidnings for vim
+Plug 'tpope/vim-tbone' 
 
 call plug#end()
 
