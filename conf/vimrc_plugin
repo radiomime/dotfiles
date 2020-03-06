@@ -99,25 +99,6 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'scrooloose/nerdtree' 
 command Tog :NERDTreeToggle
 
-" intellisense engine for vim8
-Plug 'neoclide/coc.nvim', {'branch': 'release'} 
-" coc config
-let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-eslint', 
-  \ 'coc-prettier', 
-  \ 'coc-json', 
-  \ ]
-
-
-let g:prettier#quickfix_enabled = 0
-let g:prettier#quickfix_auto_focus = 0
- " prettier command for coc
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-
 " Tpope Plugins
 " vim verb on surrouding operators
 Plug 'tpope/vim-surround' 
