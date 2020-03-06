@@ -64,15 +64,6 @@ def is_linux():
     return False
 
 
-def is_plugin(file):
-    if os.path.isdir(PLUGIN_PATH + file):
-        return True
-
-    return False
-
-# Install functions
-
-
 def fix_mac_bash(password):
     # Update Mac Bash shell
 
@@ -97,60 +88,6 @@ def append_plugin_vimrc():
     fout = open(add_user("~/.vimrc"), "a")
     fout.write(data2)
     fout.close()
-
-
-def setup_plugins(plugin_list):
-    append_plugin_vimrc()
-
-    for plugin in plugin_list:
-        for repo in plugin['git']:
-            name = git_extract_name(repo)
-
-            if(is_plugin(name)):
-                print(f'==============================================')
-                print(f'Repo {name} exists!                          |')
-                print(f'==============================================')
-            else:
-                print(f'==============================================')
-                print(f'Installed: {name} | Use of Plugin is: ')
-                print(f'----------------------------------------------')
-
-                for use in plugin['use']:
-                    print(f'             | {use}')
-                print(f'----------------------------------------------')
-                clone_repo(repo)
-
-
-def git_extract_name(git_path):
-    splt = git_path.split("/")
-    name = splt.pop()
-    clean = name.replace(".git", "")
-
-    return clean
-
-
-def clone_repo(repo_url):
-    os.system(
-        f'git clone {repo_url} {PLUGIN_PATH + git_extract_name(repo_url)}')
-
-
-def setup_autocompletion(password):
-    if (is_plugin("deoplete.nvim")):
-        print(f'Deoplete exists')
-    else:
-        print(f'Installing Deoplete')
-        clone_repo("https://github.com/Shougo/deoplete.nvim.git")
-        clone_repo("https://github.com/roxma/vim-hug-neovim-rpc.git")
-        clone_repo("https://github.com/roxma/nvim-yarp.git")
-
-        if (is_linux()):
-            command = "apt-get install -y python3 python3-pip"
-
-            if password is not None:
-                run_sudo(command, password)
-            else:
-                os.system(command)
-        os.system("python3 -m pip install neovim")
 
 
 def is_directory(path):
@@ -232,49 +169,24 @@ def install_extra_dirs():
     os.system("mkdir -pv ~/.sandbox")
     os.system("mkdir -pv ~/.notes")
 
-    if not is_plugin('markdown'):
-        if is_installed("npm"):
-            os.system("sudo npm -g install instant-markdown-d")
-            os.system(
-                "git clone https://github.com/suan/vim-instant-markdown.git ~/.vim/bundle/markdown")
-        else:
-            print(f'Please install NPM to get Markdown VIM plugin.')
+    if is_installed("npm"):
+        os.system("sudo npm -g install instant-markdown-d")
+    else:
+        print(f'Please install NPM to get Markdown VIM plugin.')
 
 
-def filter_impact(plugins, impact):
-    if impact == "heavy":
-        return plugins
-    filtered = []
-
-    if impact == "medium":
-        for plugin in plugins:
-            if plugin["impact"] == "medium" or plugin["impact"] == "light":
-                filtered.push(plugin)
-
-    if impact == "light":
-        for plugin in plugins:
-            if plugin["impact"] == "light":
-                filtered.append(plugin)
-
-    return filtered
+def install_plug():
+    os.system("\
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
 
 
 def main(argv):
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--impact", type=str,
-                        help="levels are: light, medium, heavy : -i heavy")
-    parser.add_argument(
-        '--noroot', help='if noroot is set, will not ask for sudo pass or run things with sudo.')
-    args = parser.parse_args()
 
     # Get sudo pass if flag isn't passed
-    password = None
-
-    if not args.noroot:
-        password = getpass.getpass("Enter your admin password:")
+    password = getpass.getpass("Enter your admin password:")
 
     # Add Timezone
-
     if (not has_word("TZ=", "~/.profile")):
         print(f'Adding timezone.')
         append("~/.profile", "TZ='America/Denver'; export TZ")
@@ -289,17 +201,16 @@ def main(argv):
     for src, dst in cp_files.items():
         cp(src, dst)
 
-    setup_autocompletion(password)
-    if not args.impact or args.impact == "heavy":
-        append_plugin_vimrc()
-        install_fzf()
-        install_bat(password)
-        install_ctags(password)
-        install_linters(password)
-        install_extra_dirs()
+    append_plugin_vimrc()
+    install_fzf()
+    install_bat(password)
+    install_ctags(password)
+    install_linters(password)
+    install_extra_dirs()
+    install_plug()
 
-        if is_mac():
-            fix_mac_bash(password)
+    if is_mac():
+        fix_mac_bash(password)
     pass
 
 
