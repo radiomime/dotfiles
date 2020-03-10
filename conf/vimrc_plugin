@@ -132,5 +132,5 @@ set background=dark
 " let g:lightline.colorscheme = 'solarized'
 let g:lightline.colorscheme = 'palenight'
 "colorscheme vim-monokai-tasty
-colorscheme palenight
+colorscheme onedark
 " colorscheme solarized
