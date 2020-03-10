@@ -1,4 +1,3 @@
-import getpass
 import re
 import sys
 from sys import platform
@@ -20,6 +19,21 @@ cp_files = {
     "../conf/linters/*": "~",
     "../conf/fzf_functions": "~/.fzf_functions"
 }
+
+
+def br(w):
+    print("|" + '-' * w + "|")
+
+
+def banner(w, word):
+    br(w)
+    mid = int((w - len(word)) / 2)
+    print("|" + (mid * " ") + word + (mid * " ") + "|")
+    br(w)
+
+
+def gen_install(name, why, cmd):
+    return {'name': name, 'why': why, 'cmds': cmd}
 
 
 def cp(src, dst):
@@ -64,21 +78,6 @@ def is_linux():
     return False
 
 
-def fix_mac_bash(password):
-    # Update Mac Bash shell
-
-    if is_mac():
-        os.system("brew install bash")
-        os.system("chsh -s /usr/local/bin/bash")
-        command = "bash -c 'echo /usr/local/bin/bash >> /etc/shells'"
-
-        if password is not None:
-            run_sudo(command, password)
-        else:
-            os.system(command)
-        os.system("ln -s /usr/local/bin/bash /usr/local/bin/bash-terminal-app")
-
-
 def append_plugin_vimrc():
     os.system("cp ../conf/vimrc " + add_user("~/.vimrc"))
 
@@ -94,101 +93,129 @@ def is_directory(path):
     return os.path.isdir(add_user(path))
 
 
+def is_file(path):
+    return os.path.exists(add_user(path))
+
+
 def is_installed(package):
     return os.popen('which ' + package).read() != ""
 
 
-def install_ctags(password):
+def is_npm_installed(package):
+    return os.popen('npm list -g ' + package +
+                    "|grep " + package).read() != ""
+                    
+
+def install_ctags():
     if not is_installed("ctags"):
+        name = "ctags"
+        why = "Allows tag generation for code bases, \
+            enables jumping to definitions."
+        cmds = []
         if is_mac():
-            os.system("brew install ctags")
-
+            cmds.append("brew install ctags")
         if is_linux():
-            command = "apt-get install ctags highlight -y"
-
-            if password is not None:
-                run_sudo(command, password)
-            else:
-                os.system(command)
+            cmds.append("apt-get install ctags highlight -y")
+        return gen_install(name, why, cmds)
+    else:
+        return None
 
 
 def install_fzf():
     if not is_directory("~/.fzf"):
+        name = "FZF"
+        why = "Fuzzy finding for command line, ctrl-r better and more"
+        cmds = []
         if is_mac():
-            print(f'Installing FZF using brew...')
-            os.system("$(brew --prefix)/opt/fzf/install --all")
+            cmds.append("$(brew --prefix)/opt/fzf/install --all")
         else:
-            print(f'Installing FZF from git...')
-            os.system(
+            cmds.append(
                 add_user("git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf"))
-            os.system("~/.fzf/install --all")
+            cmds.append("~/.fzf/install --all")
+            return gen_install(name, why, cmds)
     else:
-        print(f'FZF already installed. {is_directory("~/.fzf")}')
+        return None
 
 
-def install_bat(password):
+def install_bat():
     if not is_installed('bat'):
-        print(f'Installing BAT | usage : bat file')
+        name = "BAT"
+        why = "utility like cat, but prettier"
+        commands = []
 
         if (is_linux()):
-            os.system(
-                "wget https://github.com/sharkdp/bat/releases/download/v0.10.0/bat-musl_0.10.0_amd64.deb")
-            command = "dpkg -i bat-musl_0.10.0_amd64.deb"
-
-            if password is not None:
-                run_sudo(command, password)
-            else:
-                os.system(command)
-            os.system("rm bat-musl_0.10.0_amd64.deb")
-
+            commands.append("wget \
+                            https://github.com/sharkdp/bat\
+                            /releases/download/v0.10.0/bat-\
+                            musl_0.10.0_amd64.deb")
+            commands.append("dpkg -i bat-musl_0.10.0_amd64.deb")
+            commands.append("rm bat-musl_0.10.0_amd64.deb")
         if (is_mac()):
-            os.system("brew install bat")
+            commands.append("brew install bat")
+        return gen_install(name, why, commands)
     else:
-        print(f'BAT already installed!')
+        return None
 
 
-def install_linters(password):
+def install_linters():
     pip_linters = ["flake8", "autopep8"]
     npm_linters = ["eslint"]
 
+    name = "Linters for python and nodejs"
+    why = "Enables syntax suggestions & standard adhesion"
+    cmds = []
     for linter in npm_linters:
         if not is_installed(linter) and is_installed("npm"):
-            os.system("npm install -g " + linter)
-
+            cmds.append("npm install -g " + linter)
     for linter in pip_linters:
         if not is_installed(linter):
-            command = "python3 -m pip install " + linter
+            cmds.append("python3 -m pip install " + linter)
+    if len(cmds) is not 0:
+        return gen_install(name, why, cmds)
+    else:
+        return None
 
-            if password is not None:
-                run_sudo(command, password)
-            else:
-                os.system(command)
+
+def install_npm_md():
+    if not is_installed("npm"):
+        return None
+
+    if is_npm_installed("instant-markdown-d"):
+        return None
+
+    name = "instant-markdown"
+    why = "Enables live render of markdown through plugin"
+    cmds = []
+    cmds.append('sudo npm install -g instant-markdown-d')
+    return gen_install(name, why, cmds)
 
 
 def install_extra_dirs():
     os.system("mkdir -pv ~/.sandbox")
     os.system("mkdir -pv ~/.notes")
 
-    if is_installed("npm"):
-        os.system("sudo npm -g install instant-markdown-d")
-    else:
-        print(f'Please install NPM to get Markdown VIM plugin.')
-
 
 def install_plug():
-    os.system("\
+    if (is_file("~/.vim/autoload/plug.vim")):
+        return None
+
+    name = "Plug"
+    why = "Plugin Manager for VIM. \
+        Open vim and run :PlugInstall to install plugins."
+    cmds = []
+
+    cmds.append("\
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
+    return gen_install(name, why, cmds)
 
 
 def main(argv):
-
-    # Get sudo pass if flag isn't passed
-    password = getpass.getpass("Enter your admin password:")
-
+    w = 70  # width of banners
+    inform = []
     # Add Timezone
     if (not has_word("TZ=", "~/.profile")):
-        print(f'Adding timezone.')
+        print('Adding timezone.')
         append("~/.profile", "TZ='America/Denver'; export TZ")
 
     # Setup Config Files
@@ -202,16 +229,41 @@ def main(argv):
         cp(src, dst)
 
     append_plugin_vimrc()
-    install_fzf()
-    install_bat(password)
-    install_ctags(password)
-    install_linters(password)
+    inform.append(install_fzf())
+    inform.append(install_bat())
+    inform.append(install_ctags())
+    inform.append(install_linters())
+    inform.append(install_plug())
+    inform.append(install_npm_md())
     install_extra_dirs()
-    install_plug()
 
-    if is_mac():
-        fix_mac_bash(password)
-    pass
+    def remove_none(item):
+        return item is not None
+
+    inform = list(filter(remove_none, inform))
+    if (len(inform) == 0):
+        return
+
+    def out(text):
+        print(text)
+
+    def instruct(install):
+        br(w)
+        print('To install: ' + install['name'])
+        print('For: ' + install['why'])
+        print('Run: ')
+        br(w)
+        [out(cmd) for cmd in install['cmds']]
+
+    banner(w, "Extra Libraries")
+    print("It looks like you are missing some libraries utilized by \
+        the best vim plugins, to install these, you can run: ")
+    [instruct(item) for item in inform]
+
+    banner(w, 'Or install everything:')
+    for item in inform:
+        [out(cmd) for cmd in item['cmds']]
+    br(w)
 
 
 if __name__ == "__main__":
