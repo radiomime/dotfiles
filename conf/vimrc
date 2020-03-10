@@ -446,6 +446,7 @@ nmap <C-P> :Files<CR>z.
 
 nnoremap C :grep! "\<<cword>\>" . -r<CR>:botright copen<CR>
 
+" adjust pane layout with toggle C-y
 fun! PANEHOR() 
     wincmd t
     wincmd H
@@ -456,8 +457,18 @@ fun! PANEVERT()
     wincmd K
 endfun
 
-nnoremap <C-y> :call PANEHOR()<CR>
-nnoremap <C-n> :call PANEVERT()<CR>
+" Toggle between vertical and horizontal layout
+let g:vert = 0
+fun! PANETOG()
+    if g:vert
+        call PANEVERT()
+        let g:vert=0
+    else
+        call PANEHOR()
+        let g:vert=1
+    endif
+endfun
+nnoremap <C-y> :call PANETOG()<CR>
 
 fun! ALIGN()
     :execute "normal! mtggvG='tzz" 
@@ -510,4 +521,3 @@ fu! InsertTabWrapper(direction)
 endfu
 inoremap <tab> <c-r>=InsertTabWrapper("forward")<cr>
 inoremap <s-tab> <c-r>=InsertTabWrapper("backward")<cr>
-

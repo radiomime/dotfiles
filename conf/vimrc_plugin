@@ -1,39 +1,23 @@
 " PLUGIN VIMRC CONTENT
-execute pathogen#infect()
+call plug#begin()
+
 filetype plugin indent on
 
-
-" Easymotion keymaps
-map <Leader> <Plug>(easymotion-prefix)
-nmap J <Plug>(easymotion-bd-w)
-nmap K <Plug>(easymotion-overwin-w)
-
-"TagBar Remap
-map <C-t> :TagbarToggle<CR>
-command T TagbarOpen<Space>j
-let g:tagbar_compact = 1
-
-function! Numgoyo()
-    :Goyo
-    :set number
-    :set relativenumber
-endfunction
-
-"" Goyo Remap
-command G :call Numgoyo()
-
+" Better Syntax Highlighting
+Plug 'sheerun/vim-polyglot' 
+" Colorscheme
+Plug 'dikiaap/minimalist' 
+" Colorscheme
+Plug 'patstockwell/vim-monokai-tasty' 
+" Fuzzyfinder plugin for VIM
+Plug 'junegunn/fzf' 
 " FZF Remap
 nmap <C-P> :Files<CR>z.
 command F Files
-
-
-" Commentary Changes
-autocmd FileType c setlocal commentstring=//\ %s
-
+" Status bar 
+Plug 'itchyny/lightline.vim' 
 " Lightline fix
 set laststatus=2
-
-
 let g:lightline = {
       \ 'colorscheme': 'monokai_tasty',
         \ 'component': {
@@ -41,7 +25,55 @@ let g:lightline = {
         \ },
       \ }
 
-" In ~/.vim/vimrc, or somewhere similar.
+" open tags in window w/ ctrl-t
+Plug 'majutsushi/tagbar' 
+
+
+"TagBar Remap
+map <C-t> :TagbarToggle<CR>
+command T TagbarOpen<Space>j
+let g:tagbar_compact = 1
+
+" Insert or delete brackets, parens, quotes
+Plug 'jiangmiao/auto-pairs' 
+" Open peak at registers
+Plug 'junegunn/vim-peekaboo' 
+" J or K to open key words to jump to
+Plug 'easymotion/vim-easymotion' 
+" Easymotion keymaps
+map <Leader> <Plug>(easymotion-prefix)
+nmap J <Plug>(easymotion-bd-w)
+nmap K <Plug>(easymotion-overwin-w)
+
+" ctrl-o to zoom in on current pane
+Plug 'vim-scripts/ZoomWin' 
+
+" google for things in vim buffer
+Plug 'szw/vim-g' 
+let g:vim_g_command = "G"
+let g:vim_g_f_command = "Gf"
+
+" :Go to remove distractions and focus pane
+Plug 'junegunn/goyo.vim' 
+let g:goyo_width=120
+function! Numgoyo()
+    :Goyo
+    :set number
+    :set relativenumber
+endfunction
+
+"" Goyo Remap
+command Go :call Numgoyo()
+
+
+" leader-w on pane, leader-w on another, swap panes
+Plug 'wesQ3/vim-windowswap' 
+" make functions object to work with
+Plug 'kana/vim-textobj-user' 
+" asynchronous completion for vim8
+Plug 'maralla/completor.vim' 
+" Linter for vim
+Plug 'dense-analysis/ale' 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
@@ -53,17 +85,39 @@ let g:ale_linters = {
 \    'c': [],
 \}
 
+"show git differences
+Plug 'mhinz/vim-signify' 
+" fuzzy find files
+Plug 'ctrlpvim/ctrlp.vim' 
+" File type and syntax for swift
+Plug 'keith/swift.vim' 
+Plug 'vim-syntastic/syntastic'
+" Handle ctags smarter
+Plug 'ludovicchabant/vim-gutentags' 
 
-" Expand or shrink current highlight block
-map H <Plug>(expand_region_expand)
-map L <Plug>(expand_region_shrink)
+" File tree in nerdtree
+Plug 'scrooloose/nerdtree' 
+command Tog :NERDTreeToggle
 
-" Only jump to things below for target
-let g:targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr lb ar ab lB Ar aB Ab AB rb rB bb bB BB'
+" Tpope Plugins
+" vim verb on surrouding operators
+Plug 'tpope/vim-surround' 
+" Add plugin support for . operator
+Plug 'tpope/vim-repeat' 
+" gc is now verb, gc3j comment out 3 lines down
+Plug 'tpope/vim-commentary' 
+" Commentary Changes
+autocmd FileType c setlocal commentstring=//\ %s
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:goyo_width=120
+
+" add :%Subvert to change case, i.e. CHILD/ADULT -> cHiLd -> aDuLt
+Plug 'tpope/vim-abolish' 
+" Add extra operators to [
+Plug 'tpope/vim-unimpaired' 
+" tmux bidnings for vim
+Plug 'tpope/vim-tbone' 
+
+call plug#end()
 
 " Color scheme things
 let g:solarized_termcolors=256
@@ -78,5 +132,5 @@ set background=dark
 " let g:lightline.colorscheme = 'solarized'
 let g:lightline.colorscheme = 'palenight'
 "colorscheme vim-monokai-tasty
-colorscheme palenight
+colorscheme onedark
 " colorscheme solarized
