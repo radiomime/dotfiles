@@ -104,7 +104,7 @@ def is_installed(package):
 def is_npm_installed(package):
     return os.popen('npm list -g ' + package +
                     "|grep " + package).read() != ""
-                    
+
 
 def install_ctags():
     if not is_installed("ctags"):

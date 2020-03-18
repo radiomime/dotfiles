@@ -9,11 +9,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'dikiaap/minimalist' 
 " Colorscheme
 Plug 'patstockwell/vim-monokai-tasty' 
-" Fuzzyfinder plugin for VIM
-Plug 'junegunn/fzf' 
-" FZF Remap
-nmap <C-P> :Files<CR>z.
-command F Files
 " Status bar 
 Plug 'itchyny/lightline.vim' 
 " Lightline fix
@@ -88,7 +83,9 @@ let g:ale_linters = {
 "show git differences
 Plug 'mhinz/vim-signify' 
 " fuzzy find files
-Plug 'ctrlpvim/ctrlp.vim' 
+Plug 'kien/ctrlp.vim'
+let g:ctrlp_working_path_mode = 0
+
 " File type and syntax for swift
 Plug 'keith/swift.vim' 
 Plug 'vim-syntastic/syntastic'
@@ -132,5 +129,5 @@ set background=dark
 " let g:lightline.colorscheme = 'solarized'
 let g:lightline.colorscheme = 'palenight'
 "colorscheme vim-monokai-tasty
-colorscheme onedark
+set background=dark
 " colorscheme solarized
