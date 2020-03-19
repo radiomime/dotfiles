@@ -85,7 +85,7 @@ Plug 'mhinz/vim-signify'
 " fuzzy find files
 Plug 'kien/ctrlp.vim'
 let g:ctrlp_working_path_mode = 0
-nnoremap <C-J> :CtrlPBuffer<Enter>
+nnoremap <C-F> :CtrlPBuffer<Enter>
 
 " File type and syntax for swift
 Plug 'keith/swift.vim' 
