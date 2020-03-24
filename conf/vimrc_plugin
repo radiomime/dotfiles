@@ -51,14 +51,11 @@ let g:vim_g_f_command = "Gf"
 " :Go to remove distractions and focus pane
 Plug 'junegunn/goyo.vim' 
 let g:goyo_width=120
-function! Numgoyo()
-    :Goyo
+function! s:goyo_enter()
     :set number
     :set relativenumber
 endfunction
-
-"" Goyo Remap
-command Go :call Numgoyo()
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
 
 " leader-w on pane, leader-w on another, swap panes
