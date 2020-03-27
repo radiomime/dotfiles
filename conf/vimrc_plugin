@@ -112,6 +112,9 @@ Plug 'tpope/vim-unimpaired'
 " tmux bidnings for vim
 Plug 'tpope/vim-tbone' 
 
+" large suite of colorschemes
+Plug 'flazz/vim-colorschemes'
+
 call plug#end()
 
 " Color scheme things
@@ -125,7 +128,9 @@ set background=dark
 " SET COLORSCHEME
 " it's worth seeint if lightline (bar at bottom) supports the theme
 " let g:lightline.colorscheme = 'solarized'
-let g:lightline.colorscheme = 'palenight'
 "colorscheme vim-monokai-tasty
+
+let g:lightline.colorscheme = 'flatcolor'
+colorscheme flatcolor
 set background=dark
 " colorscheme solarized
