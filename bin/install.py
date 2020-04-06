@@ -170,7 +170,7 @@ def install_linters():
     for linter in pip_linters:
         if not is_installed(linter):
             cmds.append("python3 -m pip install " + linter)
-    if len(cmds) is not 0:
+    if len(cmds) != 0:
         return gen_install(name, why, cmds)
     else:
         return None
