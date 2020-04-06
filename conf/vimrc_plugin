@@ -23,6 +23,9 @@ let g:lightline = {
 " open tags in window w/ ctrl-t
 Plug 'majutsushi/tagbar' 
 
+" Open Markdown in browser, depends on:
+" sudo npm install -g instant-markdown-d
+Plug 'suan/vim-instant-markdown'
 
 "TagBar Remap
 map <C-t> :TagbarToggle<CR>
