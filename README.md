@@ -11,8 +11,8 @@ Requires Python 3.6 and vim 8.
 
 On Ubuntu:
 ```
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo add-apt-repository ppa:jonathonf/vim
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo add-apt-repository ppa:jonathonf/vim -y 
 sudo apt-get update
 sudo apt-get install -y python3.6 vim
 ```
