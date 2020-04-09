@@ -118,6 +118,8 @@ Plug 'tpope/vim-tbone'
 " large suite of colorschemes
 Plug 'flazz/vim-colorschemes'
 
+Plug 'shinchu/lightline-gruvbox.vim'
+
 call plug#end()
 
 " Color scheme things
@@ -133,7 +135,12 @@ set background=dark
 " let g:lightline.colorscheme = 'solarized'
 "colorscheme vim-monokai-tasty
 
-let g:lightline.colorscheme = 'flatcolor'
-colorscheme flatcolor
+
+let g:lightline = {}
+let g:lightline.colorscheme = 'gruvbox'
+colorscheme gruvbox
+
+" let g:lightline.colorscheme = 'flatcolor'
+" colorscheme flatcolor
 set background=dark
 " colorscheme solarized
