@@ -30,11 +30,11 @@ ga() {
     if [[ -z "$1" ]];then
         git add --all
     else
-        git add $1
+        git add "$@"
     fi
 }
 
-gc() { git commit -m $1 ; } # Example: gc "Updated the comments"
+gc() { git commit -m "$@" ; } # Example: gc "Updated the comments"
 alias gp='git push'         # This one is pretty straight forward.
 alias gs='git status'
 
