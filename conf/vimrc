@@ -93,6 +93,9 @@ set smartindent
 "Set tab spacing to 4 
 set tabstop=4
 set softtabstop=4
+set expandtab
+set shiftwidth=4
+set autoindent
 
 "enable syntax processing
 syntax enable
@@ -154,12 +157,6 @@ set nomodeline
 
 " don't make it look like there are line breaks where there aren't:
 set nowrap
-
-" use indents of 2 spaces, and have them copied down lines:
-set shiftwidth=4
-set shiftround
-set expandtab
-set autoindent
 
 " normally don't automatically format `text' as it is typed, IE only do this
 " with comments, at 79 characters:
