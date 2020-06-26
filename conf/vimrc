@@ -105,6 +105,8 @@ set hlsearch
 
 " Remap : to ; for ease of use
 nnoremap ; :
+" Keep ; an option
+nnoremap : ;
 
 
 " :W sudo saves the file (no permission denied)
