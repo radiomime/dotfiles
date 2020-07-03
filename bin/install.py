@@ -8,7 +8,7 @@ import argparse
 
 cp_files = {
     "../conf/bashrc": "~/.bashrc",
-    "../conf/bin": "~/.bin",
+    # "../conf/bin": "~/.bin",
     "../conf/functions": "~/.functions",
     "../conf/public_aliases": "~/.public_aliases",
     "../conf/tmux.conf": "~/.tmux.conf",
