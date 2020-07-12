@@ -7,15 +7,15 @@ import os
 import argparse
 
 symlink_files = {
-    "../conf/bashrc": "~/.bashrc", # Identical
-    "../conf/functions": "~/.functions", # Identical
-    "../conf/public_aliases": "~/.public_aliases", # Identical
-    "../conf/tmux.conf": "~/.tmux.conf", # Identical
-    "../conf/vim_colors": "~/.vim/colors", # Identical
-    "../conf/autoload": "~/.vim/autoload", # Identical
-    "../conf/skeletons": "~/.vim/skeletons", # Identical
-    "../conf/fzf_functions": "~/.fzf_functions", # Identical
-    "../conf/vimrc_full": "~/.vimrc", # full vimrc
+    "../conf/bashrc": "~/.bashrc",
+    "../conf/functions": "~/.functions",
+    "../conf/public_aliases": "~/.public_aliases",
+    "../conf/tmux.conf": "~/.tmux.conf",
+    "../conf/vim_colors": "~/.vim/colors",
+    "../conf/autoload": "~/.vim/autoload",
+    "../conf/skeletons": "~/.vim/skeletons",
+    "../conf/fzf_functions": "~/.fzf_functions",
+    "../conf/vimrc_full": "~/.vimrc",
 }
 
 def br(w):
@@ -250,8 +250,8 @@ def main(argv):
         bak_file(dst)
         symlink(src, dst)
 
-    # print('Appending vimrc_plugin contents to vimrc')
-    # append_plugin_vimrc()
+    print('Appending vimrc_plugin contents to vimrc')
+    append_plugin_vimrc()
 
     inform.append(install_fzf())
     inform.append(install_bat())
