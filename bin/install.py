@@ -2,24 +2,21 @@ import re
 import sys
 from sys import platform
 from os.path import expanduser
+from os.path import abspath
 import os
 import argparse
 
-
-cp_files = {
-    "../conf/bashrc": "~/.bashrc",
-    # "../conf/bin": "~/.bin",
-    "../conf/functions": "~/.functions",
-    "../conf/public_aliases": "~/.public_aliases",
-    "../conf/tmux.conf": "~/.tmux.conf",
-    "../conf/vim_colors/*.vim": "~/.vim/colors",
-    "../conf/autoload/*": "~/.vim/autoload/",
-    "../conf/skeletons/": "~/.vim/",
-    "../conf/vimrc": "~/.vimrc",
-    "../conf/linters/*": "~",
-    "../conf/fzf_functions": "~/.fzf_functions"
+symlink_files = {
+    "../conf/bashrc": "~/.bashrc", # Identical
+    "../conf/functions": "~/.functions", # Identical
+    "../conf/public_aliases": "~/.public_aliases", # Identical
+    "../conf/tmux.conf": "~/.tmux.conf", # Identical
+    "../conf/vim_colors": "~/.vim/colors", # Identical
+    "../conf/autoload": "~/.vim/autoload", # Identical
+    "../conf/skeletons": "~/.vim/skeletons", # Identical
+    "../conf/fzf_functions": "~/.fzf_functions", # Identical
+    "../conf/vimrc_full": "~/.vimrc", # full vimrc
 }
-
 
 def br(w):
     print("|" + '-' * w + "|")
@@ -35,10 +32,33 @@ def banner(w, word):
 def gen_install(name, why, cmd):
     return {'name': name, 'why': why, 'cmds': cmd}
 
+# Move a file to file.bak as long as bak does not already exist
+def bak_file(file):
+    # Check if file exists
+    exists = (lambda: False, lambda: True)[path_exists(file)]()
+    if not exists:
+        return
+
+    bak_exists = (lambda: False, lambda: True)[path_exists(file + ".bak")]()
+    if not bak_exists:
+        cmd = "mv " + full_path(file) + " " + full_path(file) + ".bak"
+        # print('backing up: ' + cmd)
+        os.system(cmd)
+
+# Remove destination files
+def symlink(src, lnk):
+    cmd = "ln -sfn " + full_path(src) + " " + full_path(lnk)
+    # print('running ' + cmd)
+    os.system(cmd)
 
 def cp(src, dst):
     os.system(add_user("cp -r " + src + " " + dst))
 
+def full_path(file):
+    # return file.replace("~", expanduser("~"))
+    path = abspath(expanduser(file))
+    return path
+    # return file.replace("~", expanduser("~"))
 
 def add_user(file):
     return file.replace("~", expanduser("~"))
@@ -88,10 +108,14 @@ def append_plugin_vimrc():
     fout.write(data2)
     fout.close()
 
+def is_link(path):
+    return os.path.islink(add_user(path))
 
 def is_directory(path):
     return os.path.isdir(add_user(path))
 
+def path_exists(path):
+    return os.path.exists(add_user(path))
 
 def is_file(path):
     return os.path.exists(add_user(path))
@@ -218,17 +242,17 @@ def main(argv):
         print('Adding timezone.')
         append("~/.profile", "TZ='America/Denver'; export TZ")
 
-    # Setup Config Files
-    os.system("mkdir -pv ~/.vim/autoload")
-    os.system("mkdir -pv ~/.vim/colors")
-
     # Setup sessions directory
     os.system("mkdir -pv ~/.vim/sessions")
 
-    for src, dst in cp_files.items():
-        cp(src, dst)
+    # Move existing files to file.bak, link dotfiles
+    for src, dst in symlink_files.items():
+        bak_file(dst)
+        symlink(src, dst)
 
-    append_plugin_vimrc()
+    # print('Appending vimrc_plugin contents to vimrc')
+    # append_plugin_vimrc()
+
     inform.append(install_fzf())
     inform.append(install_bat())
     inform.append(install_ctags())
