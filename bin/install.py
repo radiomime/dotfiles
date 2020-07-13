@@ -16,6 +16,7 @@ symlink_files = {
     "../conf/skeletons": "~/.vim/skeletons",
     "../conf/fzf_functions": "~/.fzf_functions",
     "../conf/vimrc_full": "~/.vimrc",
+    "../conf/gitconfig": "~/.gitconfig",
 }
 
 def br(w):
@@ -241,6 +242,9 @@ def main(argv):
     if (not has_word("TZ=", "~/.profile")):
         print('Adding timezone.')
         append("~/.profile", "TZ='America/Denver'; export TZ")
+
+    # Create vim directory if it doesn't exist
+    os.system("mkdir -pv ~/.vim")
 
     # Setup sessions directory
     os.system("mkdir -pv ~/.vim/sessions")
