@@ -12,7 +12,6 @@ symlink_files = {
     "../conf/public_aliases": "~/.public_aliases",
     "../conf/tmux.conf": "~/.tmux.conf",
     "../conf/vim_colors": "~/.vim/colors",
-    "../conf/autoload": "~/.vim/autoload",
     "../conf/skeletons": "~/.vim/skeletons",
     "../conf/fzf_functions": "~/.fzf_functions",
     "../conf/vimrc_full": "~/.vimrc",
