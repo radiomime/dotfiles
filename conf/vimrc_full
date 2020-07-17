@@ -9,7 +9,7 @@ endfunction
 command! -nargs=1 S call MakeSession(<f-args>)
 
 " Termanl Remap
-"" I can't figure out why but on some distros twk needs to be
+" I can't figure out why but on some distros twk needs to be
 "set and on some termkey needs to be set
 set twk=<C-H>
 " set termkey=<C-H> 
@@ -18,17 +18,24 @@ set twk=<C-H>
 command V :vert term
 set splitbelow " split all windows below, including the terminal which is where I always want it
 
-set number relativenumber
-
 command! MakeTags !ctags -R .
 
-" // to search for currently selected text
+"*****************************************************************************
+" Mappings
+"*****************************************************************************
+
+" `//`: Visual Mode: search for currently selected text
 vnoremap // y/<C-R>"<CR>"
 
-" remap j k and to treat 'false' new lines as new line, also keep center
+" Always keep text centered
+" Note: gj will move the cursor one apparent line down rather than actual
+"     lines. Useful for text wrapping
+" TODO: Checkout: set scrolloff=50, or set scrolloff=999
+"   * Should do the same as the zz
 nnoremap j gjzz
 nnoremap k gkzz
-" Also do it for all the other stuff
+
+" Always keep text centered
 nnoremap } }zz
 nnoremap { {zz
 nnoremap G Gzz
@@ -52,35 +59,42 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " <> and +- to adjust pane sizes
+" TODO: checkout resizing windows
 nnoremap > :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap < :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
-
 
 nnoremap + :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap - :exe "resize " . (winheight(0) * 2/3)<CR>
 
-
+" `;;` in insert mode will rind the next <..>, delete it, and enter insert mode
 inoremap ;; <Esc>/<..><Enter>"_c4l
 
+"*****************************************************************************
+" Visual Settings
+"*****************************************************************************
 syntax on
+
 set t_Co=256
-
 set background=dark
-
-
-
 set hidden
+
 " colorscheme if plugins aren't used
 colorscheme onedark
 
 "Chose colorscheme, copy to folder: ~/.vim/colors
 " $ cp /path/to/your/color.vim  ~/.vim/colors
 
+
 " first clear any existing autocommands:
 autocmd!
-" Set Numbers
-set nu  
-set cursorline
+
+" Show line number, and relative line numbers
+set number
+set relativenumber
+" Show current position
+set ruler
+
+set cursorline " Highlight current line
 set wrap
 set ttyfast
 
@@ -96,6 +110,10 @@ set softtabstop=4
 set expandtab
 set shiftwidth=4
 set autoindent
+
+"*****************************************************************************
+" Other stuff, not yet labeled
+"*****************************************************************************
 
 "enable syntax processing
 syntax enable
@@ -115,9 +133,6 @@ command W w !sudo tee % > /dev/null
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
-
-"Always show current position
-set ruler
 
 " Ignore case when searching
 set ignorecase
